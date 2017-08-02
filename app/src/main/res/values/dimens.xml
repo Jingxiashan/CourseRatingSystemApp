@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_login_side_margin">40dp</dimen>
+    <dimen name="activity_login_input_margin">10dp</dimen>
+    <dimen name="activity_login_input_margin_half">5dp</dimen>
+    <dimen name="activity_login_font_size">14sp</dimen>
+</resources>

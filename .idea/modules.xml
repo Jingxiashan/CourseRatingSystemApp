@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/CourseRatingSystem.iml" filepath="$PROJECT_DIR$/CourseRatingSystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/CourseRatingSystemApp.iml" filepath="$PROJECT_DIR$/CourseRatingSystemApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
