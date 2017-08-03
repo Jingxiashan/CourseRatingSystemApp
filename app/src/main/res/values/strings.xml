@@ -5,4 +5,25 @@
     <string name="fragment_login_password_hint">密码</string>
     <string name="fragment_login_divider_hint">好久不见？</string>
     <string name="fragment_login_button_login">登录</string>
+    <string name="fragment_login_toRegister_hint">新朋友？</string>
+    <string name="fragment_login_warn_emptyUsername">用户名不能为空</string>
+    <string name="fragment_login_warn_emptyPassword">密码不能为空</string>
+    <string name="fragment_login_warn_wrongCredentials">用户名或密码错误</string>
+    <string name="fragment_register_username_hint">用户名</string>
+    <string name="fragment_register_password1_hint">密码</string>
+    <string name="fragment_register_password2_hint">确认密码</string>
+    <string name="fragment_register_divider_hint">欢迎你，我的朋友</string>
+    <string name="fragment_register_button_register">注册</string>
+    <string name="fragment_register_nickname_hint">昵称</string>
+    <string name="fragment_register_grade_hint">年级</string>
+    <string name="fragment_register_toLogin_hint">老朋友？</string>
+    <string name="fragment_register_warn_duplicateUsername">用户名已存在，请重试</string>
+    <string name="fragment_register_warn_diffPasswords">两次密码输入不一致</string>
+    <string name="fragment_register_warn_emptyUsername">用户名不能为空</string>
+    <string name="fragment_register_warn_emptyPassword">密码不能为空</string>
+    <string name="fragment_register_warn_emptyNickname">昵称不能为空</string>
+    <string name="fragment_register_warn_shortUsername">用户名不能少于四位</string>
+    <string name="fragment_register_warn_shortPassword">密码不能少于六位</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

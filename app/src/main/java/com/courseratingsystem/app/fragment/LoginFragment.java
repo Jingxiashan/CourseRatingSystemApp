@@ -1,18 +1,42 @@
 package com.courseratingsystem.app.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.activity.LoginActivity;
+import com.courseratingsystem.app.tools.EncyptionHelper;
 
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
+@ContentView(R.layout.fragment_login)
 public class LoginFragment extends Fragment {
 
-
+    @ViewInject(R.id.fragment_login_input_username)
+    private EditText mUsername;
+    ;
+    @ViewInject(R.id.fragment_login_input_password)
+    private EditText mPassword;
+    @ViewInject(R.id.fragment_login_button_login)
+    private Button mLogin;
+    @ViewInject(R.id.fragment_login_button_wechat)
+    private Button mWeChat;
+    @ViewInject(R.id.fragment_login_button_qq)
+    private Button mQQ;
+    @ViewInject(R.id.fragment_login_button_weibo)
+    private Button mWeibo;
+    @ViewInject(R.id.fragment_login_text_warn)
+    private TextView mWarning;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -25,13 +49,44 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View myView = inflater.inflate(R.layout.fragment_login, container, false);
-        return myView;
+
+        return x.view().inject(this, inflater, container);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
+
+    @Event(type = View.OnClickListener.class, value = R.id.fragment_login_button_login)
+    private void attemptLogin(View view) {
+        String username = mUsername.getText().toString();
+        String password = mPassword.getText().toString();
+        //判断空
+        if (username.isEmpty()) {
+            mWarning.setText(getString(R.string.fragment_login_warn_emptyUsername));
+            mWarning.setVisibility(View.VISIBLE);
+            return;
+        }
+        if (password.isEmpty()) {
+            mWarning.setText(getString(R.string.fragment_login_warn_emptyPassword));
+            mWarning.setVisibility(View.VISIBLE);
+            return;
+        }
+        //加密并调用Activity方法登录
+        String passwordEncrypted = EncyptionHelper.shaEncrypt(password);
+        LoginStatus status = ((LoginActivity) getActivity()).attemptLogin(username, passwordEncrypted);
+        switch (status) {
+            case LOGIN_SUCCESSFULLY:
+                mWarning.setVisibility(View.GONE);
+                break;
+            case WRONG_CREDENTIALS:
+                mWarning.setText(getString(R.string.fragment_login_warn_wrongCredentials));
+                mWarning.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    public enum LoginStatus {LOGIN_SUCCESSFULLY, WRONG_CREDENTIALS}
 }
+

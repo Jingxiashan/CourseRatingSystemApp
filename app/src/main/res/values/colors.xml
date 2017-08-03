@@ -8,4 +8,5 @@
     <color name="splashBackColor">#1c1c1c</color>
     <color name="lightGrey">#919191</color>
     <color name="lightGreyAlpha">#A0919191</color>
+    <color name="warnRedLight">#E57373</color>
 </resources>

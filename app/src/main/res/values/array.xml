@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="grade">
+        <item>2010级</item>
+        <item>2011级</item>
+        <item>2012级</item>
+        <item>2013级</item>
+        <item>2014级</item>
+        <item>2015级</item>
+        <item>2016级</item>
+        <item>2017级</item>
+        <item>2018级</item>
+        <item>2019级</item>
+        <item>2020级</item>
+    </string-array>
+</resources>
