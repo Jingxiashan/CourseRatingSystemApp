@@ -15,11 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.application.MyCourseApplication;
 import com.courseratingsystem.app.fragment.LoginFragment;
 import com.courseratingsystem.app.fragment.RegisterFragment;
+import com.courseratingsystem.app.view.LoadingAnimView;
+import com.courseratingsystem.app.view.SuccessAnimView;
 import com.mcxtzhang.pathanimlib.PathAnimView;
 import com.mcxtzhang.pathanimlib.utils.SvgPathParser;
 
@@ -50,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     private final String[] REGISTER_POST_KEY = new String[]{"username", "password", "nickname", "grade"};
     private final String SUCCESS = "success";
     private final String FAIL = "fail";
+    @ViewInject(R.id.activity_login_layout)
+    RelativeLayout relativeLayout;
     @ViewInject(R.id.activity_login_tablayout)
     TabLayout mTabLayout;
     @ViewInject(R.id.activity_login_viewpager)
@@ -59,11 +64,13 @@ public class LoginActivity extends AppCompatActivity {
     @ViewInject(R.id.activity_login_return_button)
     Button mReturn;
 
+    LoadingAnimView loadingAnimView;
+    SuccessAnimView successAnimView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
         //选择登录/注册
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -141,6 +148,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void attemptLogin(final String username, final String encryptedPass, final Handler handler) {
+
+        showLoadingAnim(true);
+
         OkHttpClient client = ((MyCourseApplication) getApplication()).getOkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add(LOGIN_POST_KEY[0], username)
@@ -178,6 +188,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void attemptRegister(final String username, final String encryptedPass, final String nickname, final String grade, final Handler handler) {
+
+        showLoadingAnim(true);
+
         OkHttpClient client = ((MyCourseApplication) getApplication()).getOkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add(REGISTER_POST_KEY[0], username)
@@ -221,6 +234,25 @@ public class LoginActivity extends AppCompatActivity {
         this.onBackPressed();
     }
 
+    //显示加载动画
+    public void showLoadingAnim(boolean ifShow) {
+        if (ifShow) {
+            loadingAnimView = new LoadingAnimView(this, LoadingAnimView.BgColor.DARK);
+            relativeLayout.addView(loadingAnimView);
+        } else {
+            relativeLayout.removeView(loadingAnimView);
+        }
+    }
+
+    //显示完成动画
+    public void showSuccessAnim(boolean ifShow) {
+        if (ifShow) {
+            successAnimView = new SuccessAnimView(this, SuccessAnimView.BgColor.DARK);
+            relativeLayout.addView(successAnimView);
+        } else {
+            relativeLayout.removeView(loadingAnimView);
+        }
+    }
     public enum FragmentsSelection {LOGIN_FRAGMENT, REGISTER_FRAGMENT}
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

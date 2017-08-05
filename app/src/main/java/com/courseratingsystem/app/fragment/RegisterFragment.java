@@ -44,9 +44,12 @@ public class RegisterFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            LoginActivity loginActivity = (LoginActivity) getActivity();
+            loginActivity.showLoadingAnim(false);
             RegisterStatus status = (RegisterStatus) msg.obj;
             switch (status) {
                 case REGISTER_SUCCESFULLLY:
+                    loginActivity.showSuccessAnim(true);
                     mWarning.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), getString(R.string.fragment_register_successfully), Toast.LENGTH_LONG).show();
                     //TODO:注册成功后记录信息、获取信息并跳转到主页
