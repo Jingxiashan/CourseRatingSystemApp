@@ -2,6 +2,8 @@ package com.courseratingsystem.app.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.LoginActivity;
@@ -24,7 +27,6 @@ public class LoginFragment extends Fragment {
 
     @ViewInject(R.id.fragment_login_input_username)
     private EditText mUsername;
-    ;
     @ViewInject(R.id.fragment_login_input_password)
     private EditText mPassword;
     @ViewInject(R.id.fragment_login_button_login)
@@ -37,6 +39,29 @@ public class LoginFragment extends Fragment {
     private Button mWeibo;
     @ViewInject(R.id.fragment_login_text_warn)
     private TextView mWarning;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            LoginStatus status = (LoginStatus) msg.obj;
+            switch (status) {
+                case LOGIN_SUCCESSFULLY:
+                    mWarning.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), getString(R.string.fragment_login_successfully), Toast.LENGTH_LONG).show();
+                    //TODO:登陆成功后记录信息、获取信息并跳转到主页
+                    //getActivity().finish();
+                    break;
+                case WRONG_CREDENTIALS:
+                    mWarning.setText(getString(R.string.fragment_login_warn_wrongCredentials));
+                    mWarning.setVisibility(View.VISIBLE);
+                    break;
+                case CONNECTION_FAILED:
+                    mWarning.setText(getString(R.string.internet_connection_failed));
+                    mWarning.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -75,18 +100,9 @@ public class LoginFragment extends Fragment {
         }
         //加密并调用Activity方法登录
         String passwordEncrypted = EncyptionHelper.shaEncrypt(password);
-        LoginStatus status = ((LoginActivity) getActivity()).attemptLogin(username, passwordEncrypted);
-        switch (status) {
-            case LOGIN_SUCCESSFULLY:
-                mWarning.setVisibility(View.GONE);
-                break;
-            case WRONG_CREDENTIALS:
-                mWarning.setText(getString(R.string.fragment_login_warn_wrongCredentials));
-                mWarning.setVisibility(View.VISIBLE);
-                break;
-        }
+        ((LoginActivity) getActivity()).attemptLogin(username, passwordEncrypted, handler);
     }
 
-    public enum LoginStatus {LOGIN_SUCCESSFULLY, WRONG_CREDENTIALS}
+    public enum LoginStatus {LOGIN_SUCCESSFULLY, WRONG_CREDENTIALS, CONNECTION_FAILED}
 }
 

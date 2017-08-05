@@ -2,6 +2,8 @@ package com.courseratingsystem.app.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.LoginActivity;
@@ -25,7 +28,6 @@ public class RegisterFragment extends Fragment {
 
     @ViewInject(R.id.fragment_register_input_username)
     private EditText mUsername;
-    ;
     @ViewInject(R.id.fragment_register_input_password1)
     private EditText mPassword1;
     @ViewInject(R.id.fragment_register_input_password2)
@@ -38,6 +40,29 @@ public class RegisterFragment extends Fragment {
     private Button mRegister;
     @ViewInject(R.id.fragment_register_text_warn)
     private TextView mWarning;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            RegisterStatus status = (RegisterStatus) msg.obj;
+            switch (status) {
+                case REGISTER_SUCCESFULLLY:
+                    mWarning.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), getString(R.string.fragment_register_successfully), Toast.LENGTH_LONG).show();
+                    //TODO:注册成功后记录信息、获取信息并跳转到主页
+                    //getActivity().finish();
+                    break;
+                case DUPLICATE_USERNAME:
+                    mWarning.setText(getString(R.string.fragment_register_warn_duplicateUsername));
+                    mWarning.setVisibility(View.VISIBLE);
+                    break;
+                case CONNECTION_FAILED:
+                    mWarning.setText(getString(R.string.internet_connection_failed));
+                    mWarning.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -101,18 +126,9 @@ public class RegisterFragment extends Fragment {
         }
         //加密密码调用Activity联网注册
         String passwordEncrypted = EncyptionHelper.shaEncrypt(password1);
-        RegisterStatus status = ((LoginActivity) getActivity()).attemptRegister(username, passwordEncrypted, nickname, grade);
-        switch (status) {
-            case REGISTER_SUCCESFULLLY:
-                mWarning.setVisibility(View.GONE);
-                break;
-            case DUPLICATE_USERNAME:
-                mWarning.setText(getString(R.string.fragment_register_warn_duplicateUsername));
-                mWarning.setVisibility(View.VISIBLE);
-                break;
-        }
+        ((LoginActivity) getActivity()).attemptRegister(username, passwordEncrypted, nickname, grade, handler);
 
     }
 
-    public enum RegisterStatus {REGISTER_SUCCESFULLLY, DUPLICATE_USERNAME}
+    public enum RegisterStatus {REGISTER_SUCCESFULLLY, DUPLICATE_USERNAME, CONNECTION_FAILED}
 }
