@@ -10,4 +10,6 @@
     <color name="lightGreyAlpha">#A0919191</color>
     <color name="warnRedLight">#E57373</color>
     <color name="finishGreenLight">#66BB6A</color>
+    <color name="indexTabOnColor">#66BB6A</color>
+    <color name="indexTabOffColor">#919191</color>
 </resources>

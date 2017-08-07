@@ -37,7 +37,7 @@
             <EditText
                 android:id="@+id/fragment_login_input_username"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:background="@null"
@@ -79,7 +79,7 @@
             <EditText
                 android:id="@+id/fragment_login_input_password"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:background="@null"

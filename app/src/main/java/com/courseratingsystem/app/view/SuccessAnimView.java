@@ -19,7 +19,6 @@ import java.text.ParseException;
 
 public class SuccessAnimView extends RelativeLayout {
     PathAnimView animView;
-    ;
 
     private SuccessAnimView(Context context) {
         super(context);

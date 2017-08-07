@@ -36,7 +36,7 @@
             <EditText
                 android:id="@+id/fragment_register_input_username"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:background="@null"
@@ -78,7 +78,7 @@
             <EditText
                 android:id="@+id/fragment_register_input_password1"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:background="@null"
@@ -109,7 +109,7 @@
             <EditText
                 android:id="@+id/fragment_register_input_password2"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:background="@null"
@@ -150,7 +150,7 @@
             <EditText
                 android:id="@+id/fragment_register_input_nickname"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:background="@null"
@@ -181,7 +181,7 @@
             <Spinner
                 android:id="@+id/fragment_register_input_grade"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/acitvity_login_input_height"
+                android:layout_height="@dimen/activity_login_input_height"
                 android:layout_margin="@dimen/activity_login_input_margin"
                 android:layout_weight="8"
                 android:entries="@array/grade"

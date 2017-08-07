@@ -18,7 +18,6 @@ import java.text.ParseException;
 
 public class LoadingAnimView extends RelativeLayout {
     StoreHouseAnimView animView;
-    ;
 
     private LoadingAnimView(Context context) {
         super(context);
