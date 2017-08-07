@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.courseratingsystem.app.activity.CourseActivity"
+    android:background="@color/pureWhite">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/activity_course_relativelayout_header"
+    android:background="@android:color/holo_orange_light">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="课程1"
+        android:textSize="@dimen/activity_course_coursename_textsize"
+        android:textColor="@color/pureBlack"
+        android:id="@+id/activity_course_textview_coursename"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/activity_course_textview_coursename"
+        android:id="@+id/activity_course_linearlayout_teachers"
+        android:layout_marginLeft="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_margin="5dp"
+                android:background="@drawable/activity_course_teacher_bg"
+                android:padding="5dp"
+                android:text="教师1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_margin="5dp"
+                android:background="@drawable/activity_course_teacher_bg"
+                android:padding="5dp"
+                android:text="教师2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_margin="5dp"
+                android:background="@drawable/activity_course_teacher_bg"
+                android:padding="5dp"
+                android:text="教师3" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textSize="90dp"
+        android:text="5.0"
+        android:textColor="@color/pureBlack"
+        android:id="@+id/activity_course_textview_avgrecomm"
+        android:layout_below="@+id/activity_course_linearlayout_teachers"
+        android:layout_toLeftOf="@+id/acivity_course_imageview_thumbup"
+        android:layout_margin="-10dp"
+        />
+    <ImageView
+        android:id="@+id/acivity_course_imageview_thumbup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_thumb_up_black_24dp"
+        android:layout_alignBottom="@id/activity_course_textview_avgrecomm"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="综合推荐指数"
+        android:textColor="@color/pureBlack"
+        android:layout_marginTop="-15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/activity_course_textview_avgrecomm"
+        android:layout_toStartOf="@+id/acivity_course_imageview_thumbup" />
+
+ <LinearLayout
+     android:id="@+id/activity_course_linear_comment"
+     android:layout_marginRight="10dp"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_toLeftOf="@id/activity_course_textview_avgrecomm"
+     android:layout_above="@+id/activity_course_linear_favorite"
+     android:orientation="horizontal"
+     android:weightSum="1">
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="100,0"
+         android:textColor="@color/pureBlack"
+         android:textSize="25dp"
+         />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="评论"
+         android:textColor="@color/pureBlack"
+         android:textSize="25dp"
+         android:layout_marginLeft="10dp"
+         />
+     <ImageView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_comment_black_24dp"
+         android:layout_margin="5dp" />
+ </LinearLayout>
+    <LinearLayout
+        android:id="@+id/activity_course_linear_favorite"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/activity_course_textview_avgrecomm"
+        android:layout_alignBottom="@id/activity_course_textview_avgrecomm"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textColor="@color/pureBlack"
+            android:textSize="25dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏"
+            android:textColor="@color/pureBlack"
+            android:textSize="25dp"
+            android:layout_marginLeft="10dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stars_black_24dp"
+            android:layout_margin="5dp" />
+    </LinearLayout>
+</RelativeLayout>
+    <com.courseratingsystem.app.view.CustomizedHorizontalBarChart
+        android:id="@+id/activity_course_horizontalbarchart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/activity_course_relativelayout_header"/>
+
+</RelativeLayout>

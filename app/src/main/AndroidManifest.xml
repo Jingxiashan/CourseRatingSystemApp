@@ -15,15 +15,19 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
+
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/LoginTheme" />
+        <activity android:name=".activity.CourseActivity"
+            android:theme="@style/CourseTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:theme="@style/LoginTheme" />
     </application>
 
 </manifest>

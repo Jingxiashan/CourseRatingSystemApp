@@ -19,5 +19,8 @@
         <item name="colorPrimaryDark">@color/lightGrey</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+    <style name="CourseTheme" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
 
 </resources>
