@@ -8,5 +8,13 @@
     <color name="splashBackColor">#1c1c1c</color>
     <color name="lightGrey">#919191</color>
     <color name="lightGreyAlpha">#A0919191</color>
+    <color name="Grey">#333333</color>
     <color name="warnRedLight">#E57373</color>
+    <color name="commentCardBackgrou">#66CC99</color>
+    <color name="littleDarkBlue">#009999</color>
+    <color name="dirtyBlue">#00343F</color>
+    <color name="dirtyWhite">#CFD1B6</color>
+    <color name="littleDirtyWhite">#FFF5DE</color>
+
+
 </resources>
