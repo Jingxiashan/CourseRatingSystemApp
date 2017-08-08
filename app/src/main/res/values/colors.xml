@@ -6,8 +6,20 @@
     <color name="pureBlack">#000000</color>
     <color name="pureWhite">#FFFFFF</color>
     <color name="splashBackColor">#1c1c1c</color>
-    <color name="lightGrey">#919191</color>
-    <color name="lightGreyAlpha">#A0919191</color>
+    <color name="lightGrey">#9A9DA4</color>
+    <color name="lightGreyAlpha">#A09A9DA4</color>
+    <color name="bgGrey">#F2F4F7</color>
+    <color name="Grey">#333333</color>
     <color name="warnRedLight">#E57373</color>
     <color name="someKindOfBlue">#5CACEE</color>
+    <color name="commentCardBackgrou">#66CC99</color>
+    <color name="littleDarkBlue">#009999</color>
+    <color name="dirtyBlue">#00343F</color>
+    <color name="dirtyWhite">#CFD1B6</color>
+    <color name="littleDirtyWhite">#FFF5DE</color>
+    <color name="finishGreenLight">#66BB6A</color>
+    <color name="indexTabOnColor">#66BB6A</color>
+    <color name="indexTabOffColor">#919191</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="myblue">#3333ff</color>
 </resources>

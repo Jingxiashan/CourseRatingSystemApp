@@ -23,4 +23,20 @@
 
     </style>
 
+    <!--Ratingbar style-->
+    <style name="CourseRatingStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/addcomment_courseratingstyle</item>
+        <item name="android:minHeight">35dp</item>
+        <item name="android:minWidth">35dp</item>
+    </style>
+
+    <style name="CourseCommentRatingStyle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/comment_item_courseratingstyle</item>
+        <item name="android:minHeight">25dp</item>
+        <item name="android:minWidth">25dp</item>
+    </style>
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/pureWhite</item>
+    </style>
 </resources>

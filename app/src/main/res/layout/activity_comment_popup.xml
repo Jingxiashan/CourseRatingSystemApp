@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    app:cardCornerRadius="10dp"
+    tools:context="com.courseratingsystem.app.activity.CommentPopupActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_commentpopup_card_height"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_commentpopup_top_margin"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_commentpopup_subtop_margin"
+                    android:src="@mipmap/app_icon" />
+
+                <TextView
+                    android:id="@+id/activity_commentpopup_text_coursename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15sp"
+                    android:layout_weight="8"
+                    android:text="Coursename"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/activity_commentpopup_header_font_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin"
+                    android:layout_weight="1"
+                    android:src="@drawable/commentpopup_user" />
+
+                <TextView
+                    android:id="@+id/activity_commentpopup_text_userName"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin"
+                    android:layout_weight="8"
+                    android:text="Auther_Name"
+                    android:textColor="@color/lightGrey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin"
+                    android:layout_weight="1"
+                    android:src="@drawable/commentpopup_timestamp" />
+
+                <TextView
+                    android:id="@+id/activity_commentpopup_text_timestamp"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin"
+                    android:layout_weight="8"
+                    android:text="Comment_Timestamp"
+                    android:textColor="@color/lightGrey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                android:layout_marginTop="@dimen/activity_login_input_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="推荐指数："
+                    android:textColor="@color/lightGrey" />
+
+                <RatingBar
+                    android:id="@+id/activity_commentpopup_ratingbar_commentRating"
+                    style="@style/CourseCommentRatingStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_login_input_margin"
+                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                    android:layout_weight="3"
+                    android:background="@color/lightGreyAlpha" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:gravity="center_horizontal"
+                    android:text="嗯，老司机语录"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="@dimen/activity_login_font_size" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                    android:layout_weight="3"
+                    android:background="@color/lightGreyAlpha" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/activity_comment_contentpop_width"
+                android:layout_height="@dimen/activity_comment_content_height"
+                android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                android:background="@drawable/commentpopup_commentcontent_border"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                    android:src="@drawable/commentpopup_pen" />
+
+                <ScrollView
+                    android:layout_width="234dp"
+                    android:layout_height="@dimen/activity_commentpopup_content_height"
+                    android:layout_marginBottom="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginEnd="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginTop="@dimen/activity_comment_content_side_margin">
+
+                    <TextView
+                        android:id="@+id/activity_commentpopup_text_commentContent"
+                        android:layout_width="234dp"
+                        android:layout_height="@dimen/activity_commentpopup_content_height"
+                        android:text="Test course comment is written by someone else"
+                        android:textColor="@color/lightGrey" />
+
+                </ScrollView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

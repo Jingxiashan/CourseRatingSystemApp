@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_courselist_card_margin"
+        android:background="@color/bgGrey" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_courselist_card_height"
+        app:cardBackgroundColor="@color/pureWhite"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/app_icon" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/item_fragment_courseList_text_courseName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:text="圣经与西方文化"
+                    android:textColor="@color/splashBackColor"
+                    android:textSize="@dimen/item_fragment_courselist_textsize_courseName" />
+
+                <Button
+                    android:id="@+id/item_fragment_courseList_button_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/item_fragment_courselist_button_bg"
+                    android:text="@string/item_fragment_courselist_addcomment"
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="@dimen/item_fragment_courselist_textsize_details" />
+
+                <TextView
+                    android:id="@+id/item_fragment_courseList_text_recScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_fragment_courseList_text_courseName"
+                    android:layout_marginTop="@dimen/item_fragment_courselist_margintop"
+                    android:text="4.5分"
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="@dimen/item_fragment_courselist_textsize_details" />
+
+                <TextView
+                    android:id="@+id/item_fragment_courseList_text_recComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_fragment_courseList_text_courseName"
+                    android:layout_marginStart="@dimen/item_fragment_courselist_marginside"
+                    android:layout_marginTop="@dimen/item_fragment_courselist_margintop"
+                    android:layout_toEndOf="@id/item_fragment_courseList_text_recScore"
+                    android:text="非常棒"
+                    android:textColor="@android:color/holo_blue_light"
+                    android:textSize="@dimen/item_fragment_courselist_textsize_details" />
+
+                <TextView
+                    android:id="@+id/item_fragment_courseList_text_commentCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_fragment_courseList_text_courseName"
+                    android:layout_marginStart="@dimen/item_fragment_courselist_marginside"
+                    android:layout_marginTop="@dimen/item_fragment_courselist_margintop"
+                    android:layout_toEndOf="@id/item_fragment_courseList_text_recComment"
+                    android:text="99条评价"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/item_fragment_courselist_textsize_details" />
+
+                <TextView
+                    android:id="@+id/item_fragment_courseList_text_otherScores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_fragment_courseList_text_recScore"
+                    android:layout_marginTop="@dimen/item_fragment_courselist_margintop"
+                    android:text="有用3.0 有趣2.0 占时3.5 给分3.5 点名2.0"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/item_fragment_courselist_textsize_details" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_fragment_courseList_text_otherScores"
+                    android:layout_marginTop="@dimen/item_fragment_courselist_margintop"
+                    android:background="@drawable/item_fragment_courselist_teacher_bg"
+                    android:paddingBottom="1dp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_fragment_courselist_teacherLabel"
+                        android:textColor="@color/splashBackColor"
+                        android:textSize="@dimen/item_fragment_courselist_textsize_details" />
+
+                    <LinearLayout
+                        android:id="@+id/item_fragment_courseList_layout_teacherLinear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
 
         mLogo.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_fade_in));
 
-        startIntent = new Intent(SplashActivity.this, LoginActivity.class);
+        startIntent = new Intent(SplashActivity.this, IndexActivity.class);
         new Timer().schedule(timerTask, 2000);
     }
 }
