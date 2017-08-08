@@ -67,6 +67,18 @@ public class LoginActivity extends AppCompatActivity {
     LoadingAnimView loadingAnimView;
     SuccessAnimView successAnimView;
 
+    private final Handler successHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            //TODO:保存获取到的userid
+            MyCourseApplication application = (MyCourseApplication) getApplication();
+            application.login("151");
+            showSuccessAnim(true);
+            finish();
+            return false;
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,9 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO:解析JSON
                 if (SUCCESS.equals(responseBody)) {
                     //成功，直接跳转
-                    //TODO:保存获取到的userid
-                    showSuccessAnim(true);
-                    finish();
+                    successHandler.sendEmptyMessage(0);
                 } else {
                     //错误，回调RegisterFragment处理，传回String型的message
 //                    status = messageString;
@@ -224,8 +234,7 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO:解析JSON,保存获取到的userid
                 if (SUCCESS.equals(responseBody)) {
                     //成功，直接跳转
-                    //TODO:保存获取到的userid
-                    finish();
+                    successHandler.sendEmptyMessage(0);
                 } else {
                     //错误，回调RegisterFragment处理，传回String型的message
 //                    status = messageString;

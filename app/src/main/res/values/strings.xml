@@ -58,6 +58,9 @@
     <string name="fragment_user_changeProfile">修改个人信息</string>
     <string name="fragment_user_changePass">修改密码</string>
     <string name="fragment_user_logout">退出登录</string>
+    <string name="fragment_user_unloggedin">未登录</string>
+    <string name="fragment_user_click_to_login">点击登录</string>
+    <string name="fragment_user_please_login">请先登录</string>
 
     <string name="internet_connection_failed">网络连接失败，请重试</string>
 
