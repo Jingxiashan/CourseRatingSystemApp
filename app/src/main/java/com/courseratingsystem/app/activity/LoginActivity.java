@@ -163,11 +163,11 @@ public class LoginActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
 
             Message msg = new Message();
-            LoginFragment.LoginStatus status;
+            String status;
 
             @Override
             public void onFailure(Call call, IOException e) {
-                status = LoginFragment.LoginStatus.CONNECTION_FAILED;
+                status = getString(R.string.internet_connection_failed);
                 msg.obj = status;
                 handler.sendMessage(msg);
             }
@@ -177,12 +177,16 @@ public class LoginActivity extends AppCompatActivity {
                 String responseBody = response.body().string();
                 //TODO:解析JSON
                 if (SUCCESS.equals(responseBody)) {
-                    status = LoginFragment.LoginStatus.LOGIN_SUCCESSFULLY;
+                    //成功，直接跳转
+                    //TODO:保存获取到的userid
+                    showSuccessAnim(true);
+                    finish();
                 } else {
-                    status = LoginFragment.LoginStatus.WRONG_CREDENTIALS;
+                    //错误，回调RegisterFragment处理，传回String型的message
+//                    status = messageString;
+                    msg.obj = status;
+                    handler.sendMessage(msg);
                 }
-                msg.obj = status;
-                handler.sendMessage(msg);
             }
         });
     }
@@ -205,26 +209,29 @@ public class LoginActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
 
             Message msg = new Message();
-            RegisterFragment.RegisterStatus status;
+            String status;
 
             @Override
             public void onFailure(Call call, IOException e) {
-                status = RegisterFragment.RegisterStatus.CONNECTION_FAILED;
+                status = getString(R.string.internet_connection_failed);
                 msg.obj = status;
                 handler.sendMessage(msg);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //TODO:解析JSON
                 String responseBody = response.body().string();
+                //TODO:解析JSON,保存获取到的userid
                 if (SUCCESS.equals(responseBody)) {
-                    status = RegisterFragment.RegisterStatus.REGISTER_SUCCESFULLLY;
+                    //成功，直接跳转
+                    //TODO:保存获取到的userid
+                    finish();
                 } else {
-                    status = RegisterFragment.RegisterStatus.DUPLICATE_USERNAME;
+                    //错误，回调RegisterFragment处理，传回String型的message
+//                    status = messageString;
+                    msg.obj = status;
+                    handler.sendMessage(msg);
                 }
-                msg.obj = status;
-                handler.sendMessage(msg);
             }
         });
     }

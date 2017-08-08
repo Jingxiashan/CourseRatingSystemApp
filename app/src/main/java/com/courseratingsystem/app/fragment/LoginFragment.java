@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.LoginActivity;
@@ -53,25 +52,10 @@ public class LoginFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             LoginActivity loginActivity = (LoginActivity) getActivity();
+            String status = (String) msg.obj;
+            mWarning.setText(status);
+            mWarning.setVisibility(View.VISIBLE);
             loginActivity.showLoadingAnim(false);
-            LoginStatus status = (LoginStatus) msg.obj;
-            switch (status) {
-                case LOGIN_SUCCESSFULLY:
-                    loginActivity.showSuccessAnim(true);
-                    mWarning.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), getString(R.string.fragment_login_successfully), Toast.LENGTH_LONG).show();
-                    //TODO:登陆成功后记录信息、获取信息并跳转到主页
-                    //getActivity().finish();
-                    break;
-                case WRONG_CREDENTIALS:
-                    mWarning.setText(getString(R.string.fragment_login_warn_wrongCredentials));
-                    mWarning.setVisibility(View.VISIBLE);
-                    break;
-                case CONNECTION_FAILED:
-                    mWarning.setText(getString(R.string.internet_connection_failed));
-                    mWarning.setVisibility(View.VISIBLE);
-                    break;
-            }
         }
     };
     public LoginFragment() {
@@ -116,16 +100,5 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public enum LoginStatus {LOGIN_SUCCESSFULLY, WRONG_CREDENTIALS, CONNECTION_FAILED}
-
-//    private void showLoadingAnimation(boolean ifShow){
-//        loadingView = new LoadingView(LoginFragment.this.getActivity());
-//        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams., ViewGroup.LayoutParams.MATCH_PARENT);
-//        loadingView.setLayoutParams(params);
-//        loadingView.setBackgroundColor(getResources().getColor(R.color.splashBackColor));
-//        relativeLayout.addView(loadingView);
-//        loadingView.startAnim();
-//
-//    }
 }
 

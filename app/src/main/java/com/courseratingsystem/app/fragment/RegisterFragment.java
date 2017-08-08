@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.LoginActivity;
@@ -45,25 +44,10 @@ public class RegisterFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             LoginActivity loginActivity = (LoginActivity) getActivity();
+            String status = (String) msg.obj;
+            mWarning.setText(status);
+            mWarning.setVisibility(View.VISIBLE);
             loginActivity.showLoadingAnim(false);
-            RegisterStatus status = (RegisterStatus) msg.obj;
-            switch (status) {
-                case REGISTER_SUCCESFULLLY:
-                    loginActivity.showSuccessAnim(true);
-                    mWarning.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), getString(R.string.fragment_register_successfully), Toast.LENGTH_LONG).show();
-                    //TODO:注册成功后记录信息、获取信息并跳转到主页
-                    //getActivity().finish();
-                    break;
-                case DUPLICATE_USERNAME:
-                    mWarning.setText(getString(R.string.fragment_register_warn_duplicateUsername));
-                    mWarning.setVisibility(View.VISIBLE);
-                    break;
-                case CONNECTION_FAILED:
-                    mWarning.setText(getString(R.string.internet_connection_failed));
-                    mWarning.setVisibility(View.VISIBLE);
-                    break;
-            }
         }
     };
 
@@ -133,5 +117,4 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    public enum RegisterStatus {REGISTER_SUCCESFULLLY, DUPLICATE_USERNAME, CONNECTION_FAILED}
 }

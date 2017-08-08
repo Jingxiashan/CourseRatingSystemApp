@@ -13,11 +13,10 @@ import okhttp3.OkHttpClient;
 public class MyCourseApplication extends Application {
 
     public static final String SERVER_URL = "http://192.168.137.1:8080/CourseRatingSystem";
+    public static final String PREF_FILE_NAME = "prefs";
     public OkHttpClient okHttpClient;
 
-    public Integer userId;
-    public String username;
-    public String nickname;
+    private Integer userId;
 
 //    public int screenWidth, screenHeight;
 
@@ -30,10 +29,24 @@ public class MyCourseApplication extends Application {
         super.onCreate();
         x.Ext.init(this);
         okHttpClient = new OkHttpClient();
-
         userId = null;
-        username = nickname = null;
+    }
 
+    public Integer getUserId() {
+        return userId;
+    }
 
+    public void login(String userid) {
+        if (userid != null) {
+            try {
+                this.userId = Integer.parseInt(userid);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void logout() {
+        userId = null;
     }
 }
