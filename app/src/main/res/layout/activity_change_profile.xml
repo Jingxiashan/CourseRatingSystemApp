@@ -47,7 +47,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:src="@drawable/change_profile_nickname"/>
 
             <LinearLayout
@@ -85,8 +85,13 @@
                 android:id="@+id/imageView2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+<<<<<<< Updated upstream
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/change_profile_wechat" />
+=======
+                android:layout_gravity="bottom"
+                android:src="@drawable/change_profile_wechat"/>
+>>>>>>> Stashed changes
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +126,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:src="@drawable/change_profile_grade"/>
 
             <LinearLayout
@@ -157,7 +162,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:src="@drawable/change_profile_introduction"/>
 
             <LinearLayout
@@ -189,8 +194,14 @@
             android:id="@+id/activity_change_profile_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:layout_marginTop="10dp"
             android:text="修改" />
+=======
+            android:layout_marginTop="20dp"
+            android:text="修改"
+            android:id="@+id/activity_change_profile_submit"/>
+>>>>>>> Stashed changes
 
     </LinearLayout>
 </RelativeLayout>

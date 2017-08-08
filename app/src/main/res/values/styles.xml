@@ -27,6 +27,7 @@
         <item name="android:minWidth">35dp</item>
     </style>
 
+<<<<<<< Updated upstream
     <style name="CourseCommentRatingStyle" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/comment_item_courseratingstyle</item>
         <item name="android:minHeight">25dp</item>
@@ -36,4 +37,15 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/pureWhite</item>
     </style>
+=======
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Activity_Change_Password_TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/myblue</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+>>>>>>> Stashed changes
 </resources>
