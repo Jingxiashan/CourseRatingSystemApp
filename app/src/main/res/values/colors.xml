@@ -13,4 +13,5 @@
     <color name="finishGreenLight">#66BB6A</color>
     <color name="indexTabOnColor">#66BB6A</color>
     <color name="indexTabOffColor">#919191</color>
+    <color name="black_semi_transparent">#B2000000</color>
 </resources>

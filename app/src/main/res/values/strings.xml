@@ -34,6 +34,13 @@
     <string name="activity_index_text_tab_discover">发现</string>
     <string name="activity_index_text_tab_user">我的</string>
     <string name="activity_index_toast_press_back_again_to_exit">再按返回键退出</string>
+    <!-- for courselist fragment -->
+    <string name="fragment_courselist_floatingbutton_label_rec">推荐分高优先</string>
+    <string name="fragment_courselist_floatingbutton_label_use">内容有用优先</string>
+    <string name="fragment_courselist_floatingbutton_label_viv">上课有趣优先</string>
+    <string name="fragment_courselist_floatingbutton_label_ocu">占时间少优先</string>
+    <string name="fragment_courselist_floatingbutton_label_sco">期末分高优先</string>
+    <string name="fragment_courselist_floatingbutton_label_rol">点名少者优先</string>
     <!-- for course item of courselist fragment -->
     <string name="item_fragment_courselist_addcomment">老司机有话说</string>
     <string name="item_fragment_courselist_teacherLabel">教师</string>

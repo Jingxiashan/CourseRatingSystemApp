@@ -83,6 +83,7 @@ public class IndexActivity extends AppCompatActivity {
     @Event(value = {R.id.activity_index_text_courseTab, R.id.activity_index_text_discoverTab, R.id.activity_index_text_userTab}, type = View.OnClickListener.class)
     private void onTabSelected(View view) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         hideAllFragment(transaction);
         clearSelectedMark();
         switch (view.getId()) {

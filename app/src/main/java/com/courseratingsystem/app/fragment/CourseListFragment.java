@@ -22,8 +22,11 @@ import android.widget.TextView;
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.IndexActivity;
 import com.courseratingsystem.app.view.CourseListSwipeRefreshView;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -53,6 +56,20 @@ public class CourseListFragment extends Fragment {
     CourseListSwipeRefreshView mSwipeRefresh;
     @ViewInject(R.id.fragment_courselist_list_course)
     ListView mCourseList;
+    @ViewInject(R.id.fragment_courselist_floating_menu)
+    FloatingActionsMenu floatingActionsMenu;
+    @ViewInject(R.id.fragment_courselist_floating_child_rec)
+    FloatingActionButton floatingRec;
+    @ViewInject(R.id.fragment_courselist_floating_child_use)
+    FloatingActionButton floatingUse;
+    @ViewInject(R.id.fragment_courselist_floating_child_viv)
+    FloatingActionButton floatingViv;
+    @ViewInject(R.id.fragment_courselist_floating_child_ocu)
+    FloatingActionButton floatingOcu;
+    @ViewInject(R.id.fragment_courselist_floating_child_sco)
+    FloatingActionButton floatingSco;
+    @ViewInject(R.id.fragment_courselist_floating_child_rol)
+    FloatingActionButton floatingRol;
 
     private SortType sortType;
 
@@ -94,6 +111,7 @@ public class CourseListFragment extends Fragment {
         headerView.setBackgroundColor(Color.parseColor("#00000000"));
         mCourseList.addHeaderView(headerView);
         mCourseList.setDividerHeight(0);
+        mSwipeRefresh.setProgressViewOffset(true, 0, getResources().getDimensionPixelOffset(R.dimen.activity_index_search_height));
         mSwipeRefresh.setColorSchemeColors(Color.CYAN, Color.BLUE, Color.GREEN, Color.RED);
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -127,6 +145,37 @@ public class CourseListFragment extends Fragment {
 
     private void initData() {
         sortType = SortType.REC_SCORE;
+    }
+
+    @Event(value = {R.id.fragment_courselist_floating_child_rec,
+            R.id.fragment_courselist_floating_child_use,
+            R.id.fragment_courselist_floating_child_viv,
+            R.id.fragment_courselist_floating_child_ocu,
+            R.id.fragment_courselist_floating_child_sco,
+            R.id.fragment_courselist_floating_child_rol}, type = View.OnClickListener.class)
+    private void onFloatingMenuClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fragment_courselist_floating_child_rec:
+                sortType = SortType.REC_SCORE;
+                break;
+            case R.id.fragment_courselist_floating_child_use:
+                sortType = SortType.USEFUL_SCORE;
+                break;
+            case R.id.fragment_courselist_floating_child_viv:
+                sortType = SortType.VIVID_SCORE;
+                break;
+            case R.id.fragment_courselist_floating_child_ocu:
+                sortType = SortType.OCUPY_SCORE;
+                break;
+            case R.id.fragment_courselist_floating_child_sco:
+                sortType = SortType.SCORE_SCORE;
+                break;
+            case R.id.fragment_courselist_floating_child_rol:
+                sortType = SortType.ROLLCALL_SCORE;
+                break;
+        }
+        floatingActionsMenu.collapse();
+        //TODO:刷新列表
     }
 
     private enum SortType {REC_SCORE, USEFUL_SCORE, VIVID_SCORE, OCUPY_SCORE, SCORE_SCORE, ROLLCALL_SCORE}
