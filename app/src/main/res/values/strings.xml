@@ -50,6 +50,14 @@
     <string name="item_fragment_courselist_recComment_0">雷勿踩</string>
     <string name="item_fragment_courselist_commentCount">%1$d条评价</string>
     <string name="item_fragment_courselist_otherScores">有用%1$.1f 有趣%2$.1f 占时%3$.1f 给分%4$.1f 点名%5$.1f</string>
+    <!-- for user fragment -->
+    <string name="fragment_user_wechat">微信：</string>
+    <string name="fragment_user_intro">简介：</string>
+    <string name="fragment_user_myFavorite">我的收藏</string>
+    <string name="fragment_user_myComments">我的评论</string>
+    <string name="fragment_user_changeProfile">修改个人信息</string>
+    <string name="fragment_user_changePass">修改密码</string>
+    <string name="fragment_user_logout">退出登录</string>
 
     <string name="internet_connection_failed">网络连接失败，请重试</string>
 
