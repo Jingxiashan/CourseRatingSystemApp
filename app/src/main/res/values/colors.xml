@@ -6,8 +6,9 @@
     <color name="pureBlack">#000000</color>
     <color name="pureWhite">#FFFFFF</color>
     <color name="splashBackColor">#1c1c1c</color>
-    <color name="lightGrey">#919191</color>
-    <color name="lightGreyAlpha">#A0919191</color>
+    <color name="lightGrey">#9A9DA4</color>
+    <color name="lightGreyAlpha">#A09A9DA4</color>
+    <color name="bgGrey">#F2F4F7</color>
     <color name="warnRedLight">#E57373</color>
     <color name="finishGreenLight">#66BB6A</color>
     <color name="indexTabOnColor">#66BB6A</color>

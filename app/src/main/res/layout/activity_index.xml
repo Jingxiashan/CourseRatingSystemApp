@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.courseratingsystem.app.activity.IndexActivity">
 
+    <FrameLayout
+        android:id="@+id/activity_index_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+    </FrameLayout>
+
     <RelativeLayout
         android:id="@+id/activity_index_layout_search"
         android:layout_width="match_parent"
@@ -48,21 +57,13 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/activity_index_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="@dimen/activity_index_tab_height"
-        android:layout_marginTop="@dimen/activity_index_search_height">
-
-    </FrameLayout>
-
     <LinearLayout
+        android:id="@+id/activity_index_bar_footer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_index_tab_height"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/pureWhite"
         android:orientation="vertical"
         android:paddingBottom="4dp">
 

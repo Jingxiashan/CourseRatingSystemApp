@@ -1,13 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_courselist_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.courseratingsystem.app.fragment.CourseListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.courseratingsystem.app.view.CourseListSwipeRefreshView
+        android:id="@+id/fragment_courselist_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/pureWhite">
 
-</FrameLayout>
+        <ListView
+            android:id="@+id/fragment_courselist_list_course"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.courseratingsystem.app.view.CourseListSwipeRefreshView>
+
+</RelativeLayout>

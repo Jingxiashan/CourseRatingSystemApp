@@ -34,6 +34,17 @@
     <string name="activity_index_text_tab_discover">发现</string>
     <string name="activity_index_text_tab_user">我的</string>
     <string name="activity_index_toast_press_back_again_to_exit">再按返回键退出</string>
+    <!-- for course item of courselist fragment -->
+    <string name="item_fragment_courselist_addcomment">老司机有话说</string>
+    <string name="item_fragment_courselist_teacherLabel">教师</string>
+    <string name="item_fragment_courselist_recScore">%1$.1f分</string>
+    <string name="item_fragment_courselist_recComment_4">非常棒</string>
+    <string name="item_fragment_courselist_recComment_3">很棒</string>
+    <string name="item_fragment_courselist_recComment_2">一般般</string>
+    <string name="item_fragment_courselist_recComment_1">还行吧</string>
+    <string name="item_fragment_courselist_recComment_0">雷勿踩</string>
+    <string name="item_fragment_courselist_commentCount">%1$d条评价</string>
+    <string name="item_fragment_courselist_otherScores">有用%1$.1f 有趣%2$.1f 占时%3$.1f 给分%4$.1f 点名%5$.1f</string>
 
     <string name="internet_connection_failed">网络连接失败，请重试</string>
 
