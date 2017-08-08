@@ -15,25 +15,38 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
-
-        </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:theme="@style/LoginTheme" />
-        <activity android:name=".activity.CommentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/LoginTheme" />
+
+        <activity android:name=".activity.CommentActivity">
+        </activity>
+
         <activity
             android:name=".activity.CommentPopupActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
         </activity>
-        <activity android:name=".activity.AddCommentActivity"></activity>
+
+        <activity android:name=".activity.AddCommentActivity"/>
+
+        <activity android:name=".activity.ChangePasswordActivity" />
+
+        <activity android:name=".activity.ChangeProfileActivity" />
+
+        <activity android:name=".activity.MyFavoritesActivity" />
+
+        <activity android:name=".activity.MyCommentsActivity" />
+
+        <activity
+            android:name=".activity.IndexActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

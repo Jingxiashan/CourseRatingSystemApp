@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_courselist_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.courseratingsystem.app.fragment.CourseListFragment">
+
+    <com.courseratingsystem.app.view.CourseListSwipeRefreshView
+        android:id="@+id/fragment_courselist_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pureWhite">
+
+        <ListView
+            android:id="@+id/fragment_courselist_list_course"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.courseratingsystem.app.view.CourseListSwipeRefreshView>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fragment_courselist_floating_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/activity_index_tab_height"
+        app:fab_addButtonColorNormal="@color/pureWhite"
+        app:fab_addButtonColorPressed="@color/bgGrey"
+        app:fab_addButtonPlusIconColor="@android:color/darker_gray"
+        app:fab_addButtonSize="mini"
+        app:fab_labelStyle="@style/menu_labels_style"
+        app:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_courselist_floating_child_rec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pureWhite"
+            app:fab_colorPressed="@color/bgGrey"
+            app:fab_icon="@drawable/ic_stars_24dp"
+            app:fab_size="mini"
+            app:fab_title="@string/fragment_courselist_floatingbutton_label_rec" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_courselist_floating_child_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pureWhite"
+            app:fab_colorPressed="@color/bgGrey"
+            app:fab_icon="@drawable/ic_book_24dp"
+            app:fab_size="mini"
+            app:fab_title="@string/fragment_courselist_floatingbutton_label_use" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_courselist_floating_child_viv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pureWhite"
+            app:fab_colorPressed="@color/bgGrey"
+            app:fab_icon="@drawable/ic_pan_tool_24dp"
+            app:fab_size="mini"
+            app:fab_title="@string/fragment_courselist_floatingbutton_label_viv" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_courselist_floating_child_ocu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pureWhite"
+            app:fab_colorPressed="@color/bgGrey"
+            app:fab_icon="@drawable/ic_alarm_add_24dp"
+            app:fab_size="mini"
+            app:fab_title="@string/fragment_courselist_floatingbutton_label_ocu" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_courselist_floating_child_sco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pureWhite"
+            app:fab_colorPressed="@color/bgGrey"
+            app:fab_icon="@drawable/ic_sort_24dp"
+            app:fab_size="mini"
+            app:fab_title="@string/fragment_courselist_floatingbutton_label_sco" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment_courselist_floating_child_rol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/pureWhite"
+            app:fab_colorPressed="@color/bgGrey"
+            app:fab_icon="@drawable/ic_perm_contact_calendar_24dp"
+            app:fab_size="mini"
+            app:fab_title="@string/fragment_courselist_floatingbutton_label_rol" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</RelativeLayout>

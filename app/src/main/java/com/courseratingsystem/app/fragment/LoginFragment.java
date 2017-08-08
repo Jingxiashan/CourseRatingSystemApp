@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.LoginActivity;
 import com.courseratingsystem.app.tools.EncyptionHelper;
+import com.courseratingsystem.app.view.LoadingAnimView;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -24,7 +26,12 @@ import org.xutils.x;
 
 @ContentView(R.layout.fragment_login)
 public class LoginFragment extends Fragment {
+    //TODO:第三方登录
 
+    LoadingAnimView loadingAnimView;
+
+    @ViewInject(R.id.fragment_login_layout)
+    private RelativeLayout relativeLayout;
     @ViewInject(R.id.fragment_login_input_username)
     private EditText mUsername;
     @ViewInject(R.id.fragment_login_input_password)
@@ -39,13 +46,18 @@ public class LoginFragment extends Fragment {
     private Button mWeibo;
     @ViewInject(R.id.fragment_login_text_warn)
     private TextView mWarning;
+
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            LoginActivity loginActivity = (LoginActivity) getActivity();
+            loginActivity.showLoadingAnim(false);
             LoginStatus status = (LoginStatus) msg.obj;
             switch (status) {
                 case LOGIN_SUCCESSFULLY:
+                    loginActivity.showSuccessAnim(true);
                     mWarning.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), getString(R.string.fragment_login_successfully), Toast.LENGTH_LONG).show();
                     //TODO:登陆成功后记录信息、获取信息并跳转到主页
@@ -101,8 +113,19 @@ public class LoginFragment extends Fragment {
         //加密并调用Activity方法登录
         String passwordEncrypted = EncyptionHelper.shaEncrypt(password);
         ((LoginActivity) getActivity()).attemptLogin(username, passwordEncrypted, handler);
+
     }
 
     public enum LoginStatus {LOGIN_SUCCESSFULLY, WRONG_CREDENTIALS, CONNECTION_FAILED}
+
+//    private void showLoadingAnimation(boolean ifShow){
+//        loadingView = new LoadingView(LoginFragment.this.getActivity());
+//        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams., ViewGroup.LayoutParams.MATCH_PARENT);
+//        loadingView.setLayoutParams(params);
+//        loadingView.setBackgroundColor(getResources().getColor(R.color.splashBackColor));
+//        relativeLayout.addView(loadingView);
+//        loadingView.startAnim();
+//
+//    }
 }
 
