@@ -14,7 +14,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/LoginTheme" />
+        <activity android:name=".activity.ChangePasswordActivity"/>
+        <activity android:name=".activity.ChangeProfileActivity" />
+        <activity android:name=".activity.MyFavoritesActivity" />
+        <activity android:name=".activity.MyCommentsActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
