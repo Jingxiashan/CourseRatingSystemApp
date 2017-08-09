@@ -20,6 +20,7 @@ import com.courseratingsystem.app.activity.LoginActivity;
 import com.courseratingsystem.app.activity.MyCommentsActivity;
 import com.courseratingsystem.app.activity.MyFavoritesActivity;
 import com.courseratingsystem.app.application.MyCourseApplication;
+import com.courseratingsystem.app.vo.User;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -28,6 +29,7 @@ import org.xutils.x;
 @ContentView(R.layout.fragment_user)
 public class UserFragment extends Fragment implements View.OnClickListener {
 
+    User user;
     @ViewInject(R.id.fragment_user_info_first_relative_layout)
     private RelativeLayout mFirstInfoLayout;
     @ViewInject(R.id.fragment_user_info_second_relative_layout)
@@ -53,7 +55,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @ViewInject(R.id.fragment_user_button_logout)
     private Button mLogout;
 
-
     public UserFragment() {
         // Required empty public constructor
     }
@@ -74,14 +75,28 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     private void initView() {
         MyCourseApplication application = (MyCourseApplication) getActivity().getApplication();
-        Integer userid = application.getUserId();
-        if (userid == null) {
+        if (!application.isLoggenIn()) {
             //未登录
             setLogoutState();
         } else {
+            Integer userid = application.getUserId();
             //已登录
+            user = new User();
+            //TODO:根据userid从网络获取信息存到User中并显示
+            //设置显示内容
+//            mNickname.setText(user.getNickname());
+//            mUsername.setText(user.getUsername());
+//            mGrade.setText(user.getGrade());
+            mWeChat.setText(user.getWeChat() != null
+                    ? String.format(getString(R.string.fragment_user_wechat), user.getWeChat())
+                    : String.format(getString(R.string.fragment_user_wechat), getString(R.string.fragment_user_profile_undefined))
+            );
+            mIntro.setText(user.getIntro() != null
+                    ? String.format(getString(R.string.fragment_user_intro), user.getIntro())
+                    : String.format(getString(R.string.fragment_user_intro), getString(R.string.fragment_user_profile_undefined))
+            );
+            //设置监听和显示状态
             setLoginState();
-            //TODO:根据userid从网络获取信息并显示
         }
     }
 
@@ -132,6 +147,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });

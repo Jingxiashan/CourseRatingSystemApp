@@ -150,7 +150,7 @@
                             android:id="@+id/fragment_user_image_myFavorite"
                             android:layout_width="@dimen/fragment_user_icon_size"
                             android:layout_height="@dimen/fragment_user_icon_size"
-                            android:src="@drawable/ic_sort_24dp" />
+                            android:src="@drawable/fragment_user_icon_my_favorite" />
 
                         <TextView
                             android:id="@+id/fragment_user_text_myFavorite"
@@ -178,7 +178,7 @@
                             android:id="@+id/fragment_user_image_myComments"
                             android:layout_width="@dimen/fragment_user_icon_size"
                             android:layout_height="@dimen/fragment_user_icon_size"
-                            android:src="@drawable/ic_sort_24dp" />
+                            android:src="@drawable/fragment_user_icon_my_comments" />
 
                         <TextView
                             android:id="@+id/fragment_user_text_myComments"
@@ -215,7 +215,7 @@
                             android:id="@+id/fragment_user_image_changeProfile"
                             android:layout_width="@dimen/fragment_user_icon_size"
                             android:layout_height="@dimen/fragment_user_icon_size"
-                            android:src="@drawable/ic_sort_24dp" />
+                            android:src="@drawable/fragment_user_icon_change_profile" />
 
                         <TextView
                             android:id="@+id/fragment_user_text_changeProfile"
@@ -243,7 +243,7 @@
                             android:id="@+id/fragment_user_image_changePass"
                             android:layout_width="@dimen/fragment_user_icon_size"
                             android:layout_height="@dimen/fragment_user_icon_size"
-                            android:src="@drawable/ic_sort_24dp" />
+                            android:src="@drawable/fragment_user_icon_chang_pass" />
 
                         <TextView
                             android:id="@+id/fragment_user_text_changePass"

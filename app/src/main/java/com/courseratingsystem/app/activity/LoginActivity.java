@@ -33,6 +33,8 @@ import org.xutils.x;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,6 +48,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String BUNDLE_FRAGMENT_SELECTION_KEY = "fragment";
+    public static final int SUCCESS_ANIM_LENGTH = 2000;
     //网络相关
     private final String LOGIN_URL = "/login.action";
     private final String REGISTER_URL = "/register_checkAndRegister.action";
@@ -74,7 +77,12 @@ public class LoginActivity extends AppCompatActivity {
             MyCourseApplication application = (MyCourseApplication) getApplication();
             application.login("151");
             showSuccessAnim(true);
-            finish();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    LoginActivity.this.finish();
+                }
+            }, SUCCESS_ANIM_LENGTH);
             return false;
         }
     });
