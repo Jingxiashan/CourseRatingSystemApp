@@ -36,7 +36,6 @@ import java.util.List;
 
 @ContentView(R.layout.activity_comment)
 public class CommentActivity extends AppCompatActivity {
-    public final static String COMMENT_KEY = "my_currentcomment";
 
     AnimatorSet hideElementAnimatorSet;//这是隐藏头尾元素使用的动画
     AnimatorSet showElementAnimatorSet;//这是显示头尾元素使用的动画
@@ -169,6 +168,10 @@ public class CommentActivity extends AppCompatActivity {
             this.commentList = commentList;
         }
 
+        public void setCommentList(List<Comment> commentList) {
+            this.commentList = commentList;
+        }
+
         @Override
         public int getCount() {
             //comment数目
@@ -216,7 +219,7 @@ public class CommentActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(CommentActivity.this, CommentPopupActivity.class);
-                    intent.putExtra(COMMENT_KEY, tmpComment);
+                    intent.putExtra(CommentPopupActivity.COMMENT_KEY, tmpComment);
                     startActivity(intent);
                 }
             });

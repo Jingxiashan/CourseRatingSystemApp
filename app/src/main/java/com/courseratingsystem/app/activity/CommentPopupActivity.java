@@ -16,6 +16,7 @@ import org.xutils.x;
 
 @ContentView(R.layout.activity_comment_popup)
 public class CommentPopupActivity extends AppCompatActivity {
+    public final static String COMMENT_KEY = "my_currentcomment";
     @ViewInject(R.id.activity_commentpopup_ratingbar_commentRating)
     private RatingBar ratingBarPop;
     @ViewInject(R.id.activity_commentpopup_text_commentContent)
@@ -39,9 +40,9 @@ public class CommentPopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
 
-        Comment comment = (Comment) getIntent().getSerializableExtra(CommentActivity.COMMENT_KEY);
+        Comment comment = (Comment) getIntent().getSerializableExtra(COMMENT_KEY);
         ratingBarPop.setNumStars(comment.getRecstar());
-        usernamePop.setText(comment.getUsername());
+        usernamePop.setText(comment.getNickname());
         contentPop.setText(comment.getContent());
         timestampPop.setText(comment.getTimestamp());
         coursenamePop.setText(comment.getCoursename());

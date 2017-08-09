@@ -20,6 +20,10 @@
     <dimen name="item_fragment_courselist_marginside">5dp</dimen>
     <dimen name="item_fragment_courselist_textsize_courseName">14sp</dimen>
     <dimen name="item_fragment_courselist_textsize_details">12sp</dimen>
+    <!-- for course item of discover fragment -->
+    <dimen name="item_fragment_discover_card_width">150dp</dimen>
+    <dimen name="item_fragment_discover_card_height">200dp</dimen>
+    <dimen name="item_fragment_discover_card_text_margintop">10dp</dimen>
     <!-- for user fragment -->
     <dimen name="fragment_user_info_text_margin_left">10dp</dimen>
     <dimen name="fragment_user_info_text_margin_top">5dp</dimen>

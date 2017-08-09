@@ -198,6 +198,14 @@ public class CourseListFragment extends Fragment {
             listToShow = courseList;
         }
 
+        public List<Course> getListToShow() {
+            return listToShow;
+        }
+
+        public void setListToShow(List<Course> listToShow) {
+            this.listToShow = listToShow;
+        }
+
         @Override
         public int getCount() {
             return listToShow.size();

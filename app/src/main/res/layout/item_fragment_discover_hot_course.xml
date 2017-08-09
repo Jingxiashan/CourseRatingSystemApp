@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="150dp"
-    android:layout_height="200dp"
+    android:layout_width="@dimen/item_fragment_discover_card_width"
+    android:layout_height="@dimen/item_fragment_discover_card_height"
     android:background="@drawable/fragment_discover_pile_bg"
     android:gravity="center"
     android:padding="15dp">
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_fragment_discover_hot_course_text_courseName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="@dimen/item_fragment_discover_card_text_margintop" />
 
     <TextView
         android:id="@+id/item_fragment_discover_hot_course_text_peopleCount"
@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_fragment_discover_hot_course_rating_recScore"
         android:layout_centerHorizontal="true"
-        android:text="100人评价"
+        android:text="@string/item_fragment_discover_peopleCount"
         android:textColor="@color/lightGrey"
-        android:textSize="10sp" />
+        android:textSize="@dimen/item_fragment_discover_card_text_margintop" />
 
     <Button
         android:id="@+id/item_fragment_discover_hot_course_button_detail"
@@ -42,9 +42,9 @@
         android:layout_height="25dp"
         android:layout_below="@id/item_fragment_discover_hot_course_text_peopleCount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/item_fragment_discover_card_text_margintop"
         android:background="@drawable/item_fragment_discover_hot_course_button_bg"
-        android:text="戳详情"
+        android:text="@string/item_fragment_discover_button_details"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="10sp" />
 

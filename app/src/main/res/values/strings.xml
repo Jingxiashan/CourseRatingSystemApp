@@ -50,6 +50,9 @@
     <string name="item_fragment_courselist_recComment_0">雷勿踩</string>
     <string name="item_fragment_courselist_commentCount">%1$d条评价</string>
     <string name="item_fragment_courselist_otherScores">有用%1$.1f 有趣%2$.1f 占时%3$.1f 给分%4$.1f 点名%5$.1f</string>
+    <!-- for course item of discover fragment -->
+    <string name="item_fragment_discover_peopleCount">%1$d条评价</string>
+    <string name="item_fragment_discover_button_details">戳详情</string>
     <!-- for user fragment -->
     <string name="fragment_user_wechat">微信：%1$s</string>
     <string name="fragment_user_intro">简介：%1$s</string>
