@@ -19,6 +19,9 @@
         <item name="colorPrimaryDark">@color/lightGrey</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+    <style name="CourseTheme" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
 
     <!--Ratingbar style-->
     <style name="CourseRatingStyle" parent="@android:style/Widget.RatingBar">
@@ -37,7 +40,7 @@
         <item name="android:textColor">@color/pureWhite</item>
     </style>
 
-    <style name="CommentPopupStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="PopupActivityStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>

@@ -7,6 +7,9 @@
     <dimen name="activity_login_input_height">20dp</dimen>
     <dimen name="fragment_login_thirdIcon_margin">10dp</dimen>
     <dimen name="fragment_login_thirdIcon_marginTop">40dp</dimen>
+    <!--CourseActivity dimens-->
+    <dimen name="activity_course_coursename_height">60dp</dimen>
+    <dimen name="activity_course_coursename_textsize">40sp</dimen>
     <!-- for index activity -->
     <dimen name="activity_index_search_height">60dp</dimen>
     <dimen name="activity_index_tab_height">55dp</dimen>
