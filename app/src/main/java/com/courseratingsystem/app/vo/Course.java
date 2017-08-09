@@ -10,6 +10,22 @@ public class Course implements Serializable {
     private int peopleCount;
     private List<TeacherBrief> teacherList;
 
+    public Course() {
+    }
+
+    public Course(int courseId, String courseName, float recommendationScore, float averageRatingsUsefulness, float averageRatingsVividness, float averageRatingsSpareTimeOccupation, float averageRatingsScoring, float averageRatingsRollCall, int peopleCount, List<TeacherBrief> teacherList) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.recommendationScore = recommendationScore;
+        this.averageRatingsUsefulness = averageRatingsUsefulness;
+        this.averageRatingsVividness = averageRatingsVividness;
+        this.averageRatingsSpareTimeOccupation = averageRatingsSpareTimeOccupation;
+        this.averageRatingsScoring = averageRatingsScoring;
+        this.averageRatingsRollCall = averageRatingsRollCall;
+        this.peopleCount = peopleCount;
+        this.teacherList = teacherList;
+    }
+
     public int getCourseId() {
         return courseId;
     }
