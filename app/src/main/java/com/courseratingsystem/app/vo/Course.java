@@ -3,7 +3,7 @@ package com.courseratingsystem.app.vo;
 import java.io.Serializable;
 import java.util.List;
 
-public class CourseInList implements Serializable {
+public class Course implements Serializable {
     private int courseId;
     private String courseName;
     private float recommendationScore, averageRatingsUsefulness, averageRatingsVividness, averageRatingsSpareTimeOccupation, averageRatingsScoring, averageRatingsRollCall;

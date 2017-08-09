@@ -8,35 +8,56 @@ import java.io.Serializable;
 
 public class Comment implements Serializable {
     private int recstar;
-    private String username;
+    private int commentid;
+    private int userid;
+    private String nickname;
     private String timestamp;
     private String content;
     private String coursename;
     private int likecount;
 
-    public Comment(String tcoursename, String tusername, String ttimestamp, String tcontent, int trecstar, String tlikecount) {
-        likecount = Integer.parseInt(tlikecount);
-        recstar = trecstar;
-        content = tcontent;
-        timestamp = ttimestamp;
-        coursename = tcoursename;
-        username = tusername;
+    public Comment(int recstar, int commentid, int userid, String nickname, String timestamp, String content, String coursename, int likecount) {
+        this.recstar = recstar;
+        this.commentid = commentid;
+        this.userid = userid;
+        this.nickname = nickname;
+        this.timestamp = timestamp;
+        this.content = content;
+        this.coursename = coursename;
+        this.likecount = likecount;
     }
 
     public int getRecstar() {
         return recstar;
+
     }
 
     public void setRecstar(int recstar) {
         this.recstar = recstar;
     }
 
-    public String getUsername() {
-        return username;
+    public int getCommentid() {
+        return commentid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCommentid(int commentid) {
+        this.commentid = commentid;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getTimestamp() {
@@ -70,4 +91,5 @@ public class Comment implements Serializable {
     public void setLikecount(int likecount) {
         this.likecount = likecount;
     }
+
 }

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -31,7 +32,6 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @ContentView(R.layout.activity_comment)
@@ -40,9 +40,9 @@ public class CommentActivity extends AppCompatActivity {
 
     AnimatorSet hideElementAnimatorSet;//这是隐藏头尾元素使用的动画
     AnimatorSet showElementAnimatorSet;//这是显示头尾元素使用的动画
+
     @ViewInject(R.id.activity_comment_layout_courseheaderinfo)
     LinearLayout courseHeaderInfor;
-    private List<Map<String, Object>> allcommentslists = new ArrayList<>();
     @ViewInject(R.id.activity_comment_listview_allcomments)
     private CommentListView allcomments_listView;
     @ViewInject(R.id.activity_comment_text_courseName)
@@ -101,8 +101,8 @@ public class CommentActivity extends AppCompatActivity {
 
 
         actionBar.setTitle("课程评论");
-        MyAdapter myAdapter = new MyAdapter(CommentActivity.this);
-        allcomments_listView.setAdapter(myAdapter);
+        CommentsAdapter commentsAdapter = new CommentsAdapter(CommentActivity.this, new ArrayList<Comment>());
+        allcomments_listView.setAdapter(commentsAdapter);
     }
 
     @Override
@@ -152,22 +152,32 @@ public class CommentActivity extends AppCompatActivity {
         }
     }
 
-    class MyAdapter extends BaseAdapter {
-        private Context mContext;
 
-        public MyAdapter(Context context) {
-            mContext = context;
+    private static class CommentsViewHolder {
+        ImageView avatar;
+        RatingBar ratingBar;
+        TextView nickName, timeStamp, commentContent, likeCount;
+        ImageButton showDetail, clickLike;
+    }
+
+    private class CommentsAdapter extends BaseAdapter {
+        private LayoutInflater inflater;
+        private List<Comment> commentList;
+
+        public CommentsAdapter(Context context, List<Comment> commentList) {
+            inflater = LayoutInflater.from(context);
+            this.commentList = commentList;
         }
 
         @Override
         public int getCount() {
             //comment数目
-            return 12;
+            return commentList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return position;
+            return commentList.get(position);
         }
 
         @Override
@@ -177,48 +187,61 @@ public class CommentActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            View view = layoutInflater.inflate(R.layout.activity_comment_list_item, null);
 
-            final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.activity_comment_ratingbar_commentRating);
-            final TextView userName = (TextView) view.findViewById(R.id.activity_comment_text_userName);
-            final TextView timeStamp = (TextView) view.findViewById(R.id.activity_comment_text_timestamp);
-            final TextView commentContent = (TextView) view.findViewById(R.id.activity_comment_text_commentContent);
-            final TextView likeCount = (TextView) view.findViewById(R.id.activity_comment_text_likeCount);
+            final Comment tmpComment = commentList.get(position);
+            CommentsViewHolder viewHolder;
+            if (convertView == null) {
+                viewHolder = new CommentsViewHolder();
+                convertView = inflater.inflate(R.layout.item_activity_comment_list, null);
+                viewHolder.avatar = (ImageView) convertView.findViewById(R.id.item_activity_comment_image_avatar);
+                viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.item_activity_comment_ratingbar_commentRating);
+                viewHolder.nickName = (TextView) convertView.findViewById(R.id.item_activity_comment_text_nickName);
+                viewHolder.timeStamp = (TextView) convertView.findViewById(R.id.item_activity_comment_text_timestamp);
+                viewHolder.commentContent = (TextView) convertView.findViewById(R.id.item_activity_comment_text_commentContent);
+                viewHolder.likeCount = (TextView) convertView.findViewById(R.id.item_activity_comment_text_likeCount);
+                viewHolder.showDetail = (ImageButton) convertView.findViewById(R.id.item_activity_comment_button_detail);
+                viewHolder.clickLike = (ImageButton) convertView.findViewById(R.id.item_activity_comment_button_like);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (CommentsViewHolder) convertView.getTag();
+            }
+            //设置头像显示
+            viewHolder.ratingBar.setNumStars(tmpComment.getRecstar());
+            viewHolder.nickName.setText(tmpComment.getNickname());
+            viewHolder.timeStamp.setText(tmpComment.getTimestamp());
+            viewHolder.commentContent.setText(tmpComment.getContent());
+            viewHolder.likeCount.setText(tmpComment.getLikecount());
 
-            ratingBar.setNumStars(3);
-            userName.setText("User_Name");
-            timeStamp.setText("Comment_Timestamp");
-            commentContent.setText("current comment is written by someone else.");
-            likeCount.setText("10");
-
-            final ImageButton showDetail = (ImageButton) view.findViewById(R.id.activity_comment_button_detail);
-            showDetail.setOnClickListener(new View.OnClickListener() {
+            viewHolder.showDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Comment tcomment = new Comment(courseName.getText().toString(), userName.getText().toString(), timeStamp.getText().toString()
-                            , commentContent.getText().toString(), ratingBar.getNumStars(), likeCount.getText().toString());
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(COMMENT_KEY, tcomment);
-
                     Intent intent = new Intent(CommentActivity.this, CommentPopupActivity.class);
-                    intent.putExtras(bundle);
+                    intent.putExtra(COMMENT_KEY, tmpComment);
                     startActivity(intent);
-
                 }
             });
 
-
-            final ImageButton clickLike = (ImageButton) view.findViewById(R.id.activity_comment_button_like);
-            clickLike.setOnClickListener(new View.OnClickListener() {
+            viewHolder.clickLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO:点赞
                 }
             });
 
-            return view;
+            viewHolder.avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO:进入个人主页
+                }
+            });
+            viewHolder.nickName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO:进入个人主页
+                }
+            });
+
+            return convertView;
         }
     }
 

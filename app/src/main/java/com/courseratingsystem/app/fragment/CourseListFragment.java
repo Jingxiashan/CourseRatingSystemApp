@@ -24,7 +24,7 @@ import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.AddCommentActivity;
 import com.courseratingsystem.app.activity.IndexActivity;
 import com.courseratingsystem.app.view.CourseListSwipeRefreshView;
-import com.courseratingsystem.app.vo.CourseInList;
+import com.courseratingsystem.app.vo.Course;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -86,10 +86,10 @@ public class CourseListFragment extends Fragment {
         View fragView = x.view().inject(this, inflater, container);
         initData();
         initView();
-        List<CourseInList> courseList = new ArrayList<>();
-        CourseInList tmpCourse;
+        List<Course> courseList = new ArrayList<>();
+        Course tmpCourse;
         for (int i = 0; i < 20; i++) {
-            tmpCourse = new CourseInList();
+            tmpCourse = new Course();
             tmpCourse.setCourseName("泥人张技艺教授与传承");
             tmpCourse.setAverageRatingsRollCall(3.6f);
             tmpCourse.setAverageRatingsScoring(3.7f);
@@ -98,7 +98,7 @@ public class CourseListFragment extends Fragment {
             tmpCourse.setAverageRatingsVividness(4.0f);
             tmpCourse.setRecommendationScore(4.9f);
             tmpCourse.setPeopleCount(1999);
-            tmpCourse.setTeacherList(new ArrayList<CourseInList.TeacherBrief>());
+            tmpCourse.setTeacherList(new ArrayList<Course.TeacherBrief>());
             tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("张彦泽", 1));
             tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("黄嘉星", 2));
             tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("鲁迪", 3));
@@ -191,9 +191,9 @@ public class CourseListFragment extends Fragment {
 
     private class CourseListAdapter extends BaseAdapter {
         private LayoutInflater inflater;
-        private List<CourseInList> listToShow;
+        private List<Course> listToShow;
 
-        public CourseListAdapter(Context context, List<CourseInList> courseList) {
+        public CourseListAdapter(Context context, List<Course> courseList) {
             inflater = LayoutInflater.from(context);
             listToShow = courseList;
         }
@@ -215,7 +215,7 @@ public class CourseListFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final CourseInList tmpCourse = listToShow.get(position);
+            final Course tmpCourse = listToShow.get(position);
             CourseViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new CourseViewHolder();
@@ -253,7 +253,7 @@ public class CourseListFragment extends Fragment {
                     tmpCourse.getAverageRatingsRollCall(),
                     tmpCourse.getAverageRatingsScoring()));
             viewHolder.mTeacherLayout.removeAllViews();
-            for (CourseInList.TeacherBrief tmpTeacher : tmpCourse.getTeacherList()) {
+            for (Course.TeacherBrief tmpTeacher : tmpCourse.getTeacherList()) {
                 TeacherTextView teacherTextView = new TeacherTextView(CourseListFragment.this.getActivity());
                 teacherTextView.setText(tmpTeacher.getTeacherName());
                 teacherTextView.setOnClickListener(new View.OnClickListener() {

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="150dp"
+    android:layout_height="200dp"
+    android:background="@drawable/fragment_discover_pile_bg"
+    android:gravity="center"
+    android:padding="15dp">
+
+
+    <TextView
+        android:id="@+id/item_fragment_discover_hot_course_text_courseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="圣经与西方..."
+        android:textSize="12sp" />
+
+    <RatingBar
+        android:id="@+id/item_fragment_discover_hot_course_rating_recScore"
+        style="@style/CourseCommentRatingStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_fragment_discover_hot_course_text_courseName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/item_fragment_discover_hot_course_text_peopleCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_fragment_discover_hot_course_rating_recScore"
+        android:layout_centerHorizontal="true"
+        android:text="100人评价"
+        android:textColor="@color/lightGrey"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/item_fragment_discover_hot_course_button_detail"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/item_fragment_discover_hot_course_text_peopleCount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/item_fragment_discover_hot_course_button_bg"
+        android:text="戳详情"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="10sp" />
+
+</RelativeLayout>
