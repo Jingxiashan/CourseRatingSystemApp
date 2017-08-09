@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="圣经与西方..."
-        android:textSize="12sp" />
+        android:textSize="@dimen/item_fragment_discover_card_textsize_large" />
 
     <RatingBar
         android:id="@+id/item_fragment_discover_hot_course_rating_recScore"
@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/item_fragment_discover_peopleCount"
         android:textColor="@color/lightGrey"
-        android:textSize="@dimen/item_fragment_discover_card_text_margintop" />
+        android:textSize="@dimen/item_fragment_discover_card_textsize_small" />
 
     <Button
         android:id="@+id/item_fragment_discover_hot_course_button_detail"
@@ -46,6 +46,6 @@
         android:background="@drawable/item_fragment_discover_hot_course_button_bg"
         android:text="@string/item_fragment_discover_button_details"
         android:textColor="@android:color/holo_blue_light"
-        android:textSize="10sp" />
+        android:textSize="@dimen/item_fragment_discover_card_textsize_small" />
 
 </RelativeLayout>
