@@ -14,13 +14,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/SplashTheme">
-
-        </activity>
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/LoginTheme" />
-        <activity android:name=".activity.CourseActivity"
+        <activity
+            android:name=".activity.CourseActivity"
             android:theme="@style/CourseTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,16 +28,19 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".activity.TeacherActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+</activity>
+        <activity android:name=".activity.PersonalPopupActivity"
+            android:theme="@style/PopupActivityStyle"></activity>
 
-        <activity
-            android:name=".activity.LoginActivity"
-            android:theme="@style/LoginTheme" />
+
 
         <activity android:name=".activity.CommentActivity" />
 
         <activity
             android:name=".activity.CommentPopupActivity"
-            android:theme="@style/CommentPopupStyle">
+            android:theme="@style/PopupActivityStyle">
         </activity>
 
         <activity android:name=".activity.AddCommentActivity">
