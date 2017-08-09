@@ -14,11 +14,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.CommentPopupActivity;
+import com.courseratingsystem.app.activity.IndexActivity;
+import com.courseratingsystem.app.view.DiscoverScrollView;
 import com.courseratingsystem.app.view.ListViewNoScroll;
 import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
@@ -39,7 +40,7 @@ public class DiscoverFragment extends Fragment {
     @ViewInject(R.id.fragment_discover_layout)
     RelativeLayout mRelativeLayout;
     @ViewInject(R.id.fragment_discover_scroll)
-    ScrollView mScrollView;
+    DiscoverScrollView mScrollView;
     @ViewInject(R.id.fragment_discover_layout_pile)
     PileLayout mPileLayout;
     @ViewInject(R.id.fragment_discover_hot_comments_list)
@@ -95,8 +96,23 @@ public class DiscoverFragment extends Fragment {
     }
 
     private void initView() {
+        View mFooterView = View.inflate(getActivity(), R.layout.footer_fragment_discover_hot_courses_list, null);
+        mCommentList.addFooterView(mFooterView);
         mCommentList.setFocusable(false);
-        mScrollView.scrollTo(0, 0);
+        mScrollView.setOnSwipeListener(new DiscoverScrollView.OnSwipeListener() {
+            @Override
+            public void onSwipe(DiscoverScrollView.SwipeDirect swipeDirect) {
+                IndexActivity indexActivity = (IndexActivity) getActivity();
+                switch (swipeDirect) {
+                    case UP:
+                        indexActivity.startHiddingToolbar();
+                        break;
+                    case DOWN:
+                        indexActivity.startShowingToolbar();
+                        break;
+                }
+            }
+        });
         mPileLayout.setAdapter(coursesAdapter);
         mCommentList.setAdapter(commentsAdapter);
     }

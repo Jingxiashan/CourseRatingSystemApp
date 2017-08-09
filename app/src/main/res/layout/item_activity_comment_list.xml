@@ -71,7 +71,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="推荐指数：" />
+                        android:text="@string/item_comment_activity_recScore" />
 
                     <RatingBar
                         android:id="@+id/item_activity_comment_ratingbar_commentRating"
@@ -110,7 +110,7 @@
                         android:layout_marginRight="50sp"
                         android:layout_marginStart="@dimen/activity_comment_content_side_margin"
                         android:gravity="center"
-                        android:text="点赞数"
+                        android:text="@string/item_comment_activity_likeCount"
                         android:textColor="@color/lightGrey"
                         android:textSize="@dimen/activity_comment_foot_font_size" />
 
