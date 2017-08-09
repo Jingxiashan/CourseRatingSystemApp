@@ -33,6 +33,8 @@ import org.xutils.x;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,6 +48,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String BUNDLE_FRAGMENT_SELECTION_KEY = "fragment";
+    public static final int SUCCESS_ANIM_LENGTH = 2000;
     //网络相关
     private final String LOGIN_URL = "/login.action";
     private final String REGISTER_URL = "/register_checkAndRegister.action";
@@ -66,6 +69,23 @@ public class LoginActivity extends AppCompatActivity {
 
     LoadingAnimView loadingAnimView;
     SuccessAnimView successAnimView;
+
+    private final Handler successHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            //TODO:保存获取到的userid
+            MyCourseApplication application = (MyCourseApplication) getApplication();
+            application.login("151");
+            showSuccessAnim(true);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    LoginActivity.this.finish();
+                }
+            }, SUCCESS_ANIM_LENGTH);
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,11 +183,11 @@ public class LoginActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
 
             Message msg = new Message();
-            LoginFragment.LoginStatus status;
+            String status;
 
             @Override
             public void onFailure(Call call, IOException e) {
-                status = LoginFragment.LoginStatus.CONNECTION_FAILED;
+                status = getString(R.string.internet_connection_failed);
                 msg.obj = status;
                 handler.sendMessage(msg);
             }
@@ -177,12 +197,14 @@ public class LoginActivity extends AppCompatActivity {
                 String responseBody = response.body().string();
                 //TODO:解析JSON
                 if (SUCCESS.equals(responseBody)) {
-                    status = LoginFragment.LoginStatus.LOGIN_SUCCESSFULLY;
+                    //成功，直接跳转
+                    successHandler.sendEmptyMessage(0);
                 } else {
-                    status = LoginFragment.LoginStatus.WRONG_CREDENTIALS;
+                    //错误，回调RegisterFragment处理，传回String型的message
+//                    status = messageString;
+                    msg.obj = status;
+                    handler.sendMessage(msg);
                 }
-                msg.obj = status;
-                handler.sendMessage(msg);
             }
         });
     }
@@ -205,26 +227,28 @@ public class LoginActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
 
             Message msg = new Message();
-            RegisterFragment.RegisterStatus status;
+            String status;
 
             @Override
             public void onFailure(Call call, IOException e) {
-                status = RegisterFragment.RegisterStatus.CONNECTION_FAILED;
+                status = getString(R.string.internet_connection_failed);
                 msg.obj = status;
                 handler.sendMessage(msg);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //TODO:解析JSON
                 String responseBody = response.body().string();
+                //TODO:解析JSON,保存获取到的userid
                 if (SUCCESS.equals(responseBody)) {
-                    status = RegisterFragment.RegisterStatus.REGISTER_SUCCESFULLLY;
+                    //成功，直接跳转
+                    successHandler.sendEmptyMessage(0);
                 } else {
-                    status = RegisterFragment.RegisterStatus.DUPLICATE_USERNAME;
+                    //错误，回调RegisterFragment处理，传回String型的message
+//                    status = messageString;
+                    msg.obj = status;
+                    handler.sendMessage(msg);
                 }
-                msg.obj = status;
-                handler.sendMessage(msg);
             }
         });
     }

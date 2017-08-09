@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.courseratingsystem.app.R;
 
 public class AddCommentActivity extends AppCompatActivity {
-
+    public static final String COURSE_INFO = "course_info";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
