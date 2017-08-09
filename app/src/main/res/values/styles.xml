@@ -36,4 +36,22 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/pureWhite</item>
     </style>
+
+    <style name="CommentPopupStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="acticity_comment_teacher_text_style">
+        <item name="android:background">@drawable/activity_comment_teacher_button_bg</item>
+        <item name="android:textSize">@dimen/activity_comment_teacher_font_size</item>
+        <item name="android:layout_marginStart">@dimen/activity_comment_teacher_side_margin</item>
+        <item name="android:layout_width">@dimen/activity_comment_teacehr_text_width</item>
+        <item name="android:layout_height">@dimen/activity_comment_teacehr_text_height</item>
+
+
+    </style>
+
 </resources>

@@ -1,24 +1,29 @@
 package com.courseratingsystem.app.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.PopupWindow;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.view.CommentListView;
+import com.courseratingsystem.app.vo.Comment;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -28,71 +33,123 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @ContentView(R.layout.activity_comment)
 public class CommentActivity extends AppCompatActivity {
+    public final static String COMMENT_KEY = "my_currentcomment";
+
+    AnimatorSet hideElementAnimatorSet;//这是隐藏头尾元素使用的动画
+    AnimatorSet showElementAnimatorSet;//这是显示头尾元素使用的动画
+    @ViewInject(R.id.activity_comment_layout_courseheaderinfo)
+    LinearLayout courseHeaderInfor;
     private List<Map<String, Object>> allcommentslists = new ArrayList<>();
     @ViewInject(R.id.activity_comment_listview_allcomments)
-    private ListView allcomments_listView;
-
+    private CommentListView allcomments_listView;
     @ViewInject(R.id.activity_comment_text_courseName)
     private TextView courseName;
-
-    private int objectId[] = {R.id.activity_comment_image_courseImag, R.id.activity_comment_text_userName,
-            R.id.activity_comment_text_timestamp, R.id.activity_comment_text_commentContent,
-            R.id.activity_comment_text_likeCount, R.id.activity_comment_ratingbar_commentRating};
-
+    @ViewInject(R.id.activity_comment_linear_teacherlayout)
+    private LinearLayout teacherLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
 
+        View headerView = new View(this);
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        courseHeaderInfor.measure(w, h);
+        headerView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) courseHeaderInfor.getMeasuredHeight()));
+        headerView.setBackgroundColor(Color.parseColor("#00000000"));
+        allcomments_listView.addHeaderView(headerView);
+        allcomments_listView.setOnSwipeListener(new CommentListView.OnSwipeListener() {
+            @Override
+            public void onSwipe(CommentListView.SwipeDirect swipeDirect) {
+                switch (swipeDirect) {
+                    case UP:
+                        startHiddingToolbar();
+                        break;
+                    case DOWN:
+                        startShowingToolbar();
+                        break;
+                }
+            }
+        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        TextView teacherText = new TextView(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(20, 20, 20, 20);
+        teacherText.setBackground(getDrawable(R.drawable.activity_comment_teacher_button_bg));
+        teacherText.setGravity(Gravity.CENTER);
+        teacherText.setLayoutParams(layoutParams);
+        teacherText.setTextSize(15);
+        teacherText.setText("孔啸");
+        teacherText.setHeight(60);
+        teacherText.setWidth(180);
+        teacherText.setTextColor(getResources().getColor(R.color.teacher_blue_light));
+        teacherLayout.addView(teacherText);
+
+        teacherText.setOnClickListener(new View.OnClickListener() {
+            //TODO 点击后弹出对应教师popupwindow
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        actionBar.setTitle("课程评论");
         MyAdapter myAdapter = new MyAdapter(CommentActivity.this);
         allcomments_listView.setAdapter(myAdapter);
-
-//        String[] keys={"comment_img","comment_username","comment_timestamp",
-//                "comment_content","comment_likecount"};
-//        int[] ids={R.id.activity_comment_image_courseImag,R.id.activity_comment_text_userName,
-//        R.id.activity_comment_text_timestamp,R.id.activity_comment_text_commentContent,
-//        R.id.activity_comment_text_likeCount};
-//
-//
-//
-//
-//        for(int i=1;i<12;i++){
-//            Map<String,Object> map=new HashMap<>();
-//            map.put(keys[0],R.drawable.comment_like_button_icon);
-//            map.put(keys[1],"User_Name");
-//            map.put(keys[2],"Comment_Timestamp");
-//            map.put(keys[3],"current comment is written by someone else.");
-//            map.put(keys[4],"100");
-////            RatingBar comment_ratingbar=(RatingBar)findViewById(R.id.activity_comment_ratingbar_commentRating);
-////            comment_ratingbar.setNumStars(3);
-//            allcommentslists.add(map);
-//        }
-//        SimpleAdapter simpleAdapter=new SimpleAdapter(CommentActivity.this,allcommentslists,R.layout.activity_comment_list_item,
-//                keys,ids);
-//        allcomments_listView.setAdapter(simpleAdapter);
     }
 
-    private int[] calculatePopWindowPos(final View anchorView, final View contentView) {
-        final int windowsPos[] = new int[2];
-        final int anchorLoc[] = new int[2];
-        //获取锚点View在屏幕上的左上角坐标位置
-        anchorView.getLocationOnScreen(anchorLoc);
-        final int anchorHeight = anchorView.getHeight();
-        //获取屏幕宽高
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        final int screenHeight = metrics.widthPixels;
-        final int screenWidth = metrics.heightPixels;
-        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        //计算conetentView的高宽
-        final int windowHeight = contentView.getMeasuredHeight();
-        final int windowWidth = contentView.getWidth();
-        windowsPos[0] = screenWidth - windowWidth;
-        windowsPos[1] = anchorLoc[1] + anchorHeight;
-        return windowsPos;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void startHiddingToolbar() {
+//先清除其他动画
+        if (showElementAnimatorSet != null && showElementAnimatorSet.isRunning()) {
+            showElementAnimatorSet.cancel();
+        }
+        if (hideElementAnimatorSet != null && hideElementAnimatorSet.isRunning()) {
+            //如果这个动画已经在运行了，就不管它
+        } else {
+            hideElementAnimatorSet = new AnimatorSet();
+            ObjectAnimator headerAnimator = ObjectAnimator.ofFloat(courseHeaderInfor, "translationY", courseHeaderInfor.getTranslationY(), -courseHeaderInfor.getHeight());//将ToolBar隐藏到上面
+            ArrayList<Animator> animators = new ArrayList<>();
+            animators.add(headerAnimator);
+            hideElementAnimatorSet.setDuration(200);
+            hideElementAnimatorSet.playTogether(animators);
+            hideElementAnimatorSet.start();
+        }
+    }
+
+    public void startShowingToolbar() {
+        //先清除其他动画
+        if (hideElementAnimatorSet != null && hideElementAnimatorSet.isRunning()) {
+            hideElementAnimatorSet.cancel();
+        }
+        if (showElementAnimatorSet != null && showElementAnimatorSet.isRunning()) {
+            //如果这个动画已经在运行了，就不管它
+        } else {
+            showElementAnimatorSet = new AnimatorSet();
+            //下面两句是将头尾元素放回初始位置。
+            ObjectAnimator headerAnimator = ObjectAnimator.ofFloat(courseHeaderInfor, "translationY", courseHeaderInfor.getTranslationY(), 0f);
+            ArrayList<Animator> animators = new ArrayList<>();
+            animators.add(headerAnimator);
+            showElementAnimatorSet.setDuration(300);
+            showElementAnimatorSet.playTogether(animators);
+            showElementAnimatorSet.start();
+        }
     }
 
     class MyAdapter extends BaseAdapter {
@@ -120,16 +177,14 @@ public class CommentActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            //动态加载布局
             LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             View view = layoutInflater.inflate(R.layout.activity_comment_list_item, null);
 
             final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.activity_comment_ratingbar_commentRating);
-            ImageView courseImage = (ImageView) view.findViewById(R.id.activity_comment_image_courseImag);
             final TextView userName = (TextView) view.findViewById(R.id.activity_comment_text_userName);
             final TextView timeStamp = (TextView) view.findViewById(R.id.activity_comment_text_timestamp);
             final TextView commentContent = (TextView) view.findViewById(R.id.activity_comment_text_commentContent);
-            TextView likeCount = (TextView) view.findViewById(R.id.activity_comment_text_likeCount);
+            final TextView likeCount = (TextView) view.findViewById(R.id.activity_comment_text_likeCount);
 
             ratingBar.setNumStars(3);
             userName.setText("User_Name");
@@ -141,38 +196,32 @@ public class CommentActivity extends AppCompatActivity {
             showDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-                    View commentPopupView = layoutInflater.inflate(R.layout.activity_comment_popup, null);
 
-                    TextView coursenamePop = (TextView) commentPopupView.findViewById(R.id.activity_commentpopup_text_coursename);
-                    TextView usernamePop = (TextView) commentPopupView.findViewById(R.id.activity_commentpopup_text_userName);
-                    TextView timestampPop = (TextView) commentPopupView.findViewById(R.id.activity_commentpopup_text_timestamp);
-                    TextView commentcontentPop = (TextView) commentPopupView.findViewById(R.id.activity_commentpopup_text_commentContent);
-                    RatingBar ratingBarPop = (RatingBar) commentPopupView.findViewById(R.id.activity_commentpopup_ratingbar_commentRating);
+                    Comment tcomment = new Comment(courseName.getText().toString(), userName.getText().toString(), timeStamp.getText().toString()
+                            , commentContent.getText().toString(), ratingBar.getNumStars(), likeCount.getText().toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(COMMENT_KEY, tcomment);
 
-                    ratingBarPop.setNumStars(ratingBar.getNumStars());
-                    coursenamePop.setText(courseName.getText());
-                    timestampPop.setText(timeStamp.getText());
-                    commentcontentPop.setText(commentContent.getText());
-                    usernamePop.setText(userName.getText());
+                    Intent intent = new Intent(CommentActivity.this, CommentPopupActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
-                    PopupWindow commentPopupWindow = new PopupWindow(commentPopupView, 1000, 1510);
-
-                    commentPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-                    commentPopupWindow.setFocusable(true);
-                    commentPopupWindow.setOutsideTouchable(true);
-                    commentPopupWindow.update();
+                }
+            });
 
 
-                    commentPopupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-
+            final ImageButton clickLike = (ImageButton) view.findViewById(R.id.activity_comment_button_like);
+            clickLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO:点赞
                 }
             });
 
             return view;
         }
     }
+
 
 }
 

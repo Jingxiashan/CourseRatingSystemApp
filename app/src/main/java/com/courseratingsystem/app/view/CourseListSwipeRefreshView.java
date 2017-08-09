@@ -118,7 +118,6 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
         this.onSwipeListener = onSwipeListener;
     }
 
-    ;
 
     public void setOnLoadMoreListener(OnLoadMoreListener listener) {
         this.onLoadMoreListener = listener;

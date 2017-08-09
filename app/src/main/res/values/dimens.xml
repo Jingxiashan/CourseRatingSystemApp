@@ -44,12 +44,18 @@
     <dimen name="activity_comment_content_subtop_margin">5sp</dimen>
     <dimen name="activity_comment_content_subside_margin">4dp</dimen>
 
+    <dimen name="activity_comment_teacher_side_margin">20px</dimen>
+    <dimen name="activity_comment_teacher_font_size">10sp</dimen>
+    <dimen name="activity_comment_teacehr_text_height">60px</dimen>
+    <dimen name="activity_comment_teacehr_text_width">180px</dimen>
+
+
     <!--CommentPopupActivity-->
     <dimen name="activity_commentpopup_card_height">500sp</dimen>
     <dimen name="activity_commentpopup_card_width">280sp</dimen>
     <dimen name="activity_commentpopup_top_margin">10dp</dimen>
     <dimen name="activity_commentpopup_subtop_margin">7dp</dimen>
-    <dimen name="activity_commentpopup_header_font_size">35sp</dimen>
+    <dimen name="activity_commentpopup_header_font_size">30sp</dimen>
     <dimen name="activity_commentpopup_content_height">100sp</dimen>
     <dimen name="activity_commentpopup_content_width">255sp</dimen>
 </resources>
