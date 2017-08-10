@@ -29,7 +29,7 @@ public class CustomizedHorizontalBarChart extends HorizontalBarChart{
     private float[] scores={0,0,0,0,0};
     private int bar_color= 0xffffa500;
     private int value_color = 0xffffa500;
-    private float bar_width = 0.9f;
+    private float bar_width = 0.05f;
     private boolean value_above_bar = true;
     private Context mContext;
 
@@ -51,10 +51,10 @@ public class CustomizedHorizontalBarChart extends HorizontalBarChart{
     }
     public void setScores(float s1,float s2,float s3,float s4,float s5){
         scores[0] = s1;
-        scores[2] = s2;
-        scores[3] = s3;
-        scores[4] = s4;
-        scores[5] = s5;
+        scores[1] = s2;
+        scores[2] = s3;
+        scores[3] = s4;
+        scores[4] = s5;
     }
     public void setBar_color(int bar_color){
         this.bar_color = bar_color;
@@ -69,7 +69,7 @@ public class CustomizedHorizontalBarChart extends HorizontalBarChart{
         this.value_above_bar=value_above_bar;
     }
 
-    private void initChart() {
+    public void initChart() {
         BarEntry e1 = new BarEntry(0, scores[0]);
         BarEntry e2 = new BarEntry(1, scores[1]);
         BarEntry e3 = new BarEntry(2, scores[2]);
@@ -94,15 +94,9 @@ public class CustomizedHorizontalBarChart extends HorizontalBarChart{
                 return mFormat.format(value); // e.g. append a dollar-sign
             }
         });
-        ArrayList<String> xvals = new ArrayList<String>();
-        xvals.add("M1");
-        xvals.add("M2");
-        xvals.add("M3");
-        xvals.add("M4");
-        xvals.add("M5");
         BarData data = new BarData(dataSets);
         data.setBarWidth(bar_width);
-        data.setValueTextSize(20f);
+        data.setValueTextSize(15f);
         data.setValueTextColor(value_color);
         this.setData(data);
         this.invalidate();
@@ -119,9 +113,9 @@ public class CustomizedHorizontalBarChart extends HorizontalBarChart{
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setDrawAxisLine(false);
         xl.setDrawGridLines(false);
-
-        xl.setValueFormatter(new IndexAxisValueFormatter(new String[]{"点名少否", "给分高否", "占时少否", "上课爽否", "内容好否"}));
-        xl.setTextSize(15);
+        xl.setDrawLabels(false);
+//        xl.setValueFormatter(new IndexAxisValueFormatter(new String[]{"点名少否", "给分高否", "占时少否", "上课爽否", "内容好否"}));
+//        xl.setTextSize(15);
 
         //y轴
         YAxis yl = this.getAxisLeft();
