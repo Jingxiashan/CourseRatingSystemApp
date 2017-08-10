@@ -26,7 +26,7 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
 
     public CourseListSwipeRefreshView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mFooterView = View.inflate(context, R.layout.fragment_courselist_list_footer, null);
+        mFooterView = View.inflate(context, R.layout.footer_fragment_courselist_list, null);
         scaledTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
@@ -118,7 +118,6 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
         this.onSwipeListener = onSwipeListener;
     }
 
-    ;
 
     public void setOnLoadMoreListener(OnLoadMoreListener listener) {
         this.onLoadMoreListener = listener;

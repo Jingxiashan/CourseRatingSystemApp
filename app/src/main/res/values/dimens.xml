@@ -7,6 +7,9 @@
     <dimen name="activity_login_input_height">20dp</dimen>
     <dimen name="fragment_login_thirdIcon_margin">10dp</dimen>
     <dimen name="fragment_login_thirdIcon_marginTop">40dp</dimen>
+    <!--CourseActivity dimens-->
+    <dimen name="activity_course_coursename_height">60dp</dimen>
+    <dimen name="activity_course_coursename_textsize">40sp</dimen>
     <!-- for index activity -->
     <dimen name="activity_index_search_height">60dp</dimen>
     <dimen name="activity_index_tab_height">55dp</dimen>
@@ -20,6 +23,22 @@
     <dimen name="item_fragment_courselist_marginside">5dp</dimen>
     <dimen name="item_fragment_courselist_textsize_courseName">14sp</dimen>
     <dimen name="item_fragment_courselist_textsize_details">12sp</dimen>
+    <!-- for course item of discover fragment -->
+    <dimen name="item_fragment_discover_card_width">150dp</dimen>
+    <dimen name="item_fragment_discover_card_height">200dp</dimen>
+    <dimen name="item_fragment_discover_card_text_margintop">10dp</dimen>
+    <dimen name="item_fragment_discover_card_textsize_large">12sp</dimen>
+    <dimen name="item_fragment_discover_card_textsize_small">10sp</dimen>
+    <!-- for user fragment -->
+    <dimen name="fragment_user_info_text_margin_left">10dp</dimen>
+    <dimen name="fragment_user_info_text_margin_top">5dp</dimen>
+    <dimen name="fragment_user_info_text_size_large">16sp</dimen>
+    <dimen name="fragment_user_info_text_size_medium">14sp</dimen>
+    <dimen name="fragment_user_info_text_size_small">12sp</dimen>
+    <dimen name="fragment_user_card_margin">8dp</dimen>
+    <dimen name="fragment_user_card_padding">20dp</dimen>
+    <dimen name="fragment_user_icon_size">24dp</dimen>
+    <dimen name="fragment_user_margin_between_lines">15dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -32,7 +51,7 @@
     <dimen name="activity_addcomment_subtop_margin">20sp</dimen>
 
     <!--CommentActivity-->
-    <dimen name="activity_comment_content_height">160sp</dimen>
+    <dimen name="activity_comment_content_height">160sp</dimen>]
     <dimen name="activity_comment_content_width">330sp</dimen>
     <dimen name="activity_comment_contentpop_width">270sp</dimen>
     <dimen name="activity_comment_header_font_size">17sp</dimen>
@@ -44,12 +63,18 @@
     <dimen name="activity_comment_content_subtop_margin">5sp</dimen>
     <dimen name="activity_comment_content_subside_margin">4dp</dimen>
 
+    <dimen name="activity_comment_teacher_side_margin">20px</dimen>
+    <dimen name="activity_comment_teacher_font_size">10sp</dimen>
+    <dimen name="activity_comment_teacehr_text_height">60px</dimen>
+    <dimen name="activity_comment_teacehr_text_width">180px</dimen>
+
+
     <!--CommentPopupActivity-->
     <dimen name="activity_commentpopup_card_height">500sp</dimen>
     <dimen name="activity_commentpopup_card_width">280sp</dimen>
     <dimen name="activity_commentpopup_top_margin">10dp</dimen>
     <dimen name="activity_commentpopup_subtop_margin">7dp</dimen>
-    <dimen name="activity_commentpopup_header_font_size">35sp</dimen>
+    <dimen name="activity_commentpopup_header_font_size">30sp</dimen>
     <dimen name="activity_commentpopup_content_height">100sp</dimen>
     <dimen name="activity_commentpopup_content_width">255sp</dimen>
 </resources>

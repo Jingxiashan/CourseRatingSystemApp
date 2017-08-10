@@ -3,40 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgGrey"
     tools:context="com.courseratingsystem.app.activity.AddCommentActivity">
 
+
+    <com.courseratingsystem.app.view.CommentListView
+        android:id="@+id/activity_comment_listview_allcomments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="11dp"
+        android:layout_marginStart="11dp"
+        android:divider="@null"
+        android:dividerHeight="@dimen/activity_comment_content_subside_margin">
+
+    </com.courseratingsystem.app.view.CommentListView>
+
+
+    <!--课程基本信息标题-->
     <LinearLayout
+        android:id="@+id/activity_comment_layout_courseheaderinfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
+        android:background="@color/bgGrey"
         android:orientation="vertical">
 
-        <!--课程基本信息标题-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/activity_comment_image_courseImag"
-                android:layout_width="80sp"
-                android:layout_height="80sp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/app_icon" />
-
             <LinearLayout
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="@dimen/activity_addcomment_side_margin"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -46,16 +48,58 @@
                     android:text="Course_Name"
                     android:textSize="@dimen/activity_addcomment_header_font_size" />
 
-                <TextView
-                    android:id="@+id/activity_comment_text_TeacherName"
+                <LinearLayout
+                    android:id="@+id/activity_comment_linear_teacherlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course_Teacher_Name"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+                    <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_marginTop="@dimen/activity_login_input_margin"-->
+                    <!--android:src="@drawable/teacher" />-->
+
+                    <!--<TextView-->
+                    <!--android:background="@drawable/activity_comment_teacher_button_bg"-->
+                    <!--android:gravity="center"-->
+                    <!--android:id="@+id/activity_comment_button_teacher"-->
+                    <!--android:layout_width="@dimen/activity_comment_teacehr_text_width"-->
+                    <!--android:layout_height="@dimen/activity_comment_teacehr_text_height"-->
+                    <!--android:layout_marginStart="@dimen/activity_comment_teacher_side_margin"-->
+                    <!--android:textColor="@android:color/holo_blue_light"-->
+                    <!--android:text="张彦泽"-->
+                    <!--android:textSize="10sp" />-->
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="推荐指数：" />
+
+                <RatingBar
+                    android:id="@+id/activity_comment_header_ratingbar_commentRating"
+                    style="@style/CourseCommentRatingStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginTop="6dp" />
+
+            </LinearLayout>
+
+
         </LinearLayout>
+
 
         <LinearLayout
 
@@ -73,37 +117,9 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="@dimen/activity_login_input_margin_half"
-                android:layout_weight="3"
+                android:layout_weight="5"
                 android:background="@color/lightGreyAlpha" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:gravity="center_horizontal"
-                android:text="嗯，老司机们这样说"
-                android:textColor="@color/lightGrey"
-                android:textSize="@dimen/activity_login_font_size" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="@dimen/activity_login_input_margin_half"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="@dimen/activity_login_input_margin_half"
-                android:layout_weight="3"
-                android:background="@color/lightGreyAlpha" />
         </LinearLayout>
-
-        <ListView
-            android:id="@+id/activity_comment_listview_allcomments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="@dimen/activity_comment_content_subside_margin">
-
-        </ListView>
-
     </LinearLayout>
 </RelativeLayout>

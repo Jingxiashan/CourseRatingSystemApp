@@ -19,6 +19,9 @@
         <item name="colorPrimaryDark">@color/lightGrey</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+    <style name="CourseTheme" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
 
     <!--Ratingbar style-->
     <style name="CourseRatingStyle" parent="@android:style/Widget.RatingBar">
@@ -27,7 +30,6 @@
         <item name="android:minWidth">35dp</item>
     </style>
 
-<<<<<<< Updated upstream
     <style name="CourseCommentRatingStyle" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/comment_item_courseratingstyle</item>
         <item name="android:minHeight">25dp</item>
@@ -37,10 +39,6 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/pureWhite</item>
     </style>
-=======
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Activity_Change_Password_TextInputLayout" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/myblue</item>
@@ -48,4 +46,22 @@
     </style>
 
 >>>>>>> Stashed changes
+
+    <style name="PopupActivityStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="acticity_comment_teacher_text_style">
+        <item name="android:background">@drawable/activity_comment_teacher_button_bg</item>
+        <item name="android:textSize">@dimen/activity_comment_teacher_font_size</item>
+        <item name="android:layout_marginStart">@dimen/activity_comment_teacher_side_margin</item>
+        <item name="android:layout_width">@dimen/activity_comment_teacehr_text_width</item>
+        <item name="android:layout_height">@dimen/activity_comment_teacehr_text_height</item>
+
+
+    </style>
+
 </resources>
