@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.application.MyCourseApplication;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -46,6 +47,9 @@ public class SplashActivity extends AppCompatActivity {
 
         startIntent = new Intent(SplashActivity.this, IndexActivity.class);
         new Timer().schedule(timerTask, 2000);
+
+        MyCourseApplication application = (MyCourseApplication) getApplication();
+        application.loadData();
     }
 
 }

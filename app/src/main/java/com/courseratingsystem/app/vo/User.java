@@ -11,6 +11,19 @@ public class User implements Serializable {
     private String username, nickname;
     private String grade;
     private String weChat, intro;
+    private String picpath;
+
+    public User() {
+    }
+
+    public User(String username, String nickname, String grade, String weChat, String intro, String picpath) {
+        this.username = username;
+        this.nickname = nickname;
+        this.grade = grade;
+        this.weChat = weChat;
+        this.intro = intro;
+        this.picpath = picpath;
+    }
 
     public String getUserid() {
         return userid;
@@ -58,5 +71,14 @@ public class User implements Serializable {
 
     public void setIntro(String intro) {
         this.intro = intro;
+    }
+
+
+    public String getPicpath() {
+        return picpath;
+    }
+
+    public void setPicpath(String picpath) {
+        this.picpath = picpath;
     }
 }

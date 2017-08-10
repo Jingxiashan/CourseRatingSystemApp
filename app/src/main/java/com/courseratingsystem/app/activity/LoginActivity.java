@@ -5,6 +5,7 @@ import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -26,6 +27,7 @@ import com.courseratingsystem.app.view.SuccessAnimView;
 import com.mcxtzhang.pathanimlib.PathAnimView;
 import com.mcxtzhang.pathanimlib.utils.SvgPathParser;
 
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -48,16 +50,15 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String BUNDLE_FRAGMENT_SELECTION_KEY = "fragment";
-    public static final int SUCCESS_ANIM_LENGTH = 2000;
+    public static final int SUCCESS_ANIM_LENGTH = 2500;
     //网络相关
-    private final String LOGIN_URL = "/login.action";
-    private final String REGISTER_URL = "/register_checkAndRegister.action";
+    private final String LOGIN_URL = "/login";
+    private final String REGISTER_URL = "/register";
     private final String[] LOGIN_POST_KEY = new String[]{"username", "password"};
     private final String[] REGISTER_POST_KEY = new String[]{"username", "password", "nickname", "grade"};
-    private final String SUCCESS = "success";
-    private final String FAIL = "fail";
+    //控件
     @ViewInject(R.id.activity_login_layout)
-    RelativeLayout relativeLayout;
+    RelativeLayout mRelativeLayout;
     @ViewInject(R.id.activity_login_tablayout)
     TabLayout mTabLayout;
     @ViewInject(R.id.activity_login_viewpager)
@@ -66,16 +67,15 @@ public class LoginActivity extends AppCompatActivity {
     PathAnimView mLogo;
     @ViewInject(R.id.activity_login_return_button)
     Button mReturn;
-
-    LoadingAnimView loadingAnimView;
-    SuccessAnimView successAnimView;
-
+    LoadingAnimView mLoadingAnimView;
+    SuccessAnimView mSuccessAnimView;
+    private String username;
     private final Handler successHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            //TODO:保存获取到的userid
             MyCourseApplication application = (MyCourseApplication) getApplication();
-            application.login("151");
+            int userId = (int) msg.obj;
+            application.login(userId, username);
             showSuccessAnim(true);
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -183,27 +183,33 @@ public class LoginActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
 
             Message msg = new Message();
-            String status;
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                status = getString(R.string.internet_connection_failed);
-                msg.obj = status;
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.obj = getString(R.string.internet_connection_failed);
                 handler.sendMessage(msg);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseBody = response.body().string();
-                //TODO:解析JSON
-                if (SUCCESS.equals(responseBody)) {
-                    //成功，直接跳转
-                    successHandler.sendEmptyMessage(0);
-                } else {
-                    //错误，回调RegisterFragment处理，传回String型的message
-//                    status = messageString;
-                    msg.obj = status;
-                    handler.sendMessage(msg);
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
+                            //成功，获取userid并跳转
+                            JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+                            LoginActivity.this.username = username;
+                            msg.obj = resultJson.getInt("userid");
+                            successHandler.sendMessage(msg);
+                        } else {
+                            msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                            handler.sendMessage(msg);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -227,27 +233,33 @@ public class LoginActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
 
             Message msg = new Message();
-            String status;
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                status = getString(R.string.internet_connection_failed);
-                msg.obj = status;
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.obj = getString(R.string.internet_connection_failed);
                 handler.sendMessage(msg);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseBody = response.body().string();
-                //TODO:解析JSON,保存获取到的userid
-                if (SUCCESS.equals(responseBody)) {
-                    //成功，直接跳转
-                    successHandler.sendEmptyMessage(0);
-                } else {
-                    //错误，回调RegisterFragment处理，传回String型的message
-//                    status = messageString;
-                    msg.obj = status;
-                    handler.sendMessage(msg);
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
+                            //成功，获取userid并跳转
+                            JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+                            LoginActivity.this.username = username;
+                            msg.obj = resultJson.getInt("userid");
+                            successHandler.sendMessage(msg);
+                        } else {
+                            msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                            handler.sendMessage(msg);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -261,26 +273,29 @@ public class LoginActivity extends AppCompatActivity {
     //显示加载动画
     public void showLoadingAnim(boolean ifShow) {
         if (ifShow) {
-            loadingAnimView = new LoadingAnimView(this, LoadingAnimView.BgColor.DARK);
-            relativeLayout.addView(loadingAnimView);
+            if (mLoadingAnimView == null) {
+                mLoadingAnimView = new LoadingAnimView(this, LoadingAnimView.BgColor.DARK);
+                mRelativeLayout.addView(mLoadingAnimView);
+            }
         } else {
-            relativeLayout.removeView(loadingAnimView);
+            mRelativeLayout.removeView(mLoadingAnimView);
+            mLoadingAnimView = null;
         }
     }
 
     //显示完成动画
     public void showSuccessAnim(boolean ifShow) {
         if (ifShow) {
-            successAnimView = new SuccessAnimView(this, SuccessAnimView.BgColor.DARK);
-            relativeLayout.addView(successAnimView);
+            mSuccessAnimView = new SuccessAnimView(this, SuccessAnimView.BgColor.DARK);
+            mRelativeLayout.addView(mSuccessAnimView);
         } else {
-            relativeLayout.removeView(loadingAnimView);
+            mRelativeLayout.removeView(mLoadingAnimView);
         }
     }
     public enum FragmentsSelection {LOGIN_FRAGMENT, REGISTER_FRAGMENT}
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager supportFragmentManager) {
+        ScreenSlidePagerAdapter(FragmentManager supportFragmentManager) {
             super(supportFragmentManager);
         }
 
