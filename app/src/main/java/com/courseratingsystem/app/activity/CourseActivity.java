@@ -2,9 +2,8 @@ package com.courseratingsystem.app.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ import java.util.List;
 
 @ContentView(R.layout.activity_course)
 public class CourseActivity extends AppCompatActivity {
+    public static final String EXTRA_COURSE_ID = "courseid";
     @ViewInject(R.id.activity_course_horizontalbarchart)
     CustomizedHorizontalBarChart barChart;
     @ViewInject(R.id.activity_course_scrollview)
@@ -57,15 +57,19 @@ public class CourseActivity extends AppCompatActivity {
     LinearLayout head;
     @ViewInject(R.id.activity_course_textview_avgreccom)
     TextView getAvgrecommStatic;
-
     float scale = 1.0f;
     float alpha = 1.0f;
     float ratio = 0;
+    private int courseid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
+        Intent intent = getIntent();
+        courseid = intent.getIntExtra(EXTRA_COURSE_ID, -1);
+        if (courseid == -1) finish();
+        //TODO:通过courseid网络获取信息
         //for test
 
         Course course = new Course(1,"圣经与西方文化",4.5f,2.4f,4,2.1f,5,1.8f,1000,new ArrayList<Course.TeacherBrief>());
@@ -111,8 +115,8 @@ public class CourseActivity extends AppCompatActivity {
             teachers.addView(teacher);
         }
 
-        barChart.setBar_color(getResources().getColor(R.color.lightGreyAlpha));
-        barChart.setValue_color(getResources().getColor(R.color.Grey));
+        barChart.setBar_color(getResources().getColor(R.color.teacher_blue_light));
+        barChart.setValue_color(getResources().getColor(R.color.lightGrey));
         barChart.setScores(course.getAverageRatingsRollCall(),course.getAverageRatingsScoring(),course.getAverageRatingsSpareTimeOccupation(),
                 course.getAverageRatingsVividness(),course.getAverageRatingsUsefulness());
         barChart.initChart();
@@ -248,7 +252,7 @@ public class CourseActivity extends AppCompatActivity {
                 viewHolder = (CourseActivity.CommentsViewHolder) convertView.getTag();
             }
             //设置头像显示
-            viewHolder.ratingBar.setNumStars(tmpComment.getRecstar());
+            viewHolder.ratingBar.setNumStars((int) tmpComment.getRecstar());
             viewHolder.nickName.setText(tmpComment.getNickname());
             viewHolder.timeStamp.setText(tmpComment.getTimestamp());
             viewHolder.commentContent.setText(tmpComment.getContent());

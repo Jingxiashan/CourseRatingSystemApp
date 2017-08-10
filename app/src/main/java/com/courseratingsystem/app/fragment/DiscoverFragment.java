@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.CommentPopupActivity;
+import com.courseratingsystem.app.activity.CourseActivity;
 import com.courseratingsystem.app.activity.IndexActivity;
 import com.courseratingsystem.app.application.MyCourseApplication;
 import com.courseratingsystem.app.view.DiscoverScrollView;
@@ -210,7 +211,7 @@ public class DiscoverFragment extends Fragment {
     private static class CommentViewHolder {
         ImageView avatar;
         RatingBar ratingBar;
-        TextView nickName, timeStamp, commentContent, likeCount;
+        TextView nickName, timeStamp, commentContent, likeCount, courseName;
         ImageButton showDetail, clickLike;
     }
 
@@ -255,12 +256,14 @@ public class DiscoverFragment extends Fragment {
                 convertView.setTag(viewHolder);
             }
             viewHolder.coursename.setText(tmpCourse.getCourseName().length() > 7 ? tmpCourse.getCourseName().substring(0, 5) + "..." : tmpCourse.getCourseName());
-            viewHolder.ratings.setNumStars(tmpCourse.getPeopleCount());
+            viewHolder.ratings.setNumStars((int) tmpCourse.getRecommendationScore());
             viewHolder.peopleCount.setText(String.format(getString(R.string.item_fragment_discover_peopleCount), tmpCourse.getPeopleCount()));
             viewHolder.details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO:打开课程页面
+                    Intent intent = new Intent(getActivity(), CourseActivity.class);
+                    intent.putExtra(CourseActivity.EXTRA_COURSE_ID, tmpCourse.getCourseId());
+                    startActivity(intent);
                 }
             });
         }
@@ -321,26 +324,27 @@ public class DiscoverFragment extends Fragment {
             CommentViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new CommentViewHolder();
-                convertView = inflater.inflate(R.layout.item_activity_comment_list, null);
-                viewHolder.avatar = (ImageView) convertView.findViewById(R.id.item_activity_comment_image_avatar);
-                viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.item_activity_comment_ratingbar_commentRating);
-                viewHolder.nickName = (TextView) convertView.findViewById(R.id.item_activity_comment_text_nickName);
-                viewHolder.timeStamp = (TextView) convertView.findViewById(R.id.item_activity_comment_text_timestamp);
-                viewHolder.commentContent = (TextView) convertView.findViewById(R.id.item_activity_comment_text_commentContent);
-                viewHolder.likeCount = (TextView) convertView.findViewById(R.id.item_activity_comment_text_likeCount);
-                viewHolder.showDetail = (ImageButton) convertView.findViewById(R.id.item_activity_comment_button_detail);
-                viewHolder.clickLike = (ImageButton) convertView.findViewById(R.id.item_activity_comment_button_like);
+                convertView = inflater.inflate(R.layout.item_fragment_discover_hot_comment_list, null);
+                viewHolder.avatar = (ImageView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_image_avatar);
+                viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.item_fragment_discover_hot_comment_ratingbar_commentRating);
+                viewHolder.nickName = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_nickName);
+                viewHolder.timeStamp = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_timestamp);
+                viewHolder.commentContent = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_commentContent);
+                viewHolder.likeCount = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_likeCount);
+                viewHolder.showDetail = (ImageButton) convertView.findViewById(R.id.item_fragment_discover_hot_comment_button_detail);
+                viewHolder.clickLike = (ImageButton) convertView.findViewById(R.id.item_fragment_discover_hot_comment_button_like);
+                viewHolder.courseName = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_courseName);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (CommentViewHolder) convertView.getTag();
             }
             //设置头像显示
-            viewHolder.ratingBar.setRating(tmpComment.getRecstar());
+            viewHolder.ratingBar.setNumStars((int) tmpComment.getRecstar());
             viewHolder.nickName.setText(tmpComment.getNickname());
             viewHolder.timeStamp.setText(tmpComment.getTimestamp());
             viewHolder.commentContent.setText(tmpComment.getContent());
             viewHolder.likeCount.setText(String.valueOf(tmpComment.getLikecount()));
-
+            viewHolder.courseName.setText(tmpComment.getCoursename());
             viewHolder.showDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -356,7 +360,14 @@ public class DiscoverFragment extends Fragment {
                     //TODO:点赞
                 }
             });
-
+            viewHolder.courseName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CourseActivity.class);
+                    intent.putExtra(CourseActivity.EXTRA_COURSE_ID, tmpComment.getCourseid());
+                    startActivity(intent);
+                }
+            });
             viewHolder.avatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

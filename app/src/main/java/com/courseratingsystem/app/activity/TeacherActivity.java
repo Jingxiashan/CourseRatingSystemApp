@@ -2,10 +2,8 @@ package com.courseratingsystem.app.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,12 +14,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.parser.deserializer.EnumDeserializer;
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
@@ -36,6 +32,7 @@ import java.util.List;
 @ContentView(R.layout.activity_teacher)
 public class TeacherActivity extends AppCompatActivity {
 
+    public static final String EXTRA_TEACHER_ID = "teacherid";
     @ViewInject(R.id.activity_teacher_imgview_photo)
     ImageView teacherphoto;
     @ViewInject(R.id.activiyt_teacher_listview_commentlist)
@@ -46,12 +43,14 @@ public class TeacherActivity extends AppCompatActivity {
     LinearLayout coursenames;
     @ViewInject(R.id.activity_teacher_linearlayout_checkallcomments)
     LinearLayout checkall;
-
+    private int teacherid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
+        Intent intent = getIntent();
+        teacherid = intent.getIntExtra(EXTRA_TEACHER_ID, -1);
+        if (teacherid == -1) finish();
         commentlist.setFocusable(false);
         scrollView.scrollTo(0,0);
 
@@ -126,7 +125,7 @@ public class TeacherActivity extends AppCompatActivity {
     private static class CommentsViewHolder {
         ImageView avatar;
         RatingBar ratingBar;
-        TextView nickName, timeStamp, commentContent, likeCount;
+        TextView nickName, timeStamp, commentContent, likeCount, courseName;
         ImageButton showDetail, clickLike;
     }
 
@@ -163,24 +162,25 @@ public class TeacherActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             final Comment tmpComment = commentList.get(position);
-            TeacherActivity.CommentsViewHolder viewHolder;
+            CommentsViewHolder viewHolder;
             if (convertView == null) {
-                viewHolder = new TeacherActivity.CommentsViewHolder();
-                convertView = inflater.inflate(R.layout.item_activity_comment_list_custom, null);
-                viewHolder.avatar = (ImageView) convertView.findViewById(R.id.item_activity_comment_image_avatar);
-                viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.item_activity_comment_ratingbar_commentRating);
-                viewHolder.nickName = (TextView) convertView.findViewById(R.id.item_activity_comment_text_nickName);
-                viewHolder.timeStamp = (TextView) convertView.findViewById(R.id.item_activity_comment_text_timestamp);
-                viewHolder.commentContent = (TextView) convertView.findViewById(R.id.item_activity_comment_text_commentContent);
-                viewHolder.likeCount = (TextView) convertView.findViewById(R.id.item_activity_comment_text_likeCount);
-                viewHolder.showDetail = (ImageButton) convertView.findViewById(R.id.item_activity_comment_button_detail);
-                viewHolder.clickLike = (ImageButton) convertView.findViewById(R.id.item_activity_comment_button_like);
+                viewHolder = new CommentsViewHolder();
+                convertView = inflater.inflate(R.layout.item_fragment_discover_hot_comment_list, null);
+                viewHolder.avatar = (ImageView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_image_avatar);
+                viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.item_fragment_discover_hot_comment_ratingbar_commentRating);
+                viewHolder.nickName = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_nickName);
+                viewHolder.timeStamp = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_timestamp);
+                viewHolder.commentContent = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_commentContent);
+                viewHolder.likeCount = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_likeCount);
+                viewHolder.showDetail = (ImageButton) convertView.findViewById(R.id.item_fragment_discover_hot_comment_button_detail);
+                viewHolder.clickLike = (ImageButton) convertView.findViewById(R.id.item_fragment_discover_hot_comment_button_like);
+                viewHolder.courseName = (TextView) convertView.findViewById(R.id.item_fragment_discover_hot_comment_text_courseName);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (TeacherActivity.CommentsViewHolder) convertView.getTag();
             }
             //设置头像显示
-            viewHolder.ratingBar.setNumStars(tmpComment.getRecstar());
+            viewHolder.ratingBar.setNumStars((int) tmpComment.getRecstar());
             viewHolder.nickName.setText(tmpComment.getNickname());
             viewHolder.timeStamp.setText(tmpComment.getTimestamp());
             viewHolder.commentContent.setText(tmpComment.getContent());
@@ -194,7 +194,14 @@ public class TeacherActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
+            viewHolder.courseName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TeacherActivity.this, CourseActivity.class);
+                    intent.putExtra(CourseActivity.EXTRA_COURSE_ID, tmpComment.getCourseid());
+                    startActivity(intent);
+                }
+            });
             viewHolder.clickLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

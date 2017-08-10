@@ -24,7 +24,9 @@ import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.AddCommentActivity;
+import com.courseratingsystem.app.activity.CourseActivity;
 import com.courseratingsystem.app.activity.IndexActivity;
+import com.courseratingsystem.app.activity.TeacherActivity;
 import com.courseratingsystem.app.application.MyCourseApplication;
 import com.courseratingsystem.app.view.CourseListSwipeRefreshView;
 import com.courseratingsystem.app.vo.Course;
@@ -408,13 +410,15 @@ public class CourseListFragment extends Fragment {
                     tmpCourse.getAverageRatingsRollCall(),
                     tmpCourse.getAverageRatingsScoring()));
             viewHolder.mTeacherLayout.removeAllViews();
-            for (Course.TeacherBrief tmpTeacher : tmpCourse.getTeacherList()) {
+            for (final Course.TeacherBrief tmpTeacher : tmpCourse.getTeacherList()) {
                 TeacherTextView teacherTextView = new TeacherTextView(CourseListFragment.this.getActivity());
                 teacherTextView.setText(tmpTeacher.getTeacherName());
                 teacherTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO:打开对应Teacher的Activity
+                        Intent intent = new Intent(getActivity(), TeacherActivity.class);
+                        intent.putExtra(TeacherActivity.EXTRA_TEACHER_ID, tmpTeacher.getTeacherId());
+                        startActivity(intent);
                     }
                 });
                 viewHolder.mTeacherLayout.addView(teacherTextView);
@@ -424,6 +428,14 @@ public class CourseListFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), AddCommentActivity.class);
                     intent.putExtra(AddCommentActivity.COURSE_INFO, tmpCourse);
+                    startActivity(intent);
+                }
+            });
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CourseActivity.class);
+                    intent.putExtra(CourseActivity.EXTRA_COURSE_ID, tmpCourse.getCourseId());
                     startActivity(intent);
                 }
             });

@@ -44,7 +44,7 @@ public class CommentListView extends ListView {
                 break;
             case MotionEvent.ACTION_MOVE:
                 mEndY = ev.getY();
-                if ((mEndY - mStartY) <= scaledTouchSlop) {
+                if ((mEndY - mStartY) <= -scaledTouchSlop) {
                     //下滑
                     onSwipeListener.onSwipe(SwipeDirect.UP);
                 } else if ((mEndY - mStartY) >= scaledTouchSlop) {

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/pureWhite"
     android:orientation="vertical"
-    tools:context="com.courseratingsystem.app.activity.CourseActivity"
-    android:background="@color/pureWhite">
+    tools:context="com.courseratingsystem.app.activity.CourseActivity">
 
     <View
         android:id="@+id/activity_course_view_headbg"
@@ -18,20 +17,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/activity_course_view_headbg"
+        android:layout_marginTop="1dp"
         android:background="@drawable/activity_course_dirtyblue_bg_top"
         android:gravity="center_horizontal"
-        android:layout_marginTop="1dp"
         >
         <TextView
             android:id="@+id/activity_course_textview_coursename"
-            android:layout_gravity="bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="圣经与西方文化"
-            android:textSize="25dp"
-            android:textColor="@color/Grey"
             android:layout_alignParentTop="true"
+            android:layout_gravity="bottom"
             android:paddingBottom="10dp"
+            android:text="圣经与西方文化"
+            android:textColor="@color/Grey"
+            android:textSize="25dp"
             />
     </LinearLayout>
 
@@ -44,59 +43,59 @@
         android:id="@+id/acivity_course_linearlayout_functionbtns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         >
         <Button
+            android:id="@+id/activity_course_btn_addcomment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/activity_course_add_comment"
-            android:id="@+id/activity_course_btn_addcomment"/>
+            android:text="@string/activity_course_add_comment" />
         <Button
+            android:id="@+id/activity_course_btn_addfavorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/activity_course_add_favorite"
-            android:id="@+id/activity_course_btn_addfavorite"/>
+            android:text="@string/activity_course_add_favorite" />
     </LinearLayout>
 <com.courseratingsystem.app.view.ObservableScrollView
-    android:overScrollMode="never"
-    android:layout_above="@id/acivity_course_linearlayout_functionbtns"
     android:id="@+id/activity_course_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_above="@id/acivity_course_linearlayout_functionbtns"
     android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp">
+    android:layout_marginRight="2dp"
+    android:overScrollMode="never">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:elevation="5dp"
+            android:id="@+id/activity_course_relativelayout_header"
             android:layout_width="match_parent"
             android:layout_height="145dp"
-            android:id="@+id/activity_course_relativelayout_header"
             android:background="@drawable/activity_course_dirtyblue_bg_bottom"
+            android:elevation="5dp"
             >
             <TextView
-            android:elevation="6dp"
             android:id="@+id/activity_course_textview_avgreccom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
             android:layout_marginTop="70dp"
-            android:textSize="40dp"
+                android:elevation="6dp"
             android:text="5.0"
             android:textColor="@color/Grey"
-            android:layout_centerHorizontal="true"
+                android:textSize="40dp"
             />
             <LinearLayout
                 android:id="@+id/activity_course_linearlayout_teachers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,8 +103,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/activity_course_teacher_bg"
                     android:padding="5dp"
-                    android:textSize="15dp"
                     android:text="教师1"
+                    android:textSize="15dp"
                     />
 
                 <TextView
@@ -114,8 +113,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/activity_course_teacher_bg"
                     android:padding="5dp"
-                    android:textSize="15dp"
-                    android:text="教师2" />
+                    android:text="教师2"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,36 +122,36 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/activity_course_teacher_bg"
                     android:padding="5dp"
-                    android:textSize="15dp"
-                    android:text="教师3" />
+                    android:text="教师3"
+                    android:textSize="15dp" />
 
             </LinearLayout>
             <TextView
                 android:id="@+id/activity_course_textview_overall"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_horizontal"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
                 android:text="@string/activity_course_overallrecomm"
                 android:textColor="@color/lightGreyAlpha"
                 android:textSize="10dp"
-                android:paddingBottom="10dp"
                 />
             <View
                 android:layout_width="60dp"
                 android:layout_height="1dp"
-                android:background="@color/lightGreyAlpha"
-                android:layout_toLeftOf="@id/activity_course_textview_overall"
                 android:layout_alignBottom="@id/activity_course_textview_overall"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp"
+                android:layout_toLeftOf="@id/activity_course_textview_overall"
+                android:background="@color/lightGreyAlpha" />
             <View
                 android:layout_width="60dp"
                 android:layout_height="1dp"
-                android:background="@color/lightGreyAlpha"
-                android:layout_toRightOf="@id/activity_course_textview_overall"
                 android:layout_alignBottom="@id/activity_course_textview_overall"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp"
+                android:layout_toRightOf="@id/activity_course_textview_overall"
+                android:background="@color/lightGreyAlpha" />
 
 
 
@@ -164,11 +163,11 @@
             android:orientation="horizontal"
             >
             <LinearLayout
-                android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginRight="-10dp"
                 android:orientation="vertical"
-                android:layout_marginRight="-10dp">
+                android:paddingLeft="10dp">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -176,38 +175,38 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/activity_course_rollcall"
-                    android:textSize="12dp"
                     android:textColor="@color/Grey"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:textSize="12dp"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/activity_course_scoring"
-                    android:textSize="12dp"
                     android:textColor="@color/Grey"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:textSize="12dp"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/activity_course_timeoccu"
-                    android:textSize="12dp"
                     android:textColor="@color/Grey"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:textSize="12dp"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:text="@string/activity_course_vivid"
-                    android:textSize="12dp"
-                    android:textColor="@color/Grey"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:text="@string/activity_course_vivid"
+                    android:textColor="@color/Grey"
+                    android:textSize="12dp"
                     />
 
                 <TextView
@@ -216,7 +215,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/fragment_user_myFavorite"
+                    android:text="@string/activity_course_useful"
                     android:textColor="@color/Grey"
                     android:textSize="12dp" />
                 <View
@@ -255,8 +254,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="16dp"
                 android:text="@string/activity_course_old_drivers"
                 android:textColor="@color/lightGreyAlpha"
                 android:textSize="10dp" />
@@ -278,11 +277,11 @@
         </com.courseratingsystem.app.view.ListViewNoScroll>
         <LinearLayout
             android:id="@+id/activity_course_linearlayout_checkallcomments"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -298,15 +297,15 @@
 
 </RelativeLayout>
     <TextView
-        android:elevation="6dp"
         android:id="@+id/activity_course_textview_avgreccom_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
-        android:textSize="40dp"
+        android:elevation="6dp"
         android:text="5.0"
         android:textColor="@color/Grey"
-        android:layout_centerHorizontal="true"
+        android:textSize="40dp"
         />
 
 </RelativeLayout>

@@ -73,7 +73,7 @@
     <string name="internet_connection_failed">网络连接失败，请重试</string>
     <!--for course activity-->
     <string name="activity_course_overallrecomm">综合推荐指数</string>
-    <string name="activity_course_usfull">内容好否？</string>
+    <string name="activity_course_useful">内容好否？</string>
     <string name="activity_course_vivid">上课爽否？</string>
     <string name="activity_course_timeoccu">占时少否？</string>
     <string name="activity_course_scoring">给分高否？</string>

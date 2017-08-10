@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/pureWhite"
+        app:cardElevation="20dp">
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10sp"
+            android:layout_marginLeft="@dimen/activity_comment_content_subtop_margin"
+            android:layout_marginRight="@dimen/activity_comment_content_subtop_margin"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/item_fragment_discover_hot_comment_image_avatar"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                android:layout_weight="1"
+                android:src="@mipmap/app_icon" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                android:layout_weight="6"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_comment_content_side_margin"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item_fragment_discover_hot_comment_text_nickName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User_Name"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="@dimen/activity_comment_header_font_size" />
+
+                    <TextView
+                        android:id="@+id/item_fragment_discover_hot_comment_text_timestamp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Comment_Timestamp"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="@dimen/activity_comment_subheader_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginTop="@dimen/activity_comment_content_subside_margin"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_comment_activity_recScore"
+                        android:textColor="@color/lightGrey" />
+
+                    <RatingBar
+                        android:id="@+id/item_fragment_discover_hot_comment_ratingbar_commentRating"
+                        style="@style/CourseCommentRatingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="-4dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/item_fragment_discover_hot_comment_text_commentContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_comment_content_side_margin"
+                        android:layout_marginTop="10dp"
+                        android:lines="2"
+                        android:text="current comment is written by someone else."
+                        android:textColor="@color/pureBlack" />
+                </LinearLayout>
+                <!--具体评论内容-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item_fragment_discover_hot_comment_text_courseName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                        android:gravity="center"
+                        android:text="course_name"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="@dimen/activity_comment_foot_font_size" />
+
+                    <TextView
+                        android:id="@+id/item_fragment_discover_hot_comment_text_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@id/item_fragment_discover_hot_comment_text_courseName"
+                        android:gravity="center"
+                        android:text="@string/item_comment_activity_likeCount"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="@dimen/activity_comment_foot_font_size" />
+
+                    <TextView
+                        android:id="@+id/item_fragment_discover_hot_comment_text_likeCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@id/item_fragment_discover_hot_comment_text_like"
+                        android:gravity="center"
+                        android:text="100"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="@dimen/activity_comment_foot_font_size" />
+
+
+                    <LinearLayout
+                        android:id="@+id/item_fragment_discover_hot_comment_layout_detail"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="9dp"
+                        android:background="@drawable/activity_comment_like_text_border"
+                        android:gravity="center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/item_fragment_discover_hot_comment_button_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#00000000"
+                            android:src="@drawable/detail" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="150dp"
+                        android:layout_toStartOf="@id/item_fragment_discover_hot_comment_layout_detail"
+                        android:background="@drawable/activity_comment_like_text_border"
+                        android:gravity="center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/item_fragment_discover_hot_comment_button_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#00000000"
+                            android:src="@drawable/like" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
