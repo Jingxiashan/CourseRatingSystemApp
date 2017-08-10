@@ -5,6 +5,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,24 +22,39 @@ import android.widget.TextView;
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.activity.CommentPopupActivity;
 import com.courseratingsystem.app.activity.IndexActivity;
+import com.courseratingsystem.app.application.MyCourseApplication;
 import com.courseratingsystem.app.view.DiscoverScrollView;
 import com.courseratingsystem.app.view.ListViewNoScroll;
+import com.courseratingsystem.app.view.LoadingAnimView;
 import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
 import com.stone.pile.libs.PileLayout;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.courseratingsystem.app.activity.CommentPopupActivity.COMMENT_KEY;
 
 @ContentView(R.layout.fragment_discover)
 public class DiscoverFragment extends Fragment {
 
+    //网络相关
+    private static final int LOAD_SUCCESSFULLY = 0;
+    private static final int LOAD_FAILED = 1;
+    private final String GET_HOTS_URL = "/getHotCourseAndComment";
+    LoadingAnimView mLoadingAnimView;
     @ViewInject(R.id.fragment_discover_layout)
     RelativeLayout mRelativeLayout;
     @ViewInject(R.id.fragment_discover_scroll)
@@ -49,6 +67,24 @@ public class DiscoverFragment extends Fragment {
     HotCommentsAdapter commentsAdapter;
     private List<Course> hotCoursesList;
     private List<Comment> hotCommentsList;
+    private final Handler getInfoHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case LOAD_SUCCESSFULLY:
+                    coursesAdapter = new HotCoursesAdapter(hotCoursesList);
+                    commentsAdapter = new HotCommentsAdapter(getActivity(), hotCommentsList);
+                    mPileLayout.setAdapter(coursesAdapter);
+                    mCommentList.setAdapter(commentsAdapter);
+                    showLoadingAnim(false);
+                    break;
+                case LOAD_FAILED:
+                    //TODO:加载失败，显示加载失败的界面
+                    break;
+            }
+            return false;
+        }
+    });
 
     public DiscoverFragment() {
         // Required empty public constructor
@@ -66,33 +102,75 @@ public class DiscoverFragment extends Fragment {
 
     private void initData() {
         //TEST
-        hotCoursesList = new ArrayList<>();
-        Course tmpCourse;
-        for (int i = 0; i < 20; i++) {
-            tmpCourse = new Course();
-            tmpCourse.setCourseName("泥人张技艺教授与传承");
-            tmpCourse.setAverageRatingsRollCall(3.6f);
-            tmpCourse.setAverageRatingsScoring(3.7f);
-            tmpCourse.setAverageRatingsSpareTimeOccupation(3.8f);
-            tmpCourse.setAverageRatingsUsefulness(3.9f);
-            tmpCourse.setAverageRatingsVividness(4.0f);
-            tmpCourse.setRecommendationScore(4.9f);
-            tmpCourse.setPeopleCount(1999);
-            tmpCourse.setTeacherList(new ArrayList<Course.TeacherBrief>());
-            tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("张彦泽", 1));
-            tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("黄嘉星", 2));
-            tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("鲁迪", 3));
-            hotCoursesList.add(tmpCourse);
-        }
-        hotCommentsList = new ArrayList<>();
-        Comment tmpComment;
-        for (int i = 0; i < 20; i++) {
-            tmpComment = new Comment(4, i, i, "asdsadf" + i, "asddsa", "哈哈哈这是第几个评论你哈哈哈这是第几个评论你哈哈哈这是第几个评论你哈哈哈这是第几个评论你", "啥子课哦", i + 1221);
-            hotCommentsList.add(tmpComment);
-        }
-        //TODO:从网络加载数据
-        coursesAdapter = new HotCoursesAdapter(hotCoursesList);
-        commentsAdapter = new HotCommentsAdapter(this.getActivity(), hotCommentsList);
+//        hotCoursesList = new ArrayList<>();
+//        Course tmpCourse;
+//        for (int i = 0; i < 20; i++) {
+//            tmpCourse = new Course();
+//            tmpCourse.setCourseName("泥人张技艺教授与传承");
+//            tmpCourse.setAverageRatingsRollCall(3.6f);
+//            tmpCourse.setAverageRatingsScoring(3.7f);
+//            tmpCourse.setAverageRatingsSpareTimeOccupation(3.8f);
+//            tmpCourse.setAverageRatingsUsefulness(3.9f);
+//            tmpCourse.setAverageRatingsVividness(4.0f);
+//            tmpCourse.setRecommendationScore(4.9f);
+//            tmpCourse.setPeopleCount(1999);
+//            tmpCourse.setTeacherList(new ArrayList<Course.TeacherBrief>());
+//            tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("张彦泽", 1));
+//            tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("黄嘉星", 2));
+//            tmpCourse.getTeacherList().add(tmpCourse.new TeacherBrief("鲁迪", 3));
+//            hotCoursesList.add(tmpCourse);
+//        }
+//        hotCommentsList = new ArrayList<>();
+//        Comment tmpComment;
+//        for (int i = 0; i < 20; i++) {
+//            tmpComment = new Comment(4, i, i, "asdsadf" + i, "asddsa", "哈哈哈这是第几个评论你哈哈哈这是第几个评论你哈哈哈这是第几个评论你哈哈哈这是第几个评论你", "啥子课哦", i + 1221);
+//            hotCommentsList.add(tmpComment);
+//        }
+        //显示加载
+        showLoadingAnim(true);
+        //联网
+        MyCourseApplication application = (MyCourseApplication) getActivity().getApplication();
+        OkHttpClient client = application.getOkHttpClient();
+        Request request = new Request.Builder()
+                .url(MyCourseApplication.SERVER_URL + GET_HOTS_URL)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            Message msg = new Message();
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.what = LOAD_FAILED;
+                getInfoHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
+                            //成功
+                            JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+                            JSONArray courseJsonList = resultJson.getJSONArray("courseList");
+                            JSONArray commentJsonList = resultJson.getJSONArray("commentList");
+                            hotCoursesList = Course.parseJsonList(courseJsonList);
+                            hotCommentsList = Comment.parseJsonList(commentJsonList);
+
+                            msg.what = LOAD_SUCCESSFULLY;
+                            getInfoHandler.sendMessage(msg);
+                        } else {
+                            msg.what = LOAD_FAILED;
+                            msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                            getInfoHandler.sendMessage(msg);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -113,10 +191,21 @@ public class DiscoverFragment extends Fragment {
                 }
             }
         });
-        mPileLayout.setAdapter(coursesAdapter);
-        mCommentList.setAdapter(commentsAdapter);
     }
 
+    //显示加载动画
+    private void showLoadingAnim(boolean ifShow) {
+        if (ifShow) {
+            if (mLoadingAnimView == null) {
+                mLoadingAnimView = new LoadingAnimView(getActivity(), LoadingAnimView.BgColor.LIGHT);
+                mRelativeLayout.addView(mLoadingAnimView);
+            }
+
+        } else {
+            mRelativeLayout.removeView(mLoadingAnimView);
+            mLoadingAnimView = null;
+        }
+    }
 
     private static class CommentViewHolder {
         ImageView avatar;
@@ -246,7 +335,7 @@ public class DiscoverFragment extends Fragment {
                 viewHolder = (CommentViewHolder) convertView.getTag();
             }
             //设置头像显示
-            viewHolder.ratingBar.setNumStars(tmpComment.getRecstar());
+            viewHolder.ratingBar.setRating(tmpComment.getRecstar());
             viewHolder.nickName.setText(tmpComment.getNickname());
             viewHolder.timeStamp.setText(tmpComment.getTimestamp());
             viewHolder.commentContent.setText(tmpComment.getContent());

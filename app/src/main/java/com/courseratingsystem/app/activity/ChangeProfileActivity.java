@@ -372,9 +372,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         MultipartBody body = new MultipartBody.Builder("AaB03x")
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("files",null,new MultipartBody.Builder("BbC04y")
-                .addPart(Headers.of("Content-Disposition","form-data;filename=\"img.png\""),
-                        RequestBody.create(MediaType.parse("image/png"),file))
-                .build())
+                        .addPart(Headers.of("Content-Disposition", "form-data;filename=\"img.png\""), RequestBody.create(MediaType.parse("image/png"), file)).build())
                 .build();
         Request request = new Request.Builder()
                 .url(url_updateImage)

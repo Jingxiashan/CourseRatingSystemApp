@@ -17,18 +17,18 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".activity.CourseActivity"
-            android:theme="@style/CourseTheme" />
-
-        <activity android:name=".activity.CommentActivity">
-
+            android:theme="@style/CourseTheme">
         </activity>
         <activity
             android:name=".activity.TeacherActivity"
@@ -39,39 +39,27 @@
             android:theme="@style/PopupActivityStyle">
         </activity>
 
+        <activity android:name=".activity.CommentActivity" />
 
         <activity
             android:name=".activity.CommentPopupActivity"
             android:theme="@style/PopupActivityStyle">
-
         </activity>
-
 
         <activity android:name=".activity.AddCommentActivity"/>
 
-        <activity android:name=".activity.ChangePasswordActivity">
+        <activity android:name=".activity.ChangePasswordActivity" />
 
-        </activity>
+        <activity android:name=".activity.ChangeProfileActivity" />
 
-        <activity android:name=".activity.ChangeProfileActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activity.MyFavoritesActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".activity.MyFavoritesActivity">
-
-        </activity>
-
-        <activity android:name=".activity.MyCommentsActivity">
-
-        </activity>
+        <activity android:name=".activity.MyCommentsActivity" />
 
         <activity
             android:name=".activity.IndexActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
     </application>
 
 </manifest>

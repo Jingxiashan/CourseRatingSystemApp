@@ -36,9 +36,10 @@ public class DiscoverScrollView extends ScrollView {
     }
 
     private void init(Context context) {
-        scaledTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        scaledTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop() * 5;
         this.scrollTo(0, 0);
     }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -48,7 +49,7 @@ public class DiscoverScrollView extends ScrollView {
                 break;
             case MotionEvent.ACTION_MOVE:
                 mEndY = ev.getY();
-                if ((mEndY - mStartY) <= scaledTouchSlop) {
+                if ((mEndY - mStartY) <= -scaledTouchSlop) {
                     //下滑
                     onSwipeListener.onSwipe(SwipeDirect.UP);
                 } else if ((mEndY - mStartY) >= scaledTouchSlop) {

@@ -1,6 +1,11 @@
 package com.courseratingsystem.app.vo;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course implements Serializable {
@@ -13,6 +18,18 @@ public class Course implements Serializable {
     public Course() {
     }
 
+    public Course(int courseId, String courseName, float recommendationScore, float averageRatingsUsefulness, float averageRatingsVividness, float averageRatingsSpareTimeOccupation, float averageRatingsScoring, float averageRatingsRollCall, int peopleCount) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.recommendationScore = recommendationScore;
+        this.averageRatingsUsefulness = averageRatingsUsefulness;
+        this.averageRatingsVividness = averageRatingsVividness;
+        this.averageRatingsSpareTimeOccupation = averageRatingsSpareTimeOccupation;
+        this.averageRatingsScoring = averageRatingsScoring;
+        this.averageRatingsRollCall = averageRatingsRollCall;
+        this.peopleCount = peopleCount;
+        this.teacherList = new ArrayList<>();
+    }
     public Course(int courseId, String courseName, float recommendationScore, float averageRatingsUsefulness, float averageRatingsVividness, float averageRatingsSpareTimeOccupation, float averageRatingsScoring, float averageRatingsRollCall, int peopleCount, List<TeacherBrief> teacherList) {
         this.courseId = courseId;
         this.courseName = courseName;
@@ -24,6 +41,34 @@ public class Course implements Serializable {
         this.averageRatingsRollCall = averageRatingsRollCall;
         this.peopleCount = peopleCount;
         this.teacherList = teacherList;
+    }
+
+    public static List<Course> parseJsonList(JSONArray courseJsonList) throws JSONException {
+        List<Course> courseList = new ArrayList<>();
+        //处理courseList
+        for (int i = 0; i < courseJsonList.length(); i++) {
+            JSONObject jsonCourse = courseJsonList.getJSONObject(i);
+            Course tmpCourse = new Course(
+                    jsonCourse.getInt("courseId"),
+                    jsonCourse.getString("courseName"),
+                    (float) jsonCourse.getDouble("recScore"),
+                    (float) jsonCourse.getDouble("useScore"),
+                    (float) jsonCourse.getDouble("vivScore"),
+                    (float) jsonCourse.getDouble("ocuScore"),
+                    (float) jsonCourse.getDouble("scoScore"),
+                    (float) jsonCourse.getDouble("rolScore"),
+                    jsonCourse.getInt("peopleCount")
+            );
+            JSONArray teacherJsonList = jsonCourse.getJSONArray("teacherList");
+            List<Course.TeacherBrief> teacherList = new ArrayList<>();
+            for (int j = 0; j < teacherJsonList.length(); j++) {
+                JSONObject jsonTeacher = teacherJsonList.getJSONObject(j);
+                teacherList.add(tmpCourse.new TeacherBrief(jsonTeacher.getString("teacherName"), jsonTeacher.getInt("teacherId")));
+            }
+            tmpCourse.setTeacherList(teacherList);
+            courseList.add(tmpCourse);
+        }
+        return courseList;
     }
 
     public int getCourseId() {
@@ -108,11 +153,11 @@ public class Course implements Serializable {
 
     public class TeacherBrief implements Serializable {
         String teacherName;
-        int teacherid;
+        int teacherId;
 
-        public TeacherBrief(String teacherName, int teacherid) {
+        public TeacherBrief(String teacherName, int teacherId) {
             this.teacherName = teacherName;
-            this.teacherid = teacherid;
+            this.teacherId = teacherId;
         }
 
         public String getTeacherName() {
@@ -123,12 +168,12 @@ public class Course implements Serializable {
             this.teacherName = teacherName;
         }
 
-        public int getTeacherid() {
-            return teacherid;
+        public int getTeacherId() {
+            return teacherId;
         }
 
-        public void setTeacherid(int teacherid) {
-            this.teacherid = teacherid;
+        public void setTeacherId(int teacherId) {
+            this.teacherId = teacherId;
         }
     }
 }

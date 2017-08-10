@@ -7,9 +7,12 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +30,8 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 @ContentView(R.layout.activity_index)
 public class IndexActivity extends AppCompatActivity {
 
@@ -34,8 +39,16 @@ public class IndexActivity extends AppCompatActivity {
     AnimatorSet hideElementAnimatorSet;//这是隐藏头尾元素使用的动画
     AnimatorSet showElementAnimatorSet;//这是显示头尾元素使用的动画
     private long mLastBackPressed;
+    @ViewInject(R.id.activity_index_search_detail_layout)
+    private LinearLayout mSearchDetailLayout;
+    @ViewInject(R.id.activity_index_search_detail_button_by_course)
+    private TextView mDetialCourse;
+    @ViewInject(R.id.activity_index_search_detail_button_by_teacher)
+    private TextView mDetialTeacher;
     @ViewInject(R.id.activity_index_layout_search)
-    private RelativeLayout searchLayout;
+    private RelativeLayout mSearchLayout;
+    @ViewInject(R.id.activity_index_search_icon)
+    private ImageView mSearchIcon;
     @ViewInject(R.id.activity_index_input_search)
     private EditText mSearch;
     @ViewInject(R.id.activity_index_text_courseTab)
@@ -51,6 +64,8 @@ public class IndexActivity extends AppCompatActivity {
     private DiscoverFragment discoverFragment;
     private UserFragment userFragment;
 
+    private boolean isSearching;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,25 +73,87 @@ public class IndexActivity extends AppCompatActivity {
         x.view().inject(this);
         onTabSelected(mTabCourse);
         mSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        mSearch.setFocusable(false);
+        mSearch.setFocusableInTouchMode(false);
         mPressBackToast = Toast.makeText(this, getString(R.string.activity_index_toast_press_back_again_to_exit), Toast.LENGTH_SHORT);
+        mDetialCourse.setSelected(true);
+        mSearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (mSearchDetailLayout.getVisibility() == GONE) {
+                    isSearching = true;
+                    mSearch.setFocusableInTouchMode(true);
+                    mSearchDetailLayout.setVisibility(View.VISIBLE);
+                    mSearchIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_24dp, null));
+                    mSearchIcon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            exitSearchingMode();
+                        }
+                    });
+                    mSearchDetailLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                }
+                return false;
+            }
+        });
     }
 
+
     //搜索栏回车键监听
-    @Event(value = R.id.activity_index_input_search, type = TextView.OnEditorActionListener.class)
+    @Event(value = R.id.activity_index_input_search, type = TextView.OnKeyListener.class)
     private boolean onSearchKeyPressed(View view, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH
                 || actionId == EditorInfo.IME_ACTION_DONE
                 || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
             String searchText = mSearch.getText().toString();
+            exitSearchingMode();
             searchForCourses(searchText);
         }
         return false;
     }
 
+    //搜索详情页面按钮监听
+    @Event(value = {R.id.activity_index_search_detail_button_by_course, R.id.activity_index_search_detail_button_by_teacher}, type = View.OnClickListener.class)
+    private void onSearchTypeSelected(View view) {
+        switch (view.getId()) {
+            case R.id.activity_index_search_detail_button_by_course:
+                mDetialCourse.setSelected(true);
+                mDetialTeacher.setSelected(false);
+                break;
+            case R.id.activity_index_search_detail_button_by_teacher:
+                mDetialCourse.setSelected(false);
+                mDetialTeacher.setSelected(true);
+                break;
+        }
+    }
+
+    private void exitSearchingMode() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mSearchLayout.getWindowToken(), 0);
+        mSearchDetailLayout.setVisibility(GONE);
+        mSearchIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_24dp, null));
+        mSearchIcon.setOnClickListener(null);
+        mSearch.setFocusableInTouchMode(false);
+        isSearching = false;
+    }
+
     //执行搜索
     private void searchForCourses(String searchText) {
-        //TODO:联网执行搜索
+        if (courseListFragment == null) {
+            courseListFragment = new CourseListFragment();
+        }
+        int searchType;
+        if (mDetialCourse.isSelected()) {
+            searchType = CourseListFragment.CourseListSession.SEARCH_BY_COURSE;
+        } else {
+            searchType = CourseListFragment.CourseListSession.SEARCH_BY_TEACHER;
+        }
+        courseListFragment.search(searchText, searchType);
+        onTabSelected(mTabCourse);
     }
 
     //底部导航栏动作监听
@@ -94,6 +171,7 @@ public class IndexActivity extends AppCompatActivity {
                     transaction.add(R.id.activity_index_fragment_container, courseListFragment);
                 } else {
                     transaction.show(courseListFragment);
+                    courseListFragment.returnToTop();
                 }
                 break;
             case R.id.activity_index_text_discoverTab:
@@ -141,6 +219,10 @@ public class IndexActivity extends AppCompatActivity {
     //监听返回
     @Override
     public void onBackPressed() {
+        if (isSearching) {
+            exitSearchingMode();
+            return;
+        }
         long currentTime = System.currentTimeMillis();
         if (Math.abs(currentTime - mLastBackPressed) > mBackPressThreshold) {
             mPressBackToast.show();
@@ -151,13 +233,6 @@ public class IndexActivity extends AppCompatActivity {
         }
     }
 
-    //监听搜索按键
-    @Event(value = R.id.activity_index_input_search, type = View.OnClickListener.class)
-    private void onClickSearchBar(View view) {
-        //TODO:BUG点击时获取焦点
-        view.setFocusable(true);
-        mSearch.setFocusable(true);
-    }
 
     public void startHiddingToolbar() {
 //先清除其他动画
@@ -168,7 +243,7 @@ public class IndexActivity extends AppCompatActivity {
             //如果这个动画已经在运行了，就不管它
         } else {
             hideElementAnimatorSet = new AnimatorSet();
-            ObjectAnimator headerAnimator = ObjectAnimator.ofFloat(searchLayout, "translationY", searchLayout.getTranslationY(), -searchLayout.getHeight());//将ToolBar隐藏到上面
+            ObjectAnimator headerAnimator = ObjectAnimator.ofFloat(mSearchLayout, "translationY", mSearchLayout.getTranslationY(), -mSearchLayout.getHeight());//将ToolBar隐藏到上面
             ObjectAnimator footerAnimator = ObjectAnimator.ofFloat(footerBar, "translationY", footerBar.getTranslationY(), footerBar.getHeight());//将Button隐藏到下面
             ArrayList<Animator> animators = new ArrayList<>();
             animators.add(headerAnimator);
@@ -189,7 +264,7 @@ public class IndexActivity extends AppCompatActivity {
         } else {
             showElementAnimatorSet = new AnimatorSet();
             //下面两句是将头尾元素放回初始位置。
-            ObjectAnimator headerAnimator = ObjectAnimator.ofFloat(searchLayout, "translationY", searchLayout.getTranslationY(), 0f);
+            ObjectAnimator headerAnimator = ObjectAnimator.ofFloat(mSearchLayout, "translationY", mSearchLayout.getTranslationY(), 0f);
             ObjectAnimator footerAnimator = ObjectAnimator.ofFloat(footerBar, "translationY", footerBar.getTranslationY(), 0f);
             ArrayList<Animator> animators = new ArrayList<>();
             animators.add(headerAnimator);

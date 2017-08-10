@@ -23,6 +23,7 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
     private OnLoadMoreListener onLoadMoreListener;
     private OnSwipeListener onSwipeListener;
     private View mFooterView;
+    private boolean canHide;
 
     public CourseListSwipeRefreshView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,6 +52,12 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
         mCourseList.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (view.getFirstVisiblePosition() == 0) {
+                    onSwipeListener.onSwipe(SwipeDirect.DOWN);
+                    canHide = false;
+                } else {
+                    canHide = true;
+                }
                 switch (scrollState) {
                     //不滑动
                     case SCROLL_STATE_IDLE:
@@ -71,6 +78,7 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (isLastItem && !isLoadingMore) {
+            //for loading more
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     mStartY = ev.getY();
@@ -78,13 +86,14 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
                 case MotionEvent.ACTION_MOVE:
                     mEndY = ev.getY();
                     if ((mEndY - mStartY) <= scaledTouchSlop) {
-                        setLoading(true);
+                        setLoadingMore(true);
                     }
                     break;
                 case MotionEvent.ACTION_UP:
                     break;
             }
         } else {
+            //for swiping detection
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     mStartY = ev.getY();
@@ -92,22 +101,31 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
                 case MotionEvent.ACTION_MOVE:
                     mEndY = ev.getY();
                     if (onSwipeListener != null) {
-                    if ((mEndY - mStartY) <= scaledTouchSlop) {
-                        //下滑
-                        onSwipeListener.onSwipe(SwipeDirect.UP);
-                    } else if ((mEndY - mStartY) >= scaledTouchSlop) {
-                        //上滑
-                        onSwipeListener.onSwipe(SwipeDirect.DOWN);
+                        if ((mEndY - mStartY) <= -scaledTouchSlop) {
+                            //内容向下
+                            if (canHide) {
+                                onSwipeListener.onSwipe(SwipeDirect.UP);
+                            }
+                        } else if ((mEndY - mStartY) >= scaledTouchSlop) {
+                            //内容向上
+                            onSwipeListener.onSwipe(SwipeDirect.DOWN);
+                        }
                     }
-                        break;
-                    }
-
+                    break;
             }
         }
         return super.dispatchTouchEvent(ev);
     }
 
-    private void setLoading(boolean loading) {
+    public void setLoadingMore(boolean loading) {
+        if (loading && isLoadingMore) {
+            //如果正在加载并且再要求加载的话，取消此次操作
+            return;
+        }
+        if (!loading && !isLoadingMore) {
+            //如果不是正在加载但要求取消加载，取消此次操作
+            return;
+        }
         isLoadingMore = loading;
         if (loading) {
             mCourseList.addFooterView(mFooterView);

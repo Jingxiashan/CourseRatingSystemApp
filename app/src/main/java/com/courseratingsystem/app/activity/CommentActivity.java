@@ -324,7 +324,7 @@ public class CommentActivity extends AppCompatActivity {
                 viewHolder = (CommentsViewHolder) convertView.getTag();
             }
             //设置头像显示
-            viewHolder.ratingBar.setNumStars(tmpComment.getRecstar());
+            viewHolder.ratingBar.setRating(tmpComment.getRecstar());
             viewHolder.nickName.setText(tmpComment.getNickname());
             viewHolder.timeStamp.setText(tmpComment.getTimestamp());
             viewHolder.commentContent.setText(tmpComment.getContent());

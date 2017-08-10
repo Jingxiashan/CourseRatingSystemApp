@@ -1,13 +1,19 @@
 package com.courseratingsystem.app.vo;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jingxiashan on 2017/8/8.
  */
 
 public class Comment implements Serializable {
-    private int recstar;
+    private float recstar;
     private int commentid;
     private int userid;
     private String nickname;
@@ -18,16 +24,35 @@ public class Comment implements Serializable {
     private int likecount;
     private int teacherid;
     private String teachername;
-    private int usefulness;
-    private int sparetimeoccupation;
-    private int vivdness;
-    private int rollcall;
-    private int scorehigh;
+    private float usefulness;
+    private float sparetimeoccupation;
+    private float vivdness;
+    private float rollcall;
+    private float scorehigh;
+
+    public Comment(float recstar, int commentid, int userid, String nickname, String timestamp, String content, String coursename, int courseid, int likecount, int teacherid, String teachername, float usefulness, float sparetimeoccupation, float vivdness, float rollcall, float scorehigh) {
+        this.recstar = recstar;
+        this.commentid = commentid;
+        this.userid = userid;
+        this.nickname = nickname;
+        this.timestamp = timestamp;
+        this.content = content;
+        this.coursename = coursename;
+        this.courseid = courseid;
+        this.likecount = likecount;
+        this.teacherid = teacherid;
+        this.teachername = teachername;
+        this.usefulness = usefulness;
+        this.sparetimeoccupation = sparetimeoccupation;
+        this.vivdness = vivdness;
+        this.rollcall = rollcall;
+        this.scorehigh = scorehigh;
+    }
 
     public Comment() {
     }
 
-    public Comment(int recstar, int commentid, int userid, String nickname, String timestamp, String content, String coursename, int likecount) {
+    public Comment(float recstar, int commentid, int userid, String nickname, String timestamp, String content, String coursename, int likecount) {
         this.recstar = recstar;
         this.commentid = commentid;
         this.userid = userid;
@@ -36,6 +61,34 @@ public class Comment implements Serializable {
         this.content = content;
         this.coursename = coursename;
         this.likecount = likecount;
+    }
+
+    public static List<Comment> parseJsonList(JSONArray commentJsonList) throws JSONException {
+        List<Comment> commentList = new ArrayList<>();
+        //处理courseList
+        for (int i = 0; i < commentJsonList.length(); i++) {
+            JSONObject jsonComment = commentJsonList.getJSONObject(i);
+            Comment tmpComment = new Comment(
+                    (float) jsonComment.getDouble("recommandScore"),
+                    jsonComment.getInt("commentId"),
+                    jsonComment.getInt("userId"),
+                    jsonComment.getString("nickName"),
+                    jsonComment.getString("timeStamp"),
+                    jsonComment.getString("critics"),
+                    jsonComment.getString("courseName"),
+                    jsonComment.getInt("courseId"),
+                    jsonComment.getInt("likeCount"),
+                    jsonComment.getInt("teacherId"),
+                    jsonComment.getString("teacherName"),
+                    (float) jsonComment.getDouble("ratingUsefulness"),
+                    (float) jsonComment.getDouble("ratingSpareTimeOccupation"),
+                    (float) jsonComment.getDouble("ratingVividness"),
+                    (float) jsonComment.getDouble("ratingRollCall"),
+                    (float) jsonComment.getDouble("ratingScoring")
+            );
+            commentList.add(tmpComment);
+        }
+        return commentList;
     }
 
     public int getCourseid() {
@@ -62,52 +115,52 @@ public class Comment implements Serializable {
         this.teachername = teachername;
     }
 
-    public int getUsefulness() {
+    public float getUsefulness() {
         return usefulness;
     }
 
-    public void setUsefulness(int usefulness) {
+    public void setUsefulness(float usefulness) {
         this.usefulness = usefulness;
     }
 
-    public int getSparetimeoccupation() {
+    public float getSparetimeoccupation() {
         return sparetimeoccupation;
     }
 
-    public void setSparetimeoccupation(int sparetimeoccupation) {
+    public void setSparetimeoccupation(float sparetimeoccupation) {
         this.sparetimeoccupation = sparetimeoccupation;
     }
 
-    public int getVivdness() {
+    public float getVivdness() {
         return vivdness;
     }
 
-    public void setVivdness(int vivdness) {
+    public void setVivdness(float vivdness) {
         this.vivdness = vivdness;
     }
 
-    public int getRollcall() {
+    public float getRollcall() {
         return rollcall;
     }
 
-    public void setRollcall(int rollcall) {
+    public void setRollcall(float rollcall) {
         this.rollcall = rollcall;
     }
 
-    public int getScorehigh() {
+    public float getScorehigh() {
         return scorehigh;
     }
 
-    public void setScorehigh(int scorehigh) {
+    public void setScorehigh(float scorehigh) {
         this.scorehigh = scorehigh;
     }
 
-    public int getRecstar() {
+    public float getRecstar() {
         return recstar;
 
     }
 
-    public void setRecstar(int recstar) {
+    public void setRecstar(float recstar) {
         this.recstar = recstar;
     }
 
@@ -166,5 +219,4 @@ public class Comment implements Serializable {
     public void setLikecount(int likecount) {
         this.likecount = likecount;
     }
-
 }

@@ -32,6 +32,8 @@
     <string name="activity_index_text_tab_discover">发现</string>
     <string name="activity_index_text_tab_user">我的</string>
     <string name="activity_index_toast_press_back_again_to_exit">再按返回键退出</string>
+    <string name="activity_index_search_detail_button_by_course">课程名</string>
+    <string name="activity_index_search_detail_button_by_teacher">老师名</string>
     <!-- for courselist fragment -->
     <string name="fragment_courselist_floatingbutton_label_rec">推荐分高优先</string>
     <string name="fragment_courselist_floatingbutton_label_use">内容有用优先</string>

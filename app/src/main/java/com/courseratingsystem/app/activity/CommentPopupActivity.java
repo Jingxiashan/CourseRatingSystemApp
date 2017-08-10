@@ -42,7 +42,7 @@ public class CommentPopupActivity extends AppCompatActivity {
         x.view().inject(this);
 
         Comment comment = (Comment) getIntent().getSerializableExtra(COMMENT_KEY);
-        ratingBarPop.setNumStars(comment.getRecstar());
+        ratingBarPop.setRating(comment.getRecstar());
         usernamePop.setText(comment.getNickname());
         contentPop.setText(comment.getContent());
         timestampPop.setText(comment.getTimestamp());

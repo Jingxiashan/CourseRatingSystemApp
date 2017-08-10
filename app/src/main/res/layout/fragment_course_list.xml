@@ -94,4 +94,14 @@
             app:fab_title="@string/fragment_courselist_floatingbutton_label_rol" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_courselist_floating_toTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:fab_colorNormal="@color/pureWhite"
+        app:fab_colorPressed="@color/bgGrey"
+        app:fab_icon="@drawable/ic_arrow_upward_24dp"
+        app:fab_size="mini" />
 </RelativeLayout>
