@@ -20,22 +20,23 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/item_activity_my_comments_image"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/default_personal_image"/>
+                android:layout_width="40dp"
+                android:layout_height="40sp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/default_personal_image" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="4"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -47,27 +48,35 @@
                         android:id="@+id/item_activity_my_comments_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="然也"
-                        android:textSize="20sp" />
+                        android:text="测试"
+                        android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/item_activity_my_comments_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="2016-03-01 06:44:00" />
+                        android:layout_marginLeft="20dp"
+                        android:text="测试"
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/item_activity_my_comments_critics"
-                    android:layout_width="wrap_content"
+                <!--具体评论内容-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="略严格" />
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:id="@+id/item_activity_my_comments_critics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="2"
+                        android:text="测试"
+                        android:textColor="@color/pureBlack" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/textview_border"
                     android:orientation="horizontal">
@@ -76,62 +85,77 @@
                         android:id="@+id/item_activity_my_comments_teacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="冯剑丰" />
+                        android:text="教师"
+                        android:textSize="10sp"/>
 
                     <TextView
                         android:id="@+id/item_activity_my_comments_course"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="海洋与人类文明" />
+                        android:text="课程"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="center_vertical">
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="点赞数"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp" />
+
+                    <TextView
                         android:id="@+id/item_activity_my_comments_likeCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:text="3"/>
+                        android:layout_height="25sp"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="likeCount"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/my_comments_like"/>
-                        <ImageView
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:layout_marginLeft="170dp"
+                        android:background="@drawable/activity_comment_like_text_border"
+                        android:gravity="center_horizontal">
+
+                        <ImageButton
                             android:id="@+id/item_activity_my_comments_delete"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/my_comments_delete"/>
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center"
+                            android:background="#00000000"
+                            android:src="@drawable/delete" />
+
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/activity_comment_like_text_border"
+                        android:gravity="center_horizontal">
+                        <ImageButton
+                            android:id="@+id/item_activity_my_comments_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#00000000"
+                            android:src="@drawable/detail" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
 
             </LinearLayout>
-
         </LinearLayout>
-
     </android.support.v7.widget.CardView>
 </LinearLayout>

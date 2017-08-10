@@ -3,172 +3,170 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/default_my_bg"
     tools:context="com.courseratingsystem.app.activity.ChangeProfileActivity">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp">
-            <ImageView
-                android:id="@+id/activity_change_profile_personal_icon"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/default_personal_image"/>
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignBottom="@+id/activity_change_profile_personal_icon"
-                android:layout_alignRight="@+id/activity_change_profile_personal_icon"
-                android:layout_marginBottom="-1dp"
-                android:layout_marginRight="-1dp"
-                android:src="@drawable/default_personal_icom_add"/>
-        </RelativeLayout>
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/activity_change_profile_personal_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/default_personal_image"/>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/activity_change_profile_personal_image"
+                    android:layout_alignRight="@+id/activity_change_profile_personal_image"
+                    android:layout_marginBottom="-1dp"
+                    android:layout_marginRight="-1dp"
+                    android:src="@drawable/default_personal_image_add"/>
+            </RelativeLayout>
 
-
-
-        <!-- 昵称 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom"
-                android:src="@drawable/change_profile_nickname"/>
-
+            <!-- 昵称 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/activity_change_profile_nickname_textview"
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/change_profile_nickname"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="昵称"/>
-                <EditText
-                    android:id="@+id/activity_change_profile_nickname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/line_et_bg"
-                    android:paddingBottom="3dp"
-                    android:text="然也" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/activity_change_profile_nickname_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="昵称"/>
+                    <EditText
+                        android:id="@+id/activity_change_profile_nickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_et_bg"
+                        android:paddingBottom="3dp"
+                        android:text="" />
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- 微信账号 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-<<<<<<< Updated upstream
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/change_profile_wechat" />
-=======
-                android:layout_gravity="bottom"
-                android:src="@drawable/change_profile_wechat"/>
->>>>>>> Stashed changes
-
+            <!-- 微信账号 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/activity_change_profile_wechatAccount_textview"
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/change_profile_wechat"/>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="微信账号"/>
-                <EditText
-                    android:id="@+id/activity_change_profile_wechatAccount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/line_et_bg"
-                    android:paddingBottom="3dp"
-                    android:text="chenxingqiming" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/activity_change_profile_wechatAccount_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="微信账号"/>
+                    <EditText
+                        android:id="@+id/activity_change_profile_wechatAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/line_et_bg"
+                        android:paddingBottom="3dp"
+                        android:text="" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- 年级 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom"
-                android:src="@drawable/change_profile_grade"/>
-
+            <!-- 年级 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
-                <TextView
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/change_profile_grade"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="年级" />
-                <Spinner
-                    android:id="@+id/activity_change_profile_grade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#888888"/>
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="年级" />
+                    <Spinner
+                        android:id="@+id/activity_change_profile_grade"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#888888"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- 简介 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="bottom"
-                android:src="@drawable/change_profile_introduction"/>
-
+            <!-- 简介 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/change_profile_introduction"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/activity_change_profile_introduction_textview"
@@ -184,23 +182,21 @@
                         android:background="@drawable/line_et_bg"
                         android:maxLines="3"
                         android:paddingBottom="3dp"
-                        android:text="仗义每多屠狗辈" />
+                        android:text="" />
 
                 </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="修改"
+                android:textColor="@android:color/holo_blue_dark"
+                android:id="@+id/activity_change_profile_submit"/>
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/activity_change_profile_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:layout_marginTop="10dp"
-            android:text="修改" />
-=======
-            android:layout_marginTop="20dp"
-            android:text="修改"
-            android:id="@+id/activity_change_profile_submit"/>
->>>>>>> Stashed changes
-
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

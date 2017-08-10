@@ -8,15 +8,15 @@
     <!-- 边框 -->
     <stroke
         android:width="1dp"
-        android:color="@color/pureBlack"/>
+        android:color="@color/lightGreyAlpha"/>
     <!-- 圆角 -->
     <corners android:radius="5dp"/>
     <!-- 边距 -->
     <padding
-        android:bottom="1dp"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="1dp"/>
+        android:bottom="2dp"
+        android:left="4dp"
+        android:right="4dp"
+        android:top="2dp"/>
     <!-- 渐变 -->
     <!--<gradient-->
         <!--android:angle="270"-->

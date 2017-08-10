@@ -7,21 +7,57 @@
     android:layout_height="match_parent"
     tools:context="com.courseratingsystem.app.activity.MyFavoritesActivity">
 
-    <ImageView
-        android:id="@+id/activity_my_comments_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/splash_logo" />
-
-    <ListView
-        android:layout_below="@id/activity_my_comments_image"
-        android:id="@+id/activity_my_favorite_listView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:divider="@null">
-    </ListView>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
+        <!-- 分割线 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                android:layout_weight="3"
+                android:background="@color/lightGreyAlpha" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:gravity="center_horizontal"
+                android:text="哦，我收藏了这些"
+                android:textColor="@color/lightGrey"
+                android:textSize="@dimen/activity_login_font_size" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                android:layout_weight="3"
+                android:background="@color/lightGreyAlpha" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/activity_my_favorite_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:divider="@null">
+        </ListView>
+
+    </LinearLayout>
 </RelativeLayout>
