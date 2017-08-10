@@ -51,15 +51,16 @@
         <activity android:name=".activity.AddCommentActivity"/>
 
         <activity android:name=".activity.ChangePasswordActivity">
+
+
+        </activity>
+
+        <activity android:name=".activity.ChangeProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <activity android:name=".activity.ChangeProfileActivity">
 
         </activity>
 
