@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,15 +51,28 @@ import okhttp3.Response;
 @ContentView(R.layout.activity_change_profile)
 public class ChangeProfileActivity extends AppCompatActivity {
 
+    private static final int WITHOUT_INTERNET = 0;
+    private static final int GET_IMAGE_IS_SUCCESS = 1;
+    private static final int GET_IMAGE_IS_FAIL = 2;
+    private static final int GET_INFORMATION_IS_SUCCESS = 3;
+    private static final int GET_INFORMATION_IS_FAIL = 4;
+    private static final int CHANGE_IMAGE_IS_SUCCESS = 5;
+    private static final int CHANGE_IMAGE_IS_FAIL = 6;
+    private static final int CHANGE_INFORMATION_IS_SUCCESS = 7;
+    private static final int CHANGE_INFORMATION_IS_FAIL = 8;
+    //下面是有关头像处理的部分
+    private static final int CHOOSE_PICTURE = 0;
+    private static final int TAKE_PICTURE = 1;
+    private static final int CROP_SMALL_PICTURE = 2;
+    private static Uri tempUri;
+    OkHttpClient okHttpClient = new OkHttpClient();
     private MyCourseApplication myCourseApplication;
     private Integer userId;
     private String[] old_information_strings = null;
-
     @ViewInject(R.id.activity_change_profile_grade)
     private Spinner grade_spinner;
     @ViewInject(R.id.activity_change_profile_personal_image)
     private ImageView personal_image;
-
     @ViewInject(R.id.activity_change_profile_nickname_textview)
     private TextView nickname_textview;
     @ViewInject(R.id.activity_change_profile_nickname)
@@ -72,18 +85,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private TextView introduction_textview;
     @ViewInject(R.id.activity_change_profile_introduction)
     private EditText introduction_edit;
-
-    private static final int WITHOUT_INTERNET = 0;
-    private static final int GET_IMAGE_IS_SUCCESS = 1;
-    private static final int GET_IMAGE_IS_FAIL = 2;
-    private static final int GET_INFORMATION_IS_SUCCESS = 3;
-    private static final int GET_INFORMATION_IS_FAIL = 4;
-    private static final int CHANGE_IMAGE_IS_SUCCESS = 5;
-    private static final int CHANGE_IMAGE_IS_FAIL = 6;
-    private static final int CHANGE_INFORMATION_IS_SUCCESS = 7;
-    private static final int CHANGE_INFORMATION_IS_FAIL = 8;
-
-    OkHttpClient okHttpClient = new OkHttpClient();
     //Handler 主线程创建---消息的处理主线程
     Handler handler = new Handler(){
         @Override
@@ -272,13 +273,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    //下面是有关头像处理的部分
-    private static final int CHOOSE_PICTURE = 0;
-    private static final int TAKE_PICTURE = 1;
-    private static final int CROP_SMALL_PICTURE = 2;
-    private static Uri tempUri;
 
     //显示修改头像的对话框
     protected void showChoosePicDialog(){

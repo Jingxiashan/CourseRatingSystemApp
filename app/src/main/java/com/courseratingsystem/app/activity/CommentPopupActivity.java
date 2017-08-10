@@ -17,6 +17,7 @@ import org.xutils.x;
 @ContentView(R.layout.activity_comment_popup)
 public class CommentPopupActivity extends AppCompatActivity {
     public final static String COMMENT_KEY = "my_currentcomment";
+
     @ViewInject(R.id.activity_commentpopup_ratingbar_commentRating)
     private RatingBar ratingBarPop;
     @ViewInject(R.id.activity_commentpopup_text_commentContent)

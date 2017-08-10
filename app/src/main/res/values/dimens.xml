@@ -47,8 +47,8 @@
     <dimen name="activity_addcomment_side_margin">20dp</dimen>
     <dimen name="activity_addcomment_header_font_size">20sp</dimen>
     <dimen name="activity_addcomment_subheader_font_size">15sp</dimen>
-    <dimen name="activity_addcomment_top_margin">20sp</dimen>
-    <dimen name="activity_addcomment_subtop_margin">20sp</dimen>
+    <dimen name="activity_addcomment_top_margin">20dp</dimen>
+    <dimen name="activity_addcomment_subtop_margin">20dp</dimen>
 
     <!--CommentActivity-->
     <dimen name="activity_comment_content_height">160sp</dimen>]

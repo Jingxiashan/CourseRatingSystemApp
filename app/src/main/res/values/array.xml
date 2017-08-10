@@ -13,5 +13,10 @@
         <item>2019级</item>
         <item>2020级</item>
     </string-array>
-
+    <string-array name="finaltype">
+        <item>论文结课</item>
+        <item>开卷考试</item>
+        <item>闭卷考试</item>
+        <item>其他</item>
+    </string-array>
 </resources>

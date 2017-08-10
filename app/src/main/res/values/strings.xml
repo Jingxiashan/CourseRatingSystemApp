@@ -71,7 +71,20 @@
     <string name="internet_connection_failed">网络连接失败，请重试</string>
 
     <!--comment/addcomment-->
-    <string name="activity_addcomment_button_submit">提交</string>
+    <string name="activity_addcomment_button_submit">嗯，提交</string>
+    <string name="activity_addcomment_attrname_usefulness">内容好否？</string>
+    <string name="activity_addcomment_attrdescrip_usefulness">从老师讲授知识层面来讲，内容对自己有益程度；内容有益，请给多星。</string>
+    <string name="activity_addcomment_attrname_vividness">上课爽否？</string>
+    <string name="activity_addcomment_attrdescrip_vividness">上课时，课堂氛围情况；课堂氛围活跃，老师授课生动有趣，请给多星。</string>
+    <string name="activity_addcomment_attrname_rollcall">点名少否？</string>
+    <string name="activity_addcomment_attrdescrip_rollcall">根据自己学习经历，进行评估；点名频率低，请给多星。</string>
+    <string name="activity_addcomment_attrname_timeoccupation">占时少否？</string>
+    <string name="activity_addcomment_attrdescrip_timeoccupation">根据自己的学习经历，与其他同类型课程比较；占用课余时间少，请给多星。</string>
+    <string name="activity_addcomment_attrname_scorehigh">给分高否？</string>
+    <string name="activity_addcomment_attrdescrip_scorehigh">根据自己的学习经历，与其他同类型课程比较；期末给分高，请给多星。</string>
+    <string name="activity_addcomment_warn_nocommentcontent">老司机你忘了留言啦~</string>
+    <string name="activity_addcomment_reply_positive">哦，我回去写。</string>
+    <string name="activity_addcomment_alertdialog_title">啊哦</string>
     <!-- for comment items of comment activity -->
     <string name="item_comment_activity_recScore">推荐指数：</string>
     <string name="item_comment_activity_likeCount">点赞数</string>

@@ -7,8 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,7 +28,10 @@ import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.view.CommentListView;
+import com.courseratingsystem.app.view.CourseListSwipeRefreshView;
 import com.courseratingsystem.app.vo.Comment;
+import com.courseratingsystem.app.vo.Course;
+import com.courseratingsystem.app.vo.Teacher;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -36,6 +43,23 @@ import java.util.List;
 
 @ContentView(R.layout.activity_comment)
 public class CommentActivity extends AppCompatActivity {
+    public static final String COURSE_INFO = "course_info";
+
+    private static int TYPE_REFRESH = 0;
+    private static int TYPE_LOADMORE = 1;
+    private static Handler loadDataHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //TODO：根据sortType和msg.what加载新数据
+            if (msg.what == TYPE_REFRESH) {
+                Log.e("LISTSCROLL", "刷新");
+            } else if (msg.what == TYPE_LOADMORE) {
+                Log.e("LISTSCROLL", "加载新数据");
+
+            }
+        }
+    };
 
     AnimatorSet hideElementAnimatorSet;//这是隐藏头尾元素使用的动画
     AnimatorSet showElementAnimatorSet;//这是显示头尾元素使用的动画
@@ -48,7 +72,8 @@ public class CommentActivity extends AppCompatActivity {
     private TextView courseName;
     @ViewInject(R.id.activity_comment_linear_teacherlayout)
     private LinearLayout teacherLayout;
-
+    @ViewInject(R.id.activity_commentlist_refresh)
+    private CourseListSwipeRefreshView commentSwipRefresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +102,61 @@ public class CommentActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //设置标题课程信息
+        if (getIntent().getSerializableExtra(COURSE_INFO) == Course.class) {
+            final Course course = (Course) getIntent().getSerializableExtra(COURSE_INFO);
+            courseName.setText(course.getCourseName());
+
+        }
+        if (getIntent().getSerializableExtra(COURSE_INFO) == Teacher.class) {
+            final Teacher teacher = (Teacher) getIntent().getSerializableExtra(COURSE_INFO);
+            courseName.setText(teacher.getTeachername());
+
+        }
+
+        //courseName.setText(course.getCourseName());
+        courseName.setText("Course_name");
+        //courseRecRatingBar.setNumStars((int)course.getRecommendationScore());
+
+
+//        for(int i=0;i<course.getTeacherList().size();i++){
+//            TextView teacherText = new TextView(this);
+//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            layoutParams.setMargins(10, 10, 10,10);
+//            teacherText.setBackground(getDrawable(R.drawable.activity_comment_teacher_button_bg));
+//            teacherText.setGravity(Gravity.CENTER);
+//            teacherText.setLayoutParams(layoutParams);
+//            teacherText.setTextSize(15);
+//            teacherText.setText(course.getTeacherList().get(i).toString());
+//            teacherText.setHeight(60);
+//            teacherText.setWidth(160);
+//            teacherText.setTextColor(getResources().getColor(R.color.teacher_blue_light));
+//            teacherLayout.addView(teacherText);
+//
+//            teacherText.setOnClickListener(new View.OnClickListener() {
+//                //TODO 点击后弹出对应教师popupwindow
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
+//
+//
+//        }
+
+        List<Comment> commentList = new ArrayList<>();
+        Comment tcomment = new Comment();
+        for (int i = 0; i < 20; i++) {
+            tcomment.setTimestamp("1997-2-26");
+            tcomment.setNickname("井下山");
+            tcomment.setRecstar(4);
+            tcomment.setContent("hhhhhhhhhhh");
+            tcomment.setLikecount(100);
+            commentList.add(tcomment);
+
+        }
+
+        //测试
         TextView teacherText = new TextView(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(20, 20, 20, 20);
@@ -99,9 +179,44 @@ public class CommentActivity extends AppCompatActivity {
         });
 
 
+        //TODO:得到commentlist
         actionBar.setTitle("课程评论");
-        CommentsAdapter commentsAdapter = new CommentsAdapter(CommentActivity.this, new ArrayList<Comment>());
+        CommentsAdapter commentsAdapter = new CommentsAdapter(CommentActivity.this, commentList);
         allcomments_listView.setAdapter(commentsAdapter);
+
+        //下拉刷新
+        commentSwipRefresh.setProgressViewOffset(true, 0, getResources().getDimensionPixelOffset(R.dimen.activity_index_search_height));
+        commentSwipRefresh.setColorSchemeColors(Color.GRAY, Color.BLACK, getResources()
+                .getColor(R.color.teacher_blue_light));
+        commentSwipRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Message msg = new Message();
+                msg.what = TYPE_REFRESH;
+                loadDataHandler.sendMessage(msg);
+            }
+        });
+        commentSwipRefresh.setOnLoadMoreListener(new CourseListSwipeRefreshView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                //TODO:加载更多
+            }
+        });
+        commentSwipRefresh.setOnSwipeListener(new CourseListSwipeRefreshView.OnSwipeListener() {
+            @Override
+            public void onSwipe(CourseListSwipeRefreshView.SwipeDirect swipeDirect) {
+                switch (swipeDirect) {
+                    case UP:
+
+                        break;
+                    case DOWN:
+
+                        break;
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -213,7 +328,7 @@ public class CommentActivity extends AppCompatActivity {
             viewHolder.nickName.setText(tmpComment.getNickname());
             viewHolder.timeStamp.setText(tmpComment.getTimestamp());
             viewHolder.commentContent.setText(tmpComment.getContent());
-            viewHolder.likeCount.setText(tmpComment.getLikecount());
+            viewHolder.likeCount.setText("" + tmpComment.getLikecount());
 
             viewHolder.showDetail.setOnClickListener(new View.OnClickListener() {
                 @Override

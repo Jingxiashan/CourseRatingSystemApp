@@ -54,7 +54,7 @@ public class CourseListFragment extends Fragment {
             }
         }
     };
-    ;
+
     @ViewInject(R.id.fragment_courselist_refresh)
     CourseListSwipeRefreshView mSwipeRefresh;
     @ViewInject(R.id.fragment_courselist_list_course)

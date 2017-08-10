@@ -106,8 +106,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="25sp"
-                        android:layout_marginRight="50sp"
+                        android:layout_height="25dp"
                         android:layout_marginStart="@dimen/activity_comment_content_side_margin"
                         android:gravity="center"
                         android:text="@string/item_comment_activity_likeCount"
@@ -117,9 +116,8 @@
                     <TextView
                         android:id="@+id/item_activity_comment_text_likeCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="25sp"
-                        android:layout_marginRight="10sp"
-                        android:layout_marginStart="5sp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="5dp"
                         android:gravity="center"
                         android:text="100"
                         android:textColor="@color/lightGrey"
@@ -127,8 +125,8 @@
 
 
                     <LinearLayout
-                        android:layout_width="25sp"
-                        android:layout_height="25sp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="150dp"
                         android:background="@drawable/activity_comment_like_text_border"
@@ -145,8 +143,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="25sp"
-                        android:layout_height="25sp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="9dp"
                         android:background="@drawable/activity_comment_like_text_border"

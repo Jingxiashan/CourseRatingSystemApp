@@ -23,4 +23,7 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="myblue">#3333ff</color>
     <color name="teacher_blue_light">#ff33b5e5</color>
+    <color name="darkDirtyBlue">#0c2128</color>
+    <color name="soilGreen">#6e6b41</color>
+    <color name="normalGrey">#cdcdcd</color>
 </resources>

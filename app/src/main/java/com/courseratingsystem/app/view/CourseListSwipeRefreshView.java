@@ -91,6 +91,7 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     mEndY = ev.getY();
+                    if (onSwipeListener != null) {
                     if ((mEndY - mStartY) <= scaledTouchSlop) {
                         //下滑
                         onSwipeListener.onSwipe(SwipeDirect.UP);
@@ -98,7 +99,9 @@ public class CourseListSwipeRefreshView extends SwipeRefreshLayout {
                         //上滑
                         onSwipeListener.onSwipe(SwipeDirect.DOWN);
                     }
-                    break;
+                        break;
+                    }
+
             }
         }
         return super.dispatchTouchEvent(ev);

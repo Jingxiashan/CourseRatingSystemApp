@@ -6,17 +6,23 @@
     android:background="@color/bgGrey"
     tools:context="com.courseratingsystem.app.activity.AddCommentActivity">
 
+    <com.courseratingsystem.app.view.CourseListSwipeRefreshView
+        android:id="@+id/activity_commentlist_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
 
-    <com.courseratingsystem.app.view.CommentListView
-        android:id="@+id/activity_comment_listview_allcomments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="11dp"
-        android:layout_marginStart="11dp"
-        android:divider="@null"
-        android:dividerHeight="@dimen/activity_comment_content_subside_margin">
+        <com.courseratingsystem.app.view.CommentListView
+            android:id="@+id/activity_comment_listview_allcomments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="11dp"
+            android:layout_marginStart="11dp"
+            android:divider="@null"
+            android:dividerHeight="@dimen/activity_comment_content_subside_margin">
 
-    </com.courseratingsystem.app.view.CommentListView>
+        </com.courseratingsystem.app.view.CommentListView>
+    </com.courseratingsystem.app.view.CourseListSwipeRefreshView>
 
 
     <!--课程基本信息标题-->
@@ -47,12 +53,11 @@
                     android:layout_height="wrap_content"
                     android:text="Course_Name"
                     android:textSize="@dimen/activity_addcomment_header_font_size" />
-
                 <LinearLayout
                     android:id="@+id/activity_comment_linear_teacherlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="1dp"
                     android:orientation="horizontal">
                     <!--<ImageView-->
                     <!--android:layout_width="wrap_content"-->
@@ -75,27 +80,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_comment_content_side_margin"
-                android:layout_marginTop="20dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="推荐指数：" />
-
-                <RatingBar
-                    android:id="@+id/activity_comment_header_ratingbar_commentRating"
-                    style="@style/CourseCommentRatingStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_comment_content_side_margin"
-                    android:layout_marginTop="6dp" />
-
-            </LinearLayout>
 
 
         </LinearLayout>

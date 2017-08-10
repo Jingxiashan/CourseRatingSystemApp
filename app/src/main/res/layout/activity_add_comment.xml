@@ -1,235 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pile="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.courseratingsystem.app.activity.AddCommentActivity">
 
-
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="71dp">
+        android:layout_alignParentTop="true">
 
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/scrollView2"
-        android:layout_marginTop="28dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-        <!--课程基本信息标题-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_addcomment_side_margin"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/activity_addcomment_image_courseImag"
-                android:layout_width="80sp"
-                android:layout_height="80sp"
-                android:src="@mipmap/app_icon" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/activity_addcomment_side_margin"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/activity_addcomment_text_courseName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Course_Name"
-                    android:textSize="@dimen/activity_addcomment_header_font_size" />
-
-                <TextView
-                    android:id="@+id/activity_addcomment_text_TeacherName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Course_Teacher_Name"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
-
-            </LinearLayout>
-        </LinearLayout>
-        <!--评课部分-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <!--课程基本信息标题-->
+            <!--课程基本信息标题-->
             <LinearLayout
+                android:id="@+id/activity_comment_layout_courseheaderinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_login_input_margin"
-                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/bgGrey"
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0.5dp"
-                    android:layout_marginBottom="@dimen/activity_login_input_margin_half"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="@dimen/activity_login_input_margin_half"
-                    android:layout_weight="3"
-                    android:background="@color/lightGreyAlpha" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="8"
-                    android:gravity="center_horizontal"
-                    android:text="课程基本属性评价"
-                    android:textColor="@color/lightGrey"
-                    android:textSize="@dimen/activity_login_font_size" />
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0.5dp"
-                    android:layout_marginBottom="@dimen/activity_login_input_margin_half"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="@dimen/activity_login_input_margin_half"
-                    android:layout_weight="3"
-                    android:background="@color/lightGreyAlpha" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/activity_addcomment_text_courseName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Course_Name"
+                            android:textSize="@dimen/activity_addcomment_header_font_size" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:text="推荐指数：" />
+
+                            <RatingBar
+                                android:id="@+id/activity_addcomment_header_ratingbar_commentRating"
+                                style="@style/CourseCommentRatingStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="1dp"
+                                android:layout_marginTop="1dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/activity_addcomment_linear_teacherlayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:orientation="horizontal">
+                            <!--<ImageView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="20dp"-->
+                            <!--android:layout_marginTop="@dimen/activity_login_input_margin"-->
+                            <!--android:src="@drawable/teacher" />-->
+
+                            <!--<TextView-->
+                            <!--android:background="@drawable/activity_comment_teacher_button_bg"-->
+                            <!--android:gravity="center"-->
+                            <!--android:id="@+id/activity_comment_button_teacher"-->
+                            <!--android:layout_width="@dimen/activity_comment_teacehr_text_width"-->
+                            <!--android:layout_height="@dimen/activity_comment_teacehr_text_height"-->
+                            <!--android:layout_marginStart="@dimen/activity_comment_teacher_side_margin"-->
+                            <!--android:textColor="@android:color/holo_blue_light"-->
+                            <!--android:text="张彦泽"-->
+                            <!--android:textSize="10sp" />-->
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_login_input_margin"
+                    android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                        android:layout_weight="5"
+                        android:background="@color/lightGreyAlpha" />
+
+                </LinearLayout>
             </LinearLayout>
-            <!--内容有趣-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_addcomment_top_margin"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="4"
-                    android:text="内容好否？"
-                    android:textColor="@color/button_material_dark"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
+            <!--<ImageView-->
+            <!--android:id="@+id/activity_addcomment_image_courseImag"-->
+            <!--android:layout_width="80sp"-->
+            <!--android:layout_height="80sp"-->
+            <!--android:src="@mipmap/app_icon" />-->
 
-                <RatingBar
-                    android:id="@+id/activity_addcomment_rating_courseContent"
-                    style="@style/CourseRatingStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6" />
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="@dimen/activity_addcomment_side_margin"-->
+            <!--android:orientation="vertical">-->
 
-            </LinearLayout>
-            <!--上课爽否-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                android:orientation="horizontal">
+            <!--<TextView-->
+            <!--android:id="@+id/activity_addcomment_text_courseName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Course_Name"-->
+            <!--android:textSize="@dimen/activity_addcomment_header_font_size" />-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="4"
-                    android:text="上课爽否？"
-                    android:textColor="@color/button_material_dark"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
+            <!--<LinearLayout-->
+            <!--android:id="@+id/activity_addcomment_linear_teacherlayout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="7dp"-->
+            <!--android:orientation="horizontal">-->
 
-                <RatingBar
-                    android:id="@+id/activity_addcomment_rating_coursePhenomena"
-                    style="@style/CourseRatingStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6" />
-            </LinearLayout>
-            <!--占时少否-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                android:orientation="horizontal">
+            <!--</LinearLayout>-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="4"
-                    android:text="占时少否？"
-                    android:textColor="@color/button_material_dark"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
+            <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
 
-                <RatingBar
-                    android:id="@+id/activity_addcomment_rating_courseTimeOccupation"
-                    style="@style/CourseRatingStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6" />
+            <com.stone.pile.libs.PileLayout
+                android:id="@+id/activity_addcomment_layout_pile"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                pile:displayCount="1.8"
+                pile:interval="5dp"
+                pile:sizeRatio="1.5" />
 
-            </LinearLayout>
-            <!--给分高否-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="4"
-                    android:text="给分高否？"
-                    android:textColor="@color/button_material_dark"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
-
-                <RatingBar
-                    android:id="@+id/activity_addcomment_rating_courseScore"
-                    style="@style/CourseRatingStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6" />
-
-            </LinearLayout>
-            <!--点名少否-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="4"
-                    android:text="点名少否？"
-                    android:textColor="@color/button_material_dark"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
-
-                <RatingBar
-                    android:id="@+id/activity_addcomment_rating_courseRollCall"
-                    style="@style/CourseRatingStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -243,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="选择授课老师咯"
+                    android:text="选择授课老师"
                     android:textColor="@color/button_material_dark"
                     android:textSize="@dimen/activity_addcomment_subheader_font_size" />
 
@@ -254,6 +197,34 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="4dp"
                     android:entries="@array/grade"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="@dimen/activity_login_font_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
+                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="期末考核方式"
+                    android:textColor="@color/button_material_dark"
+                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
+
+                <Spinner
+                    android:id="@+id/activity_addcomment_spinner_courseFinalSelect"
+                    android:layout_width="150dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:entries="@array/finaltype"
                     android:textColor="@color/lightGrey"
                     android:textSize="@dimen/activity_login_font_size"></Spinner>
 
@@ -298,14 +269,30 @@
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/acticity_addcomment_editText_commentContent"
-                android:layout_width="240dp"
+
+            <LinearLayout
+                android:layout_width="@dimen/activity_comment_contentpop_width"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
-                android:ems="10"
-                android:inputType="textMultiLine" />
+                android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_comment_content_side_margin"
+                    android:layout_marginTop="@dimen/activity_comment_content_side_margin"
+                    android:src="@drawable/pen" />
+
+                <EditText
+                    android:id="@+id/acticity_addcomment_editText_commentContent"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
+                    android:ems="10"
+                    android:inputType="textMultiLine" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -358,14 +345,13 @@
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
+                android:layout_marginBottom="40dp"
                 android:layout_marginTop="@dimen/activity_addcomment_top_margin"
                 android:background="@drawable/activity_addcomment_button"
                 android:text="@string/activity_addcomment_button_submit"
                 android:textColor="@color/pureBlack" />
+
         </LinearLayout>
 
-    </LinearLayout>
-
-
+    </ScrollView>
 </RelativeLayout>
