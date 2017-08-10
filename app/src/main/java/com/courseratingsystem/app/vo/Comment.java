@@ -14,7 +14,15 @@ public class Comment implements Serializable {
     private String timestamp;
     private String content;
     private String coursename;
+    private int courseid;
     private int likecount;
+    private int teacherid;
+    private String teachername;
+    private int usefulness;
+    private int sparetimeoccupation;
+    private int vivdness;
+    private int rollcall;
+    private int scorehigh;
 
     public Comment() {
     }
@@ -28,6 +36,70 @@ public class Comment implements Serializable {
         this.content = content;
         this.coursename = coursename;
         this.likecount = likecount;
+    }
+
+    public int getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(int courseid) {
+        this.courseid = courseid;
+    }
+
+    public int getTeacherid() {
+        return teacherid;
+    }
+
+    public void setTeacherid(int teacherid) {
+        this.teacherid = teacherid;
+    }
+
+    public String getTeachername() {
+        return teachername;
+    }
+
+    public void setTeachername(String teachername) {
+        this.teachername = teachername;
+    }
+
+    public int getUsefulness() {
+        return usefulness;
+    }
+
+    public void setUsefulness(int usefulness) {
+        this.usefulness = usefulness;
+    }
+
+    public int getSparetimeoccupation() {
+        return sparetimeoccupation;
+    }
+
+    public void setSparetimeoccupation(int sparetimeoccupation) {
+        this.sparetimeoccupation = sparetimeoccupation;
+    }
+
+    public int getVivdness() {
+        return vivdness;
+    }
+
+    public void setVivdness(int vivdness) {
+        this.vivdness = vivdness;
+    }
+
+    public int getRollcall() {
+        return rollcall;
+    }
+
+    public void setRollcall(int rollcall) {
+        this.rollcall = rollcall;
+    }
+
+    public int getScorehigh() {
+        return scorehigh;
+    }
+
+    public void setScorehigh(int scorehigh) {
+        this.scorehigh = scorehigh;
     }
 
     public int getRecstar() {
