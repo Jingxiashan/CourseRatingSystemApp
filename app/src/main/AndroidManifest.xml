@@ -17,49 +17,48 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".activity.CourseActivity"
-            android:theme="@style/CourseTheme">
-        </activity>
+            android:theme="@style/CourseTheme" />
         <activity
             android:name=".activity.TeacherActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activity.PersonalPopupActivity"
-            android:theme="@style/PopupActivityStyle">
-        </activity>
-
+            android:theme="@style/PopupActivityStyle" />
         <activity android:name=".activity.CommentActivity" />
-
         <activity
             android:name=".activity.CommentPopupActivity"
-            android:theme="@style/PopupActivityStyle">
-        </activity>
-
-        <activity android:name=".activity.AddCommentActivity"/>
-
+            android:theme="@style/PopupActivityStyle" />
+        <activity android:name=".activity.AddCommentActivity" />
         <activity android:name=".activity.ChangePasswordActivity" />
-
         <activity android:name=".activity.ChangeProfileActivity" />
-
         <activity android:name=".activity.MyFavoritesActivity" />
-
         <activity android:name=".activity.MyCommentsActivity" />
-
         <activity
             android:name=".activity.IndexActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.ViewPagerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
+        </activity>
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".activity.AboutUsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
