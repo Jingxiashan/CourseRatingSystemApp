@@ -117,11 +117,11 @@ public class CourseActivity extends AppCompatActivity {
     private final Handler getCourseInfoHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            switch (msg.what) {
+            switch (msg.what){
                 case FAILED:
-                    String result_without_internet = (String) msg.obj;
+                    String result_without_internet = (String)msg.obj;
                     Toast.makeText(CourseActivity.this,
-                            getString(R.string.internet_connection_failed), Toast.LENGTH_LONG).show();
+                            getString(R.string.internet_connection_failed),Toast.LENGTH_LONG).show();
                     break;
                 default:
                     initView((Course) msg.obj);
@@ -133,8 +133,8 @@ public class CourseActivity extends AppCompatActivity {
     });
     private Course course;
 
-    private void setFavoriteButtonStatus(String action) {
-        switch (action) {
+    private void setFavoriteButtonStatus(String action){
+        switch (action){
             case ADD_FAVORITE_ACTION:
                 addFavoriteBtn.setText("我要收藏");
                 addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +156,7 @@ public class CourseActivity extends AppCompatActivity {
         }
     }
 
-    private void setFavorite(final String action) {
+    private void setFavorite(final String action){
         MyCourseApplication application = (MyCourseApplication) CourseActivity.this.getApplication();
         final int userid = application.getUserId();
         OkHttpClient client = application.getOkHttpClient();
@@ -164,10 +164,10 @@ public class CourseActivity extends AppCompatActivity {
         String action_url = null;
         switch (action){
             case ADD_FAVORITE_ACTION:
-                action_url = ADD_FAVORITE_URL + PARAM_USER_ID + userid + PARAM_COURSE_ID + courseid;
+                action_url = ADD_FAVORITE_URL+ PARAM_USER_ID + userid +PARAM_COURSE_ID + courseid;
                 break;
             case DELETE_FAVORITE_ACTION:
-                action_url = DELETE_FAVORITE_URL + PARAM_USER_ID + userid + PARAM_COURSE_ID + courseid;
+                action_url = DELETE_FAVORITE_URL+ PARAM_USER_ID + userid + PARAM_COURSE_ID + courseid;
 
         }
         Request request = new Request.Builder()
@@ -213,7 +213,7 @@ public class CourseActivity extends AppCompatActivity {
 
     }
 
-    private void initData() {
+    private void initData(){
         showLoadingAnim(true);
         MyCourseApplication application = (MyCourseApplication) getApplication();
         OkHttpClient okHttpClient = application.getOkHttpClient();
@@ -224,7 +224,6 @@ public class CourseActivity extends AppCompatActivity {
                 .build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             Message msg = new Message();
-
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 msg.what = FAILED;
@@ -260,17 +259,20 @@ public class CourseActivity extends AppCompatActivity {
 
     }
 
-    private void initView(Course course) {
+    private void initView(final Course course){
 
         mCommentlist.setFocusable(false);
-        mScrollView.scrollTo(0, 0);
+        mScrollView.scrollTo(0,0);
         setFavoriteButtonStatus(course.isIfFavorite() ? DELETE_FAVORITE_ACTION : ADD_FAVORITE_ACTION);
         mButtonCheckall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 跳转全部评论页
-                Log.i("Clicked","Checkall");
                 Intent intent = new Intent(CourseActivity.this,CommentActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(CommentActivity.BUNDLE_TYPE, CommentActivity.CommentType.COURSE_COMMENTS);
+                bundle.putInt(CommentActivity.BUNDLE_ID, course.getCourseId());
+                bundle.putString(CommentActivity.BUNDLE_NAME, course.getCourseName());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -281,7 +283,7 @@ public class CourseActivity extends AppCompatActivity {
         teacherParam.setMargins(5,5,5,5);
         mLayoutTeachers.removeAllViews();
         List<Course.TeacherBrief> teachers = course.getTeacherList();
-        for (int i = 0; i < teachers.size(); i++) {
+        for (int i =0;i<teachers.size();i++){
             TextView teacher = new TextView(CourseActivity.this);
             teacher.setText(teachers.get(i).getTeacherName());
             teacher.setLayoutParams(teacherParam);
@@ -302,7 +304,7 @@ public class CourseActivity extends AppCompatActivity {
 
         mBarChart.setBar_color(getResources().getColor(R.color.teacher_blue_light));
         mBarChart.setValue_color(getResources().getColor(R.color.lightGrey));
-        mBarChart.setScores(course.getAverageRatingsRollCall(), course.getAverageRatingsScoring(), course.getAverageRatingsSpareTimeOccupation(),
+        mBarChart.setScores(course.getAverageRatingsRollCall(),course.getAverageRatingsScoring(),course.getAverageRatingsSpareTimeOccupation(),
                 course.getAverageRatingsVividness(),course.getAverageRatingsUsefulness());
         mBarChart.initChart();
 
@@ -332,8 +334,8 @@ public class CourseActivity extends AppCompatActivity {
                     mAvgRecomm.setVisibility(View.GONE);
                 }
                 if(scrollView.getScrollY()>=-10){
-                    scale = (((2 * (float) mHeader.getHeight()) - (float) scrollView.getScrollY()) / (2 * (float) mHeader.getHeight()));
-                    ratio = ((float) scrollView.getScrollY() / (float) mHeader.getHeight());
+                    scale =  (((2*(float) mHeader.getHeight())-(float)scrollView.getScrollY())/(2*(float) mHeader.getHeight()));
+                    ratio = ((float)scrollView.getScrollY()/(float) mHeader.getHeight());
                     if(scale<0.5){
                         scale=0.5f;
                     }
@@ -347,16 +349,16 @@ public class CourseActivity extends AppCompatActivity {
                     ViewHelper.setPivotY(mAvgRecomm, -640);
                     ViewHelper.setScaleX(mAvgRecomm, scale);
                     ViewHelper.setScaleY(mAvgRecomm, scale);
-                    ViewHelper.setAlpha(mHeader, alpha);
+                    ViewHelper.setAlpha(mHeader,alpha);
                     ViewHelper.setAlpha(mViewHeadbg, ratio);
                     ViewHelper.setPivotX(mCourseName, 0);
-                    ViewHelper.setPivotY(mCourseName, mCourseName.getHeight() / 2);
-                    ViewHelper.setScaleX(mCourseName, 1 - (ratio * 0.2f));
-                    ViewHelper.setScaleY(mCourseName, 1 - (ratio * 0.2f));
-                    ViewHelper.setTranslationX(mCourseName, -ratio * 250);
-                    mLayoutHead.setElevation(ratio * 5);
+                    ViewHelper.setPivotY(mCourseName, mCourseName.getHeight()/2);
+                    ViewHelper.setScaleX(mCourseName, 1-(ratio *0.2f));
+                    ViewHelper.setScaleY(mCourseName, 1-(ratio *0.2f));
+                    ViewHelper.setTranslationX(mCourseName,-ratio *250);
+                    mLayoutHead.setElevation(ratio*5);
                 }
-                if (scrollView.getScrollY() > 0 && scrollView.getScrollY() <= mHeader.getHeight()) {
+                if(scrollView.getScrollY()>0&&scrollView.getScrollY()<= mHeader.getHeight()){
                     mAvgRecomm.setVisibility(View.VISIBLE);
                     mAvgrecommStatic.setVisibility(View.GONE);
                 }
@@ -366,7 +368,7 @@ public class CourseActivity extends AppCompatActivity {
                 }
 
 
-                Log.i("scrollY", ((float) scrollView.getScrollY() / (2 * (float) mHeader.getHeight())) + "");
+                Log.i("scrollY",((float)scrollView.getScrollY()/(2*(float) mHeader.getHeight()))+"");
             }
         });
         mViewHeadbg.setAlpha(ratio);

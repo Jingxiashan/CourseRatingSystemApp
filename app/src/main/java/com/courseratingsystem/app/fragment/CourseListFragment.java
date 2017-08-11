@@ -84,6 +84,7 @@ public class CourseListFragment extends Fragment {
     FloatingActionButton floatingRol;
     @ViewInject(R.id.fragment_courselist_floating_toTop)
     private FloatingActionButton buttonToTop;
+    private View mFooterView;
     private CourseListSession listSession;
     private CourseListAdapter listAdapter;
     private final Handler refreshDataHandler = new Handler(new Handler.Callback() {
@@ -130,6 +131,7 @@ public class CourseListFragment extends Fragment {
     }
 
     private void initView() {
+        mFooterView = View.inflate(getActivity(), R.layout.footer_fragment_discover_hot_courses_list, null);
         View headerView = new View(getActivity());
         headerView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.activity_index_search_height)));
         headerView.setBackgroundColor(Color.parseColor("#00000000"));
@@ -268,13 +270,16 @@ public class CourseListFragment extends Fragment {
 
         void loadMore() {
             if (currentMaxLoadedPage < totalPage) {
+                if(mCourseList.getFooterViewsCount() > 1){
+                    mCourseList.removeFooterView(mFooterView);
+                }
                 loadData(currentMaxLoadedPage + 1);
             } else {
                 //已经到达最后一页
                 mSwipeRefresh.setLoadingMore(false);
                 if (mCourseList.getFooterViewsCount() == 0) {
                     //添加一个已经到最低 的 footerview
-                    mCourseList.addFooterView(View.inflate(getActivity(), R.layout.footer_fragment_discover_hot_courses_list, null));
+                    mCourseList.addFooterView(mFooterView);
                 }
             }
         }

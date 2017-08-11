@@ -139,7 +139,7 @@ public class TeacherActivity extends AppCompatActivity {
         });
     }
 
-    private void initView(Teacher teacher) {
+    private void initView(final Teacher teacher) {
         mCommentList.setFocusable(false);
         mScrollView.scrollTo(0, 0);
 
@@ -152,8 +152,12 @@ public class TeacherActivity extends AppCompatActivity {
         mButtonCheckall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 跳转全部评论页
                 Intent intent = new Intent(TeacherActivity.this,CommentActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(CommentActivity.BUNDLE_TYPE, CommentActivity.CommentType.TEACHER_COMMENTS);
+                bundle.putInt(CommentActivity.BUNDLE_ID, teacher.getTeacherid());
+                bundle.putString(CommentActivity.BUNDLE_NAME, teacher.getTeachername());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

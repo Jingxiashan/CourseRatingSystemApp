@@ -3,10 +3,11 @@ package com.courseratingsystem.app.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,25 +18,38 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.application.MyCourseApplication;
 import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
 import com.courseratingsystem.app.vo.Teacher;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @ContentView(R.layout.activity_add_comment)
 
 public class AddCommentActivity extends AppCompatActivity {
     public static final String COURSE_INFO = "course_info";
-    //    public List<attribute> attributeList;
-    public Comment comment = new Comment();
+    private final String ADD_COMMENT_URL = "/addComment";
     //public List<String> teachernameList=new ArrayList<>();
 
 //    @ViewInject(R.id.activity_addcomment_layout_pile)
@@ -43,64 +57,140 @@ public class AddCommentActivity extends AppCompatActivity {
 
 //    @ViewInject(R.id.activity_addcomment_linear_teacherlayout)
 //    LinearLayout teacherLayout;
-
+private final int SUCCEEDED = 0;
+    private final int FAILED = 1;
+    //    public List<attribute> attributeList;
+    public Comment comment = new Comment();
     @ViewInject(R.id.activity_addcomment_button_submitComment)
     Button commentSubmit;
-
     @ViewInject(R.id.acticity_addcomment_editText_commentContent)
     private EditText commentcontent;
-
     @ViewInject(R.id.activity_addcomment_spinner_courseTeacherSelect)
     private Spinner teacherName;
-
     @ViewInject(R.id.activity_addcomment_text_courseName)
     private TextView courseName;
-
     @ViewInject(R.id.activity_addcomment_linear_teacherlayout)
     private LinearLayout teacherLayout;
-
     @ViewInject(R.id.activity_addcomment_rating_rollcall)
     private RatingBar rollcallRating;
-
     @ViewInject(R.id.activity_addcomment_rating_usefulness)
     private RatingBar usefulnessRating;
-
     @ViewInject(R.id.activity_addcomment_rating_vividness)
     private RatingBar vivdnessRating;
-
     @ViewInject(R.id.activity_addcomment_rating_scorehigh)
     private RatingBar scorehighRating;
-
     @ViewInject(R.id.activity_addcomment_rating_timeoccupation)
     private RatingBar timeoccuRating;
+    @ViewInject(R.id.activity_addcomment_rating_courseRecommendation)
+    private RatingBar courseRecRating;
+    private String[] ADD_COMMENT_POST_KEY = new String[]{
+            "teacherId"
+            ,"courseId"
+            ,"userId"
+            ,"ratingUsefulness"
+            ,"ratingVividness"
+            ,"ratingSpareTimeOccupation"
+            ,"ratingScoring"
+            ,"ratingRollCall"
+            ,"recommandScore"
+            ,"critics"};
+    private Course course;
+
+    private final Handler addCommentHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what){
+                case SUCCEEDED:
+                    Toast.makeText(AddCommentActivity.this,"评论成功",Toast.LENGTH_LONG);
+                    MyCourseApplication application = (MyCourseApplication) getApplication();
+                    comment.setContent(commentcontent.getText().toString());
+                    comment.setCoursename(course.getCourseName());
+                    comment.setNickname(application.getUsername());
+                    comment.setTimestamp(getTime());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("my_currentcomment", comment);
+                    startActivity(new Intent(AddCommentActivity.this, CommentPopupActivity.class).putExtras(bundle));
+                    finish();
+                    break;
+                case FAILED:
+                    Toast.makeText(AddCommentActivity.this,"发表评论失败！",Toast.LENGTH_LONG);
+            }
+            return false;
+        }
+    });
+    private String getTime(){
+        long time=System.currentTimeMillis();//long now = android.os.SystemClock.uptimeMillis();
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        Date d1=new Date(time);
+        String t1=format.format(d1);
+        return t1;
+    }
+
+    private void postComment(){
+        MyCourseApplication application = (MyCourseApplication) getApplication();
+        OkHttpClient client = ((MyCourseApplication)getApplication()).getOkHttpClient();
+        okhttp3.RequestBody formbody = new FormBody.Builder()
+                .add(ADD_COMMENT_POST_KEY[0],String.valueOf(course.getTeacherList().get(teacherName.getSelectedItemPosition()).getTeacherId()))
+                .add(ADD_COMMENT_POST_KEY[1],String.valueOf(course.getCourseId()))
+                .add(ADD_COMMENT_POST_KEY[2],String.valueOf(application.getUserId()))
+                .add(ADD_COMMENT_POST_KEY[3],String.valueOf(comment.getUsefulness()))
+                .add(ADD_COMMENT_POST_KEY[4],String.valueOf(comment.getVivdness()))
+                .add(ADD_COMMENT_POST_KEY[5],String.valueOf(comment.getSparetimeoccupation()))
+                .add(ADD_COMMENT_POST_KEY[6],String.valueOf(comment.getScorehigh()))
+                .add(ADD_COMMENT_POST_KEY[7],String.valueOf(comment.getRollcall()))
+                .add(ADD_COMMENT_POST_KEY[8],String.valueOf(comment.getRecstar()))
+                .add(ADD_COMMENT_POST_KEY[3],comment.getContent())
+                .build();
+        Request request = new Request.Builder()
+                .url(MyCourseApplication.SERVER_URL+ADD_COMMENT_URL)
+                .post(formbody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            Message msg = new Message();
+            @Override
+            public void onFailure(Call call, IOException e) {
+                msg.what = FAILED;
+                addCommentHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.body()!=null){
+                    String responseBody = response.body().string();
+                    try{
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if(statusCode == MyCourseApplication.JSON_RESULT_CODE_200){
+                            msg.what = SUCCEEDED;
+                            addCommentHandler.sendMessage(msg);
+                        }
+                        else {
+                            msg.what = FAILED;
+                            addCommentHandler.sendMessage(msg);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
-        //initView();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("课程评论");
 
-        final Course course = (Course) getIntent().getSerializableExtra(COURSE_INFO);
-        courseName.setText("高等数学");
-        //mCourseName.setText(course.getCourseName());
-//        final Course course1=new Course();
-
-
-        //画teacherspinner 和 teacherlayout
-
-        //测试
+        course = (Course) getIntent().getSerializableExtra(COURSE_INFO);
+        courseName.setText(course.getCourseName());
         List<String> teachernameList = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
+        for (int i = 0; i < course.getTeacherList().size(); i++) {
             Teacher teacher = new Teacher();
-            teacher.setTeachername("张彦泽");
-            //Course.TeacherBrief teacherBrief=course.new TeacherBrief("孔啸",1);
-            //course.getTeacherList().add(teacherBrief);
+            teacher.setTeachername(course.getTeacherList().get(i).getTeacherName());
             teachernameList.add(teacher.getTeachername());
 
             TextView teacherText = new TextView(this);
@@ -110,7 +200,7 @@ public class AddCommentActivity extends AppCompatActivity {
             teacherText.setGravity(Gravity.CENTER);
             teacherText.setLayoutParams(layoutParams);
             teacherText.setTextSize(15);
-            teacherText.setText("孔啸");
+            teacherText.setText(course.getTeacherList().get(i).getTeacherName());
             teacherText.setHeight(60);
             teacherText.setWidth(180);
             teacherText.setTextColor(getResources().getColor(R.color.teacher_blue_light));
@@ -145,6 +235,15 @@ public class AddCommentActivity extends AppCompatActivity {
 //                }
 //            });
 //        }
+
+        courseRecRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setRecstar(rating);
+            }
+        });
+
+
 
         usefulnessRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -207,21 +306,7 @@ public class AddCommentActivity extends AppCompatActivity {
                     });
                     builder.create().show();
                 } else {
-                    comment.setContent(commentcontent.getText().toString());
-                    //comment.setCoursename(course.getCourseName());
-                    comment.setCoursename("高等数学");
-                    comment.setNickname("井下山");
-                    comment.setTimestamp("1997-2-26");
-                    Log.i("info", "" + comment.getSparetimeoccupation());
-
-
-                    comment.setRecstar(comment.getSparetimeoccupation());
-
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("my_currentcomment", comment);
-
-                    startActivity(new Intent(AddCommentActivity.this, CommentPopupActivity.class).putExtras(bundle));
-                    finish();
+                    postComment();
                 }
             }
         });

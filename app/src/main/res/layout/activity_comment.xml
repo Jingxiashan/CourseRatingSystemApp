@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgGrey"
+    android:id="@+id/activity_comment_layout"
     tools:context="com.courseratingsystem.app.activity.AddCommentActivity">
 
     <com.courseratingsystem.app.view.CourseListSwipeRefreshView
@@ -12,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent">
 
-        <com.courseratingsystem.app.view.CommentListView
+        <ListView
             android:id="@+id/activity_comment_listview_allcomments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +22,7 @@
             android:divider="@null"
             android:dividerHeight="@dimen/activity_comment_content_subside_margin">
 
-        </com.courseratingsystem.app.view.CommentListView>
+        </ListView>
     </com.courseratingsystem.app.view.CourseListSwipeRefreshView>
 
 
