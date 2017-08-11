@@ -321,6 +321,7 @@ public class CourseActivity extends AppCompatActivity {
         mScrollView.setScrollViewListener(new ObservableScrollView.ScrollViewListener() {
             @Override
             public void onScrollChanged(ObservableScrollView scrollView, int l, int t, int oldl, int oldt) {
+                float deltaX = (mLayoutHead.getWidth()-mCourseName.getWidth())/2-100;
                 float scrollY = oldt - t;
                 alpha +=scrollY/400f;
                 if(alpha<0){
@@ -356,7 +357,7 @@ public class CourseActivity extends AppCompatActivity {
                     ViewHelper.setPivotY(mCourseName, mCourseName.getHeight()/2);
                     ViewHelper.setScaleX(mCourseName, 1-(ratio *0.2f));
                     ViewHelper.setScaleY(mCourseName, 1-(ratio *0.2f));
-                    ViewHelper.setTranslationX(mCourseName,-ratio *250);
+                    ViewHelper.setTranslationX(mCourseName,-ratio *deltaX);
                     mLayoutHead.setElevation(ratio*5);
                 }
                 if(scrollView.getScrollY()>0&&scrollView.getScrollY()<= mHeader.getHeight()){
