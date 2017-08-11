@@ -138,6 +138,7 @@ public class IndexActivity extends AppCompatActivity {
         mSearchIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_24dp, null));
         mSearchIcon.setOnClickListener(null);
         mSearch.setFocusableInTouchMode(false);
+        mSearchDetailLayout.setOnClickListener(null);
         isSearching = false;
     }
 

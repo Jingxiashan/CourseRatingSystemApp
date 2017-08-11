@@ -3,6 +3,9 @@ package com.courseratingsystem.app.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,69 +18,147 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.application.MyCourseApplication;
+import com.courseratingsystem.app.view.LoadingAnimView;
 import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
+import com.courseratingsystem.app.vo.Teacher;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @ContentView(R.layout.activity_teacher)
 public class TeacherActivity extends AppCompatActivity {
 
     public static final String EXTRA_TEACHER_ID = "teacherid";
+    private static final String GET_TEACHER_URL = "/getCommentListAndCourseListByTeacherId?teacherId=";
+    private static final int FAILED = 0;
+    private static final int SUCCESS = 1;
+    @ViewInject(R.id.activity_teacher_layout)
+    RelativeLayout mRelativeLayout;
+    @ViewInject(R.id.activity_teacher_textview_name)
+    TextView mTeachername;
     @ViewInject(R.id.activity_teacher_imgview_photo)
-    ImageView teacherphoto;
+    ImageView mTeacherPhoto;
     @ViewInject(R.id.activiyt_teacher_listview_commentlist)
-    ListView commentlist;
+    ListView mCommentList;
     @ViewInject(R.id.activity_teacher_scrollview)
-    ScrollView scrollView;
+    ScrollView mScrollView;
     @ViewInject(R.id.activity_teacher_linearlayout_coursenames)
-    LinearLayout coursenames;
+    LinearLayout mLayoutCoursenames;
     @ViewInject(R.id.activity_teacher_linearlayout_checkallcomments)
-    LinearLayout checkall;
-    private int teacherid;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        x.view().inject(this);
-        Intent intent = getIntent();
-        teacherid = intent.getIntExtra(EXTRA_TEACHER_ID, -1);
-        if (teacherid == -1) finish();
-        commentlist.setFocusable(false);
-        scrollView.scrollTo(0,0);
-
-        //for test
-        final ArrayList<Course> courses = new ArrayList<>();
-        courses.add(new Course(1,"圣经与西方文化",4.5f,2,3,4,5,5,1000,new ArrayList<Course.TeacherBrief>()));
-        courses.add(new Course(1,"圣经与西方文化",4.5f,2,3,4,5,5,1000,new ArrayList<Course.TeacherBrief>()));
-        courses.add(new Course(1,"圣经与西方文化",4.5f,2,3,4,5,5,1000,new ArrayList<Course.TeacherBrief>()));
-
-        List<Comment> comments = new ArrayList<>();
-        for (int i = 0;i<12;i++){
-            comments.add(new Comment(3,1,1,"鲁迪","2017-05-23","呵呵呵呵呵呵呵呵","圣经与西方文化",55));
+    LinearLayout mButtonCheckall;
+    LoadingAnimView mLoadingAnimView;
+    private final Handler getTeacherInfoHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case FAILED:
+                    String result_without_internet = (String) msg.obj;
+                    Toast.makeText(TeacherActivity.this,
+                            getString(R.string.internet_connection_failed), Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    initView((Teacher) msg.obj);
+                    showLoadingAnim(false);
+                    break;
+            }
+            return false;
         }
+    });
+    private int teacherid;
+    private Teacher teacher;
 
-        //end of for test
+    private void initData() {
+        showLoadingAnim(true);
+        MyCourseApplication application = (MyCourseApplication) getApplication();
+        OkHttpClient okHttpClient = application.getOkHttpClient();
+        Request request = new Request.Builder()
+                .url(MyCourseApplication.SERVER_URL + GET_TEACHER_URL + teacherid)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            Message msg = new Message();
 
-        checkall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.what = FAILED;
+                msg.obj = e.toString();
+                getTeacherInfoHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
+                            //成功，处理内容
+                            JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+                            JSONArray courseJsonList = resultJson.getJSONArray("courseList");
+                            JSONArray commentJsonList = resultJson.getJSONArray("commentList");
+                            teacher = new Teacher();
+                            teacher.setTeacherid(resultJson.getInt("teacherId"));
+                            teacher.setTeachername(resultJson.getString("teacherName"));
+                            List<Course> courseList = Course.parseJsonListNoTeacher(courseJsonList);
+                            List<Comment> commentList = Comment.parseJsonListNoTeacher(commentJsonList);
+                            teacher.setCourseList(courseList);
+                            teacher.setCommentList(commentList);
+                            msg.what = SUCCESS;
+                            msg.obj = teacher;
+                        } else {
+                            msg.what = FAILED;
+                            msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                        }
+                        getTeacherInfoHandler.sendMessage(msg);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void initView(Teacher teacher) {
+        mCommentList.setFocusable(false);
+        mScrollView.scrollTo(0, 0);
+
+        mTeachername.setText(teacher.getTeachername());
+
+        List<Comment> comments = teacher.getCommentList();
+        List<Course> courses = teacher.getCourseList();
+
+
+        mButtonCheckall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO 跳转全部评论页
-                Log.i("Clicked","Checkall");
                 Intent intent = new Intent(TeacherActivity.this,CommentActivity.class);
                 startActivity(intent);
             }
         });
 
-        coursenames.removeAllViews();
+        mLayoutCoursenames.removeAllViews();
         LinearLayout.LayoutParams courseNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         courseNameParams.setMargins(0,5,0,5);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -109,19 +190,42 @@ public class TeacherActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Log.i("Clicked","CourseName");
                     Intent intent = new Intent(TeacherActivity.this,CourseActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("courseid",courseid);
-                    intent.putExtras(bundle);
+                    intent.putExtra(CourseActivity.EXTRA_COURSE_ID, courseid);
                     startActivity(intent);
                 }
             });
             layout.addView(courseName);
             layout.addView(avgrecomm);
-            coursenames.addView(layout);
+            mLayoutCoursenames.addView(layout);
         }
         CommentsAdapter commentsAdapter = new CommentsAdapter(TeacherActivity.this,comments);
-        commentlist.setAdapter(commentsAdapter);
+        mCommentList.setAdapter(commentsAdapter);
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        x.view().inject(this);
+        Intent intent = getIntent();
+        teacherid = intent.getIntExtra(EXTRA_TEACHER_ID, -1);
+        if (teacherid == -1) finish();
+        initData();
+    }
+
+    //显示加载动画
+    private void showLoadingAnim(boolean ifShow) {
+        if (ifShow) {
+            if (mLoadingAnimView == null) {
+                mLoadingAnimView = new LoadingAnimView(this, LoadingAnimView.BgColor.LIGHT);
+                mRelativeLayout.addView(mLoadingAnimView);
+            }
+
+        } else {
+            mRelativeLayout.removeView(mLoadingAnimView);
+            mLoadingAnimView = null;
+        }
+    }
+
     private static class CommentsViewHolder {
         ImageView avatar;
         RatingBar ratingBar;
@@ -145,7 +249,7 @@ public class TeacherActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             //comment数目
-            return 10;
+            return commentList.size();
         }
 
         @Override

@@ -1,27 +1,39 @@
 package com.courseratingsystem.app.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
-import com.courseratingsystem.app.vo.Comment;
+import com.courseratingsystem.app.application.MyCourseApplication;
+import com.courseratingsystem.app.view.LoadingAnimView;
+import com.courseratingsystem.app.vo.Course;
+import com.courseratingsystem.app.vo.User;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,34 +44,38 @@ import okhttp3.Response;
 @ContentView(R.layout.activity_my_favorites)
 public class MyFavoritesActivity extends AppCompatActivity {
 
+    public static final String EXTRA_USER = "user";
+    private static final String MY_FAVORITE_URL = "/getFavoriteCourseList?userId=";
+    private static final int FAILED = 0;
+    private static final int SUCCESS = 1;
+    LoadingAnimView mLoadingAnimView;
+    @ViewInject(R.id.activity_my_favorite_layout)
+    private RelativeLayout mRelativeLayout;
+    @ViewInject(R.id.activity_my_favourites_nickname)
+    private TextView mNickname;
+    @ViewInject(R.id.activity_my_favourites_favouritesCount)
+    private TextView mFavoriteCount;
     @ViewInject(R.id.activity_my_favorite_listView)
-    private ListView listView;
-    private List<Map<String,Object>> lists = new ArrayList<>();
+    private ListView mCourseList;
+    private User user;
 
-    private static final int WITHOUT_INTERNET = 0;
-    private static final int GET_MYFAVORITES_IS_SUCCESS = 1;
-    private static final int GET_MYFAVORITES_IS_FAIL = 2;
-
-    OkHttpClient okHttpClient = new OkHttpClient();
     //Handler 主线程创建---消息的处理主线程
-    Handler handler = new Handler() {
+    Handler getFinishedHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case WITHOUT_INTERNET:
+                case FAILED:
                     String result_without_internet = (String)msg.obj;
                     Toast.makeText(MyFavoritesActivity.this,
                             "网络异常！请稍后再试",Toast.LENGTH_SHORT).show();
                     break;
-                case GET_MYFAVORITES_IS_SUCCESS:
-                    String result_get_information = (String)msg.obj;
-                    //根据得到的result_get_information设置信息
-                    setText(result_get_information);
-                    break;
-                case GET_MYFAVORITES_IS_FAIL:
-                    Toast.makeText(MyFavoritesActivity.this,
-                            "收藏课程获取失败！",Toast.LENGTH_SHORT).show();
+                default:
+                    List<Course> courseList = (List<Course>) msg.obj;
+                    mCourseList.setAdapter(new CourseListAdapter(MyFavoritesActivity.this, courseList));
+                    mNickname.setText(user.getNickname());
+                    mFavoriteCount.setText(String.valueOf(courseList.size()));
+                    showLoadingAnim(false);
                     break;
             }
         }
@@ -69,87 +85,72 @@ public class MyFavoritesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra(EXTRA_USER);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("课程收藏管理");
 
-        String url = new String("http://www.baidu.com");//获得用户评论的url
+        initData();
+    }
+
+    private void initData() {
+        showLoadingAnim(true);
+        MyCourseApplication application = (MyCourseApplication) getApplication();
+        OkHttpClient okHttpClient = application.getOkHttpClient();
         Request request = new Request.Builder()
-                .url(url)
-                .get()
+                .url(MyCourseApplication.SERVER_URL + MY_FAVORITE_URL + application.getUserId())
                 .build();
-        exec_getMyFavorites(request);
-    }
-
-    private void setText(String result_get_information) {
-        //获得用户评论成功，填写……
-        //将结果转换为JSON类型
-
-        String[] keys = {
-                "courseName",
-                "comment",
-                "recScore",
-                "recComment",
-                "commentCount",
-                "otherScores",
-                "teacher",
-                "delete"
-        };
-        int[] ids = {
-                R.id.item_activity_my_favorites_courseName,
-                R.id.item_activity_my_favorites_comment,
-                R.id.item_activity_my_favorites_recScore,
-                R.id.item_activity_my_favorites_recComment,
-                R.id.item_activity_my_favorites_commentCount,
-                R.id.item_activity_my_favorites_otherScores,
-                R.id.item_activity_my_favorites_teacher,
-                R.id.item_activity_my_favorites_delete
-        };
-        SimpleAdapter simpleAdapter = new SimpleAdapter(
-                        MyFavoritesActivity.this, lists,
-                        R.layout.item_activity_my_favorites, keys,ids);
-        listView.setAdapter(simpleAdapter);
-        for(int i=0;i<20;i++){
-            Map<String,Object> map = new HashMap<>();
-            map.put("courseName","葫芦丝演奏与提高");
-            map.put("comment","老司机有话说");
-            map.put("recScore","4.5分");
-            map.put("recComment","非常棒");
-            map.put("commentCount","99条评论");
-            map.put("otherScores","有用3.0 有趣2.0 占时3.5 给分3.5 点名2.0");
-            map.put("teacher","冯剑锋");
-            map.put("delete",R.drawable.delete);
-            lists.add(map);
-        }
-    }
-
-    //获得用户收藏课程返回信息处理
-    private void exec_getMyFavorites(Request request) {
         okHttpClient.newCall(request).enqueue(new Callback() {
+            Message msg = new Message();
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i("无网络连接","--->"+e);
-                Message message = new Message();
-                message.what = WITHOUT_INTERNET;
-                message.obj = e.toString();
-                handler.sendMessage(message);
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.what = FAILED;
+                msg.obj = e.toString();
+                getFinishedHandler.sendMessage(msg);
             }
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Message message = handler.obtainMessage();
-                if(response.isSuccessful()){
-                    message.what = GET_MYFAVORITES_IS_SUCCESS;
-                    message.obj = response.body().string();
-                    Log.i("收藏课程获得成功","--->"+message.obj);
-                    handler.sendMessage(message);
-                }else {
-                    Log.i("收藏课程获得失败","--->");
-                    handler.sendEmptyMessage(GET_MYFAVORITES_IS_FAIL);
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
+                            //成功，处理内容
+                            JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+
+                            JSONArray courseJsonList = resultJson.getJSONArray("favoriteCourseList");
+                            msg.what = SUCCESS;
+                            msg.obj = Course.parseJsonListNoTeacher(courseJsonList);
+                        } else {
+                            msg.what = FAILED;
+                            msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                        }
+                        getFinishedHandler.sendMessage(msg);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
     }
 
+    //显示加载动画
+    private void showLoadingAnim(boolean ifShow) {
+        if (ifShow) {
+            if (mLoadingAnimView == null) {
+                mLoadingAnimView = new LoadingAnimView(this, LoadingAnimView.BgColor.LIGHT);
+                mRelativeLayout.addView(mLoadingAnimView);
+            }
+
+        } else {
+            mRelativeLayout.removeView(mLoadingAnimView);
+            mLoadingAnimView = null;
+        }
+    }
+
+    //ActionBar返回键
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -158,6 +159,105 @@ public class MyFavoritesActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private static class CourseViewHolder {
+        Button mAddComment;
+        TextView mCourseName, mRecScore, mRecComment, mCommentCount, mOtherScores;
+        LinearLayout mTeacherLayout;
+    }
+
+    private class CourseListAdapter extends BaseAdapter {
+        private LayoutInflater inflater;
+        private List<Course> listToShow;
+
+        public CourseListAdapter(Context context, List<Course> courseList) {
+            inflater = LayoutInflater.from(context);
+            listToShow = courseList;
+        }
+
+        public List<Course> getListToShow() {
+            return listToShow;
+        }
+
+        public void setListToShow(List<Course> listToShow) {
+            this.listToShow = listToShow;
+        }
+
+        @Override
+        public int getCount() {
+            return listToShow.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return listToShow.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final Course tmpCourse = listToShow.get(position);
+            CourseViewHolder viewHolder;
+            if (convertView == null) {
+                viewHolder = new CourseViewHolder();
+                convertView = inflater.inflate(R.layout.item_activity_my_favorites, null);
+                viewHolder.mCourseName = (TextView) convertView.findViewById(R.id.item_activity_my_favorites_courseName);
+                viewHolder.mRecScore = (TextView) convertView.findViewById(R.id.item_activity_my_favorites_recScore);
+                viewHolder.mRecComment = (TextView) convertView.findViewById(R.id.item_activity_my_favorites_recComment);
+                viewHolder.mCommentCount = (TextView) convertView.findViewById(R.id.item_activity_my_favorites_commentCount);
+                viewHolder.mOtherScores = (TextView) convertView.findViewById(R.id.item_activity_my_favorites_otherScores);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (CourseViewHolder) convertView.getTag();
+            }
+//            设置显示内容
+            viewHolder.mCourseName.setText(tmpCourse.getCourseName());
+            viewHolder.mRecScore.setText(String.format(getString(R.string.item_fragment_courselist_recScore), tmpCourse.getRecommendationScore()));
+            if (tmpCourse.getRecommendationScore() >= 4) {
+                viewHolder.mRecComment.setText(getString(R.string.item_fragment_courselist_recComment_4));
+            } else if (tmpCourse.getRecommendationScore() >= 3) {
+                viewHolder.mRecComment.setText(getString(R.string.item_fragment_courselist_recComment_3));
+            } else if (tmpCourse.getRecommendationScore() >= 2) {
+                viewHolder.mRecComment.setText(getString(R.string.item_fragment_courselist_recComment_2));
+            } else if (tmpCourse.getRecommendationScore() >= 1) {
+                viewHolder.mRecComment.setText(getString(R.string.item_fragment_courselist_recComment_1));
+            } else {
+                viewHolder.mRecComment.setText(getString(R.string.item_fragment_courselist_recComment_0));
+            }
+            viewHolder.mCommentCount.setText(String.format(getString(R.string.item_fragment_courselist_commentCount), tmpCourse.getPeopleCount()));
+            viewHolder.mOtherScores.setText(String.format(getString(R.string.item_fragment_courselist_otherScores),
+                    tmpCourse.getAverageRatingsUsefulness(),
+                    tmpCourse.getAverageRatingsVividness(),
+                    tmpCourse.getAverageRatingsSpareTimeOccupation(),
+                    tmpCourse.getAverageRatingsRollCall(),
+                    tmpCourse.getAverageRatingsScoring()));
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MyFavoritesActivity.this, CourseActivity.class);
+                    intent.putExtra(CourseActivity.EXTRA_COURSE_ID, tmpCourse.getCourseId());
+                    startActivity(intent);
+                }
+            });
+            return convertView;
+        }
+
+        private class TeacherTextView extends android.support.v7.widget.AppCompatTextView {
+
+            public TeacherTextView(Context context) {
+                super(context);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(context.getResources().getDimensionPixelSize(R.dimen.item_fragment_courselist_marginside), 0, 0, 0);
+                this.setLayoutParams(params);
+                this.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimensionPixelSize(R.dimen.item_fragment_courselist_textsize_details));
+                this.setTextColor(context.getResources().getColor(R.color.lightGrey));
+            }
+        }
     }
 
 }

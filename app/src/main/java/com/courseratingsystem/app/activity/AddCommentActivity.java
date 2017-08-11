@@ -88,7 +88,7 @@ public class AddCommentActivity extends AppCompatActivity {
 
         final Course course = (Course) getIntent().getSerializableExtra(COURSE_INFO);
         courseName.setText("高等数学");
-        //courseName.setText(course.getCourseName());
+        //mCourseName.setText(course.getCourseName());
 //        final Course course1=new Course();
 
 

@@ -14,6 +14,8 @@ public class Course implements Serializable {
     private float recommendationScore, averageRatingsUsefulness, averageRatingsVividness, averageRatingsSpareTimeOccupation, averageRatingsScoring, averageRatingsRollCall;
     private int peopleCount;
     private List<TeacherBrief> teacherList;
+    private boolean ifFavorite;
+    private List<Comment> commentList;
 
     public Course() {
     }
@@ -30,6 +32,7 @@ public class Course implements Serializable {
         this.peopleCount = peopleCount;
         this.teacherList = new ArrayList<>();
     }
+
     public Course(int courseId, String courseName, float recommendationScore, float averageRatingsUsefulness, float averageRatingsVividness, float averageRatingsSpareTimeOccupation, float averageRatingsScoring, float averageRatingsRollCall, int peopleCount, List<TeacherBrief> teacherList) {
         this.courseId = courseId;
         this.courseName = courseName;
@@ -43,6 +46,31 @@ public class Course implements Serializable {
         this.teacherList = teacherList;
     }
 
+    public Course(JSONObject jsonCourse) throws JSONException {
+        this.courseId = jsonCourse.getInt("courseId");
+        this.courseName = jsonCourse.getString("courseName");
+        this.recommendationScore = (float) jsonCourse.getDouble("recommendationScore");
+        this.averageRatingsUsefulness = (float) jsonCourse.getDouble("averageRatingUsefulness");
+        this.averageRatingsVividness = (float) jsonCourse.getDouble("averageRatingsVividness");
+        this.averageRatingsSpareTimeOccupation = (float) jsonCourse.getDouble("averageRatingsSpareTimeOccupation");
+        this.averageRatingsScoring = (float) jsonCourse.getDouble("averageRatingsScoring");
+        this.averageRatingsRollCall = (float) jsonCourse.getDouble("averageRatingsRollCall");
+        this.peopleCount = jsonCourse.getInt("peopleCount");
+        this.ifFavorite = jsonCourse.getBoolean("ifFavorite");
+        this.teacherList = new ArrayList<>();
+        JSONArray teacherJsonList = jsonCourse.getJSONArray("teacherList");
+        for (int j = 0; j < teacherJsonList.length(); j++) {
+            JSONObject jsonTeacher = teacherJsonList.getJSONObject(j);
+            this.teacherList.add(new TeacherBrief(jsonTeacher.getString("teacherName"), jsonTeacher.getInt("teacherId")));
+        }
+        this.commentList = new ArrayList<>();
+        JSONArray commentJsonArray = jsonCourse.getJSONArray("commentList");
+        for (int j = 0; j < commentJsonArray.length(); j++) {
+            JSONObject jsonComment = commentJsonArray.getJSONObject(j);
+            this.commentList.add(new Comment(jsonComment));
+        }
+    }
+
     public static List<Course> parseJsonList(JSONArray courseJsonList) throws JSONException {
         List<Course> courseList = new ArrayList<>();
         //处理courseList
@@ -51,12 +79,12 @@ public class Course implements Serializable {
             Course tmpCourse = new Course(
                     jsonCourse.getInt("courseId"),
                     jsonCourse.getString("courseName"),
-                    (float) jsonCourse.getDouble("recScore"),
-                    (float) jsonCourse.getDouble("useScore"),
-                    (float) jsonCourse.getDouble("vivScore"),
-                    (float) jsonCourse.getDouble("ocuScore"),
-                    (float) jsonCourse.getDouble("scoScore"),
-                    (float) jsonCourse.getDouble("rolScore"),
+                    (float) jsonCourse.getDouble("recommendationScore"),
+                    (float) jsonCourse.getDouble("averageRatingUsefulness"),
+                    (float) jsonCourse.getDouble("averageRatingsVividness"),
+                    (float) jsonCourse.getDouble("averageRatingsSpareTimeOccupation"),
+                    (float) jsonCourse.getDouble("averageRatingsScoring"),
+                    (float) jsonCourse.getDouble("averageRatingsRollCall"),
                     jsonCourse.getInt("peopleCount")
             );
             JSONArray teacherJsonList = jsonCourse.getJSONArray("teacherList");
@@ -69,6 +97,43 @@ public class Course implements Serializable {
             courseList.add(tmpCourse);
         }
         return courseList;
+    }
+
+    public static List<Course> parseJsonListNoTeacher(JSONArray courseJsonList) throws JSONException {
+        List<Course> courseList = new ArrayList<>();
+        //处理courseList
+        for (int i = 0; i < courseJsonList.length(); i++) {
+            JSONObject jsonCourse = courseJsonList.getJSONObject(i);
+            Course tmpCourse = new Course(
+                    jsonCourse.getInt("courseId"),
+                    jsonCourse.getString("courseName"),
+                    (float) jsonCourse.getDouble("recommendationScore"),
+                    (float) jsonCourse.getDouble("averageRatingUsefulness"),
+                    (float) jsonCourse.getDouble("averageRatingsVividness"),
+                    (float) jsonCourse.getDouble("averageRatingsSpareTimeOccupation"),
+                    (float) jsonCourse.getDouble("averageRatingsScoring"),
+                    (float) jsonCourse.getDouble("averageRatingsRollCall"),
+                    jsonCourse.getInt("peopleCount")
+            );
+            courseList.add(tmpCourse);
+        }
+        return courseList;
+    }
+
+    public boolean isIfFavorite() {
+        return ifFavorite;
+    }
+
+    public void setIfFavorite(boolean ifFavorite) {
+        this.ifFavorite = ifFavorite;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 
     public int getCourseId() {

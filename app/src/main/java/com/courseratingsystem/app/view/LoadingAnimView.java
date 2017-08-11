@@ -81,6 +81,7 @@ public class LoadingAnimView extends RelativeLayout {
         this.setLayoutParams(layoutParams1);
         this.setGravity(CENTER_IN_PARENT);
         this.setBackgroundColor(int_color);
+        this.setElevation(9999);
         this.addView(animView);
 
         //运行动画

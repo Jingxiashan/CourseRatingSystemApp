@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        tools:targetApi="lollipop"
         android:layout_width="match_parent"
         android:layout_height="123dp"
-        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
-        app:cardPreventCornerOverlap="false">
+        tools:targetApi="lollipop">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:src="@mipmap/app_icon" />
 
             <RelativeLayout
@@ -41,17 +40,6 @@
                     android:text="测试"
                     android:textColor="@color/splashBackColor"
                     android:textSize="15sp" />
-
-                <Button
-                    android:id="@+id/item_activity_my_favorites_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@drawable/item_activity_my_favorites_comment_bg"
-                    android:text="@string/item_fragment_courselist_addcomment"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="@dimen/item_fragment_courselist_textsize_details" />
 
                 <TextView
                     android:id="@+id/item_activity_my_favorites_recScore"
@@ -97,31 +85,16 @@
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/item_fragment_courselist_textsize_details" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/item_activity_my_favorites_otherScores"
-                    android:layout_marginTop="@dimen/item_fragment_courselist_margintop"
-                    android:paddingBottom="1dp"
-                    android:paddingEnd="5dp"
-                    android:paddingTop="1dp">
-                    <TextView
-                        android:id="@+id/item_activity_my_favorites_teacher"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="测试"
-                        android:background="@drawable/textview_border"
-                        android:textColor="@color/splashBackColor"
-                        android:textSize="@dimen/item_fragment_courselist_textsize_details" />
-                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="25sp"
                     android:layout_height="25sp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
                     android:background="@drawable/activity_comment_like_text_border"
                     android:gravity="center_horizontal">
+
                     <ImageButton
                         android:id="@+id/item_activity_my_favorites_delete"
                         android:layout_width="10dp"

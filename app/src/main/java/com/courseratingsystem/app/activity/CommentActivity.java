@@ -114,7 +114,7 @@ public class CommentActivity extends AppCompatActivity {
 
         }
 
-        //courseName.setText(course.getCourseName());
+        //mCourseName.setText(course.getCourseName());
         courseName.setText("Course_name");
         //courseRecRatingBar.setNumStars((int)course.getRecommendationScore());
 

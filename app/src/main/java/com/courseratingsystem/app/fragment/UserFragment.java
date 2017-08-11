@@ -221,6 +221,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyFavoritesActivity.class);
+                intent.putExtra(MyFavoritesActivity.EXTRA_USER, user);
                 startActivity(intent);
             }
         });
