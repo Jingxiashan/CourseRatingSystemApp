@@ -57,6 +57,8 @@ public class CourseActivity extends AppCompatActivity {
     LinearLayout head;
     @ViewInject(R.id.activity_course_textview_avgreccom)
     TextView getAvgrecommStatic;
+    @ViewInject(R.id.activity_course_textview_commentcount)
+    TextView commentcount;
     float scale = 1.0f;
     float alpha = 1.0f;
     float ratio = 0;
@@ -92,6 +94,8 @@ public class CourseActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        commentcount.setText(String.valueOf(course.getPeopleCount()));
 
         LinearLayout.LayoutParams teacherParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         teacherParam.setMargins(5,5,5,5);
