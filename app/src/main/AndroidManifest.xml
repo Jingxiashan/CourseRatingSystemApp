@@ -24,7 +24,8 @@
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".activity.CourseActivity"
-            android:theme="@style/CourseTheme" />
+            android:theme="@style/CourseTheme"></activity>
+
         <activity
             android:name=".activity.TeacherActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -52,13 +53,30 @@
             android:name=".activity.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.AboutUsActivity" >
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.RollcallPopupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activity.UsefullnessPopupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activity.VividPopupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activity.ScorehighPopupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
+            android:name=".activity.TimeoccupaPopupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

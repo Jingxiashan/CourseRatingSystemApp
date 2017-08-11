@@ -1,21 +1,31 @@
 package com.courseratingsystem.app.activity;
 
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.tools.DepthPageTransformer;
 
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@ContentView(R.layout.activity_about_us)
+
 public class AboutUsActivity extends AppCompatActivity {
+
+    @ViewInject(R.id.activity_about_gitlink_text)
+    TextView gitlink;
 
     private ViewPager ViewPager_kongxiao,ViewPager_zhangyanze,
             ViewPager_huangjiaxing,ViewPager_ludi;
@@ -41,10 +51,19 @@ public class AboutUsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_us);
+        //setContentView(R.layout.activity_about_us);
+        x.view().inject(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("关于我们");
+//        gitlink.setOnClickListener(new TextView.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(("www.baidu.com")));
+//                startActivity(intent);
+//            }
+//        });
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("关于我们");
 
         initData(mImgIds_kongxiao,mImageViews_kongxiao);
         initData(mImgIds_zhangyanze,mImageViews_zhangyanze);
