@@ -50,6 +50,14 @@ import okhttp3.Response;
 @ContentView(R.layout.activity_course)
 public class CourseActivity extends AppCompatActivity {
     public static final String EXTRA_COURSE_ID = "courseid";
+    private static final int SUCCESSFULLY = 0;
+    private static final int FAILED = 1;
+    private static final String ADD_FAVORIATE_ACTION = "addFavoriteCourse";
+    private static final String DELETE_FAVORITE_ACTION = "deleteFavoriteCourse";
+    private final String ADD_FAVORITE_URL = "/addFavoriteCourse?";
+    private final String DELETE_FAVORITE_URL = "/deleteFavoriteCourse?";
+    private final String USERID = "userId=";
+    private final String COURSEID = "courseId=";
     @ViewInject(R.id.activity_course_horizontalbarchart)
     CustomizedHorizontalBarChart barChart;
     @ViewInject(R.id.activity_course_scrollview)
@@ -76,22 +84,41 @@ public class CourseActivity extends AppCompatActivity {
     TextView commentcount;
     @ViewInject(R.id.activity_course_btn_addfavorite)
     Button addFavoriteBtn;
-
+    @ViewInject(R.id.course_useful_text)
+    TextView useful;
+    @ViewInject(R.id.course_vivid_text)
+    TextView vivid;
+    @ViewInject(R.id.course_timeoccu_text)
+    TextView timeoccu;
+    @ViewInject(R.id.course_rollcall_text)
+    TextView rollcall;
+    @ViewInject(R.id.course_score_text)
+    TextView scorehigh;
     private float scale = 1.0f;
     private float alpha = 1.0f;
     private float ratio = 0;
     private int courseid;
-
-    private final String ADD_FAVORITE_URL = "/addFavoriteCourse?";
-    private final String DELETE_FAVORITE_URL = "/deleteFavoriteCourse?";
-    private final String USERID = "userId=";
-    private final String COURSEID = "courseId=";
-
-    private static final int SUCCESSFULLY = 0;
-    private static final int FAILED = 1;
-    private static final String ADD_FAVORIATE_ACTION = "addFavoriteCourse";
-    private static final String DELETE_FAVORITE_ACTION = "deleteFavoriteCourse";
-
+    private final Handler deleteFavoriteHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case SUCCESSFULLY:
+                    addFavoriteBtn.setText("我要收藏");
+                    addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getdata(ADD_FAVORIATE_ACTION);
+                        }
+                    });
+                    Toast.makeText(CourseActivity.this, "移除收藏成功！", Toast.LENGTH_LONG).show();
+                    break;
+                case FAILED:
+                    Toast.makeText(CourseActivity.this, "移除收藏失败！", Toast.LENGTH_LONG).show();
+                    break;
+            }
+            return false;
+        }
+    });
     private  final Handler addFavoriteHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -115,27 +142,6 @@ public class CourseActivity extends AppCompatActivity {
         }
     });
 
-    private  final Handler deleteFavoriteHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case SUCCESSFULLY:
-                    addFavoriteBtn.setText("我要收藏");
-                    addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            getdata(ADD_FAVORIATE_ACTION);
-                        }
-                    });
-                    Toast.makeText(CourseActivity.this, "移除收藏成功！", Toast.LENGTH_LONG).show();
-                    break;
-                case FAILED:
-                    Toast.makeText(CourseActivity.this, "移除收藏失败！", Toast.LENGTH_LONG).show();
-                    break;
-            }
-            return false;
-        }
-    });
     private void getdata(final String action){
 
         MyCourseApplication application = (MyCourseApplication) CourseActivity.this.getApplication();
@@ -336,6 +342,43 @@ public class CourseActivity extends AppCompatActivity {
         commentlist.setFocusable(false);
         scrollView.scrollTo(0,0);
         headbg.setAlpha(ratio);
+
+
+        //一些列课程属性介绍评论Popup弹出
+        scorehigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CourseActivity.this, ScorehighPopupActivity.class));
+            }
+        });
+
+        vivid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CourseActivity.this, VividPopupActivity.class));
+            }
+        });
+
+        useful.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CourseActivity.this, UsefullnessPopupActivity.class));
+            }
+        });
+
+        rollcall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CourseActivity.this, RollcallPopupActivity.class));
+            }
+        });
+
+        timeoccu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CourseActivity.this, TimeoccupaPopupActivity.class));
+            }
+        });
 
 
     }

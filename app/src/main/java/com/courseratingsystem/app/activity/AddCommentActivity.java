@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,14 +28,11 @@ import com.courseratingsystem.app.vo.Teacher;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.http.body.RequestBody;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,8 +49,7 @@ import okhttp3.Response;
 
 public class AddCommentActivity extends AppCompatActivity {
     public static final String COURSE_INFO = "course_info";
-    //    public List<attribute> attributeList;
-    public Comment comment = new Comment();
+    private final String ADD_COMMENT_URL = "/addComment";
     //public List<String> teachernameList=new ArrayList<>();
 
 //    @ViewInject(R.id.activity_addcomment_layout_pile)
@@ -62,42 +57,32 @@ public class AddCommentActivity extends AppCompatActivity {
 
 //    @ViewInject(R.id.activity_addcomment_linear_teacherlayout)
 //    LinearLayout teacherLayout;
-
+private final int SUCCEEDED = 0;
+    private final int FAILED = 1;
+    //    public List<attribute> attributeList;
+    public Comment comment = new Comment();
     @ViewInject(R.id.activity_addcomment_button_submitComment)
     Button commentSubmit;
-
     @ViewInject(R.id.acticity_addcomment_editText_commentContent)
     private EditText commentcontent;
-
     @ViewInject(R.id.activity_addcomment_spinner_courseTeacherSelect)
     private Spinner teacherName;
-
     @ViewInject(R.id.activity_addcomment_text_courseName)
     private TextView courseName;
-
     @ViewInject(R.id.activity_addcomment_linear_teacherlayout)
     private LinearLayout teacherLayout;
     @ViewInject(R.id.activity_addcomment_rating_rollcall)
     private RatingBar rollcallRating;
-
     @ViewInject(R.id.activity_addcomment_rating_usefulness)
     private RatingBar usefulnessRating;
-
     @ViewInject(R.id.activity_addcomment_rating_vividness)
     private RatingBar vivdnessRating;
-
     @ViewInject(R.id.activity_addcomment_rating_scorehigh)
     private RatingBar scorehighRating;
-
     @ViewInject(R.id.activity_addcomment_rating_timeoccupation)
     private RatingBar timeoccuRating;
-
     @ViewInject(R.id.activity_addcomment_rating_courseRecommendation)
     private RatingBar courseRecRating;
-
-    private final String ADD_COMMENT_URL = "/addComment";
-    private final int SUCCEEDED = 0;
-    private final int FAILED = 1;
     private String[] ADD_COMMENT_POST_KEY = new String[]{
             "teacherId"
             ,"courseId"
@@ -196,27 +181,16 @@ public class AddCommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
 
-        //initView();
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("课程评论");
 
         course = (Course) getIntent().getSerializableExtra(COURSE_INFO);
-        courseName.setText("高等数学");
-        //courseName.setText(course.getCourseName());
-//        final Course course1=new Course();
-
-
-        //画teacherspinner 和 teacherlayout
-
-        //测试
+        courseName.setText(course.getCourseName());
         List<String> teachernameList = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
+        for (int i = 0; i < course.getTeacherList().size(); i++) {
             Teacher teacher = new Teacher();
-            teacher.setTeachername("张彦泽");
-            //Course.TeacherBrief teacherBrief=course.new TeacherBrief("孔啸",1);
-            //course.getTeacherList().add(teacherBrief);
+            teacher.setTeachername(course.getTeacherList().get(i).getTeacherName());
             teachernameList.add(teacher.getTeachername());
 
             TextView teacherText = new TextView(this);
@@ -226,7 +200,7 @@ public class AddCommentActivity extends AppCompatActivity {
             teacherText.setGravity(Gravity.CENTER);
             teacherText.setLayoutParams(layoutParams);
             teacherText.setTextSize(15);
-            teacherText.setText("孔啸");
+            teacherText.setText(course.getTeacherList().get(i).getTeacherName());
             teacherText.setHeight(60);
             teacherText.setWidth(180);
             teacherText.setTextColor(getResources().getColor(R.color.teacher_blue_light));
