@@ -56,9 +56,10 @@ public class CommentActivity extends AppCompatActivity {
     public static final String BUNDLE_ID = "id";
     public static final String BUNDLE_NAME = "name";
     private static final String COURSE_COMMENT_URL = "/getCommentListByCourseId?courseId=";
+    private static final String COMMENT_LIKE_URL = "/addLikeCount?commentId=";
     private static final String TEACHER_COMMENT_URL = "/getCommentListByTeacherId?teacherId=";
     private static final String PARAM_CURRENT_PAGE = "&currentPage=";
-    private static final int FAILED = 0;
+    private static final int FAILED = -1;
     private static final int LOAD_RESET = 1;
     private static final int LOAD_APPEND = 2;
     private static int TYPE_REFRESH = 0;
@@ -349,7 +350,7 @@ public class CommentActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             final Comment tmpComment = commentList.get(position);
-            CommentsViewHolder viewHolder;
+            final CommentsViewHolder viewHolder;
             if (convertView == null) {
                 viewHolder = new CommentsViewHolder();
                 convertView = inflater.inflate(R.layout.item_activity_comment_list, null);
@@ -385,6 +386,7 @@ public class CommentActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     //TODO:点赞
+                    clickList(viewHolder.likeCount, tmpComment.getCommentid());
                 }
             });
 
@@ -403,6 +405,60 @@ public class CommentActivity extends AppCompatActivity {
 
             return convertView;
         }
+    }
+    private final Handler likeHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what){
+                case FAILED:
+                    break;
+                default:
+                    TextView likeCount = (TextView) msg.obj;
+                    likeCount.setText(String.valueOf(msg.what));
+                    break;
+            }
+            return false;
+        }
+    });
+    private void clickList(final TextView view, int commentId){
+        MyCourseApplication application = (MyCourseApplication) getApplication();
+        OkHttpClient okHttpClient = application.getOkHttpClient();
+        Request request = new Request.Builder()
+                .url(COMMENT_LIKE_URL + commentId)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            Message msg = new Message();
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.what = FAILED;
+                msg.obj = e.toString();
+                likeHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
+                            //成功，处理内容
+                            JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+                            msg.what = resultJson.getInt("likeCount");
+                            msg.obj = view;
+                        } else {
+                            msg.what = FAILED;
+                            msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                        }
+                        likeHandler.sendMessage(msg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 
