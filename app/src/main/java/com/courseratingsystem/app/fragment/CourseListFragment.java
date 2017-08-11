@@ -53,6 +53,7 @@ import okhttp3.Response;
 @ContentView(R.layout.fragment_course_list)
 public class CourseListFragment extends Fragment {
 
+    public static final String COURSE_INFO = "course_info";
     private static final int REFRESH_DATA_RESET = 0;
     private static final int REFRESH_DATA_APPEND = 1;
     @ViewInject(R.id.fragment_courselist_refresh)
@@ -394,6 +395,14 @@ public class CourseListFragment extends Fragment {
                 viewHolder = (CourseViewHolder) convertView.getTag();
             }
 //            设置显示内容
+            viewHolder.mAddComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(),AddCommentActivity.class);
+                    intent.putExtra(COURSE_INFO,tmpCourse);
+                    startActivity(intent);
+                }
+            });
             viewHolder.mCourseName.setText(tmpCourse.getCourseName());
             viewHolder.mRecScore.setText(String.format(getString(R.string.item_fragment_courselist_recScore), tmpCourse.getRecommendationScore()));
             if (tmpCourse.getRecommendationScore() >= 4) {

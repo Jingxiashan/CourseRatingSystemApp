@@ -50,6 +50,7 @@ import okhttp3.Response;
 @ContentView(R.layout.activity_course)
 public class CourseActivity extends AppCompatActivity {
     public static final String EXTRA_COURSE_ID = "courseid";
+    public static final String COURSE_INFO = "course_info";
     private static final String GET_COURSE_URL = "/getCourseWithTenComments?";
     private static final String ADD_FAVORITE_URL = "/addFavorateCourse?";
     private static final String DELETE_FAVORITE_URL = "/deleteFavorateCourse?";
@@ -406,6 +407,7 @@ public class CourseActivity extends AppCompatActivity {
     private void doEvent(View view){
         //TODO:打开评论页
         Intent intent = new Intent(CourseActivity.this,AddCommentActivity.class);
+        intent.putExtra(COURSE_INFO,course);
         startActivity(intent);
     }
     private static class CommentsViewHolder {
