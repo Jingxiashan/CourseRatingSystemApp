@@ -147,6 +147,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         if (statusCode == MyCourseApplication.JSON_RESULT_CODE_200) {
                             //成功
                             JSONObject resultJson = responseJson.getJSONObject(MyCourseApplication.JSON_RESULT);
+
+
                             msg.obj = new User(
                                     username,
                                     resultJson.getString("nickname"),
@@ -162,6 +164,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                             msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
                             getInfoHandler.sendMessage(msg);
                         }
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

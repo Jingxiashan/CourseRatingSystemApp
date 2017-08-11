@@ -3,20 +3,26 @@ package com.courseratingsystem.app.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.application.MyCourseApplication;
 import com.courseratingsystem.app.view.CustomizedHorizontalBarChart;
 import com.courseratingsystem.app.view.ListViewNoScroll;
 import com.courseratingsystem.app.view.ObservableScrollView;
@@ -24,13 +30,22 @@ import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
 import com.nineoldandroids.view.ViewHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @ContentView(R.layout.activity_course)
 public class CourseActivity extends AppCompatActivity {
@@ -59,10 +74,140 @@ public class CourseActivity extends AppCompatActivity {
     TextView getAvgrecommStatic;
     @ViewInject(R.id.activity_course_textview_commentcount)
     TextView commentcount;
-    float scale = 1.0f;
-    float alpha = 1.0f;
-    float ratio = 0;
+    @ViewInject(R.id.activity_course_btn_addfavorite)
+    Button addFavoriteBtn;
+
+    private float scale = 1.0f;
+    private float alpha = 1.0f;
+    private float ratio = 0;
     private int courseid;
+
+    private final String ADD_FAVORITE_URL = "/addFavoriteCourse?";
+    private final String DELETE_FAVORITE_URL = "/deleteFavoriteCourse?";
+    private final String USERID = "userId=";
+    private final String COURSEID = "courseId=";
+
+    private static final int SUCCESSFULLY = 0;
+    private static final int FAILED = 1;
+    private static final String ADD_FAVORIATE_ACTION = "addFavoriteCourse";
+    private static final String DELETE_FAVORITE_ACTION = "deleteFavoriteCourse";
+
+    private  final Handler addFavoriteHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            //TODO 处理收藏操作
+            switch (msg.what) {
+                case SUCCESSFULLY:
+                addFavoriteBtn.setText("已收藏");
+                addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getdata(DELETE_FAVORITE_ACTION);
+                    }
+                });
+                Toast.makeText(CourseActivity.this, "收藏成功！", Toast.LENGTH_LONG).show();
+                    break;
+                case FAILED:
+                    Toast.makeText(CourseActivity.this, "收藏失败！", Toast.LENGTH_LONG).show();
+                    break;
+            }
+            return false;
+        }
+    });
+
+    private  final Handler deleteFavoriteHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case SUCCESSFULLY:
+                    addFavoriteBtn.setText("我要收藏");
+                    addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getdata(ADD_FAVORIATE_ACTION);
+                        }
+                    });
+                    Toast.makeText(CourseActivity.this, "移除收藏成功！", Toast.LENGTH_LONG).show();
+                    break;
+                case FAILED:
+                    Toast.makeText(CourseActivity.this, "移除收藏失败！", Toast.LENGTH_LONG).show();
+                    break;
+            }
+            return false;
+        }
+    });
+    private void getdata(final String action){
+
+        MyCourseApplication application = (MyCourseApplication) CourseActivity.this.getApplication();
+        final int userid = application.getUserId();
+        OkHttpClient client = application.getOkHttpClient();
+
+        String action_url = new String();
+        switch (action){
+            case ADD_FAVORIATE_ACTION:
+                action_url = ADD_FAVORITE_URL+USERID+userid+"&"+COURSEID+courseid;
+                break;
+            case DELETE_FAVORITE_ACTION:
+                action_url = DELETE_FAVORITE_URL+USERID+userid+"&"+COURSEID+courseid;
+
+        }
+        Request request = new Request.Builder()
+                .url(MyCourseApplication.SERVER_URL+action_url)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            Message msg =new Message();
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                msg.what = FAILED;
+                switch (action){
+                    case ADD_FAVORIATE_ACTION:
+                        addFavoriteHandler.sendMessage(msg);
+                        break;
+                    case DELETE_FAVORITE_ACTION:
+                        deleteFavoriteHandler.sendMessage(msg);
+                        break;
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.body() != null){
+                    String responseBody = response.body().string();
+                    try{
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        int statusCode = responseJson.getInt(MyCourseApplication.JSON_RESULT_CODE);
+                        if(statusCode == MyCourseApplication.JSON_RESULT_CODE_200){
+                            switch (action){
+                                case ADD_FAVORIATE_ACTION:
+                                    msg.what = SUCCESSFULLY;
+                                    addFavoriteHandler.sendMessage(msg);
+                                    break;
+                                case DELETE_FAVORITE_ACTION:
+                                    msg.what = SUCCESSFULLY;
+                                    deleteFavoriteHandler.sendMessage(msg);
+                            }
+                        }
+                        else {
+                            switch (action) {
+                                case ADD_FAVORIATE_ACTION:
+                                    msg.what = FAILED;
+                                    msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                                    addFavoriteHandler.sendMessage(msg);
+                                    break;
+                                case DELETE_FAVORITE_ACTION:
+                                    msg.what = FAILED;
+                                    msg.obj = responseJson.getString(MyCourseApplication.JSON_REASON);
+                                    deleteFavoriteHandler.sendMessage(msg);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
