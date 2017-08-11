@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:pile="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,119 +10,159 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/bgGrey">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+
             android:background="@android:color/transparent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <!--课程基本信息标题-->
             <!--课程基本信息标题-->
+        <LinearLayout
+            android:id="@+id/activity_comment_layout_courseheaderinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/bgGrey"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:id="@+id/activity_comment_layout_courseheaderinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/bgGrey"
-                android:orientation="vertical">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/activity_addcomment_text_courseName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="高等数学"
+                        android:textSize="30sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginTop="10dp">
 
                         <TextView
-                            android:id="@+id/activity_addcomment_text_courseName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Course_Name"
-                            android:textSize="@dimen/activity_addcomment_header_font_size" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:text="推荐指数：" />
-
-                            <RatingBar
-                                android:id="@+id/activity_addcomment_header_ratingbar_commentRating"
-                                style="@style/CourseCommentRatingStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="1dp"
-                                android:layout_marginTop="1dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/activity_addcomment_linear_teacherlayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="1dp"
-                            android:orientation="horizontal">
-                            <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="20dp"-->
-                            <!--android:layout_marginTop="@dimen/activity_login_input_margin"-->
-                            <!--android:src="@drawable/teacher" />-->
+                            android:text="推荐指数：" />
 
-                            <!--<TextView-->
-                            <!--android:background="@drawable/activity_comment_teacher_button_bg"-->
-                            <!--android:gravity="center"-->
-                            <!--android:id="@+id/activity_comment_button_teacher"-->
-                            <!--android:layout_width="@dimen/activity_comment_teacehr_text_width"-->
-                            <!--android:layout_height="@dimen/activity_comment_teacehr_text_height"-->
-                            <!--android:layout_marginStart="@dimen/activity_comment_teacher_side_margin"-->
-                            <!--android:textColor="@android:color/holo_blue_light"-->
-                            <!--android:text="张彦泽"-->
-                            <!--android:textSize="10sp" />-->
-
-                        </LinearLayout>
+                        <RatingBar
+                            android:id="@+id/activity_addcomment_header_ratingbar_commentRating"
+                            style="@style/CourseCommentRatingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginTop="1dp" />
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/activity_addcomment_linear_teacherlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:orientation="horizontal">
+                        <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:layout_marginTop="@dimen/activity_login_input_margin"-->
+                        <!--android:src="@drawable/teacher" />-->
+
+                        <!--<TextView-->
+                        <!--android:background="@drawable/activity_comment_teacher_button_bg"-->
+                        <!--android:gravity="center"-->
+                        <!--android:id="@+id/activity_comment_button_teacher"-->
+                        <!--android:layout_width="@dimen/activity_comment_teacehr_text_width"-->
+                        <!--android:layout_height="@dimen/activity_comment_teacehr_text_height"-->
+                        <!--android:layout_marginStart="@dimen/activity_comment_teacher_side_margin"-->
+                        <!--android:textColor="@android:color/holo_blue_light"-->
+                        <!--android:text="张彦泽"-->
+                        <!--android:textSize="10sp" />-->
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
 
-                <LinearLayout
+            </LinearLayout>
 
-                    android:layout_width="match_parent"
+
+            <!--<LinearLayout-->
+
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/activity_login_input_margin"-->
+            <!--android:layout_marginTop="@dimen/activity_login_input_margin"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0.5dp"-->
+            <!--android:layout_marginBottom="@dimen/activity_login_input_margin_half"-->
+            <!--android:layout_marginEnd="20dp"-->
+            <!--android:layout_marginStart="20dp"-->
+            <!--android:layout_marginTop="@dimen/activity_login_input_margin_half"-->
+            <!--android:layout_weight="5"-->
+            <!--android:background="@color/lightGreyAlpha" />-->
+
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_login_input_margin"
+                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                    android:layout_weight="3"
+                    android:background="@color/lightGreyAlpha" />
+
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_login_input_margin"
-                    android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_weight="8"
+                    android:gravity="center_horizontal"
+                    android:text="课程基本属性"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="@dimen/activity_login_font_size" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0.5dp"
-                        android:layout_marginBottom="@dimen/activity_login_input_margin_half"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="@dimen/activity_login_input_margin_half"
-                        android:layout_weight="5"
-                        android:background="@color/lightGreyAlpha" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/activity_login_input_margin_half"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/activity_login_input_margin_half"
+                    android:layout_weight="3"
+                    android:background="@color/lightGreyAlpha" />
 
-                </LinearLayout>
             </LinearLayout>
             <!--<LinearLayout-->
             <!--android:layout_width="wrap_content"-->
@@ -161,17 +201,233 @@
 
             <!--</LinearLayout>-->
             <!--</LinearLayout>-->
-
-            <com.stone.pile.libs.PileLayout
-                android:id="@+id/activity_addcomment_layout_pile"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
+            <android.support.v7.widget.CardView
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                pile:displayCount="1.8"
-                pile:interval="5dp"
-                pile:sizeRatio="1.5" />
+                android:background="@color/pureWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/activity_addcomment_attrname_usefulness"
+                    android:textSize="15sp" />
+
+                    <TextView
+                    android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/activity_addcomment_attrdescrip_usefulness"
+                        android:textSize="12sp" />
+
+                    <RatingBar
+                        android:id="@+id/activity_addcomment_rating_usefulness"
+                        style="@style/CourseRatingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:rating="0" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/pureWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_addcomment_attrname_vividness"
+                    android:textSize="15sp" />
+
+                    <TextView
+                    android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/activity_addcomment_attrdescrip_vividness"
+                        android:textSize="12sp" />
+
+                    <RatingBar
+                        android:id="@+id/activity_addcomment_rating_vividness"
+                        style="@style/CourseRatingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:rating="0" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/pureWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_addcomment_attrname_timeoccupation"
+                        android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/activity_addcomment_attrdescrip_timeoccupation"
+                    android:textSize="12sp" />
+
+                    <RatingBar
+                        android:id="@+id/activity_addcomment_rating_timeoccupation"
+                        style="@style/CourseRatingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:rating="0" />
+
+
+            </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/pureWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                        android:text="@string/activity_addcomment_attrname_scorehigh"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/activity_addcomment_attrdescrip_scorehigh"
+                        android:textSize="12sp" />
+
+                    <RatingBar
+                        android:id="@+id/activity_addcomment_rating_scorehigh"
+                        style="@style/CourseRatingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:rating="0" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/pureWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_addcomment_attrname_rollcall"
+                        android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/activity_addcomment_attrdescrip_rollcall"
+                    android:textSize="12sp" />
+
+                    <RatingBar
+                        android:id="@+id/activity_addcomment_rating_rollcall"
+                        style="@style/CourseRatingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:rating="0" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--<com.stone.pile.libs.PileLayout-->
+            <!--android:id="@+id/activity_addcomment_layout_pile"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--pile:displayCount="1.8"-->
+            <!--pile:interval="10dp"-->
+            <!--pile:sizeRatio="0.72" />-->
 
 
             <LinearLayout
@@ -183,8 +439,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="选择授课老师"
                     android:textColor="@color/button_material_dark"
@@ -202,33 +458,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
-                android:layout_marginTop="@dimen/activity_addcomment_subtop_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="期末考核方式"
-                    android:textColor="@color/button_material_dark"
-                    android:textSize="@dimen/activity_addcomment_subheader_font_size" />
-
-                <Spinner
-                    android:id="@+id/activity_addcomment_spinner_courseFinalSelect"
-                    android:layout_width="150dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="4dp"
-                    android:entries="@array/finaltype"
-                    android:textColor="@color/lightGrey"
-                    android:textSize="@dimen/activity_login_font_size"></Spinner>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -287,12 +516,12 @@
                     android:id="@+id/acticity_addcomment_editText_commentContent"
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/activity_addcomment_top_margin"
                     android:ems="10"
                     android:inputType="textMultiLine" />
 
-            </LinearLayout>
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

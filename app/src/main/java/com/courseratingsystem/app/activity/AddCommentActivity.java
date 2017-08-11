@@ -22,7 +22,6 @@ import com.courseratingsystem.app.R;
 import com.courseratingsystem.app.vo.Comment;
 import com.courseratingsystem.app.vo.Course;
 import com.courseratingsystem.app.vo.Teacher;
-import com.stone.pile.libs.PileLayout;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -35,12 +34,12 @@ import java.util.List;
 
 public class AddCommentActivity extends AppCompatActivity {
     public static final String COURSE_INFO = "course_info";
-    public List<attribute> attributeList;
+    //    public List<attribute> attributeList;
     public Comment comment = new Comment();
     //public List<String> teachernameList=new ArrayList<>();
 
-    @ViewInject(R.id.activity_addcomment_layout_pile)
-    PileLayout attributePile;
+//    @ViewInject(R.id.activity_addcomment_layout_pile)
+//    PileLayout attributePile;
 
 //    @ViewInject(R.id.activity_addcomment_linear_teacherlayout)
 //    LinearLayout teacherLayout;
@@ -51,9 +50,6 @@ public class AddCommentActivity extends AppCompatActivity {
     @ViewInject(R.id.acticity_addcomment_editText_commentContent)
     private EditText commentcontent;
 
-    @ViewInject(R.id.activity_addcomment_spinner_courseFinalSelect)
-    private Spinner finalType;
-
     @ViewInject(R.id.activity_addcomment_spinner_courseTeacherSelect)
     private Spinner teacherName;
 
@@ -63,13 +59,28 @@ public class AddCommentActivity extends AppCompatActivity {
     @ViewInject(R.id.activity_addcomment_linear_teacherlayout)
     private LinearLayout teacherLayout;
 
+    @ViewInject(R.id.activity_addcomment_rating_rollcall)
+    private RatingBar rollcallRating;
+
+    @ViewInject(R.id.activity_addcomment_rating_usefulness)
+    private RatingBar usefulnessRating;
+
+    @ViewInject(R.id.activity_addcomment_rating_vividness)
+    private RatingBar vivdnessRating;
+
+    @ViewInject(R.id.activity_addcomment_rating_scorehigh)
+    private RatingBar scorehighRating;
+
+    @ViewInject(R.id.activity_addcomment_rating_timeoccupation)
+    private RatingBar timeoccuRating;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
 
-        initView();
+        //initView();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -87,14 +98,14 @@ public class AddCommentActivity extends AppCompatActivity {
         List<String> teachernameList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             Teacher teacher = new Teacher();
-            teacher.setTeachername("孔啸");
+            teacher.setTeachername("张彦泽");
             //Course.TeacherBrief teacherBrief=course.new TeacherBrief("孔啸",1);
             //course.getTeacherList().add(teacherBrief);
             teachernameList.add(teacher.getTeachername());
 
             TextView teacherText = new TextView(this);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(20, 20, 20, 20);
+            layoutParams.setMargins(10, 10, 10, 10);
             teacherText.setBackground(getDrawable(R.drawable.activity_comment_teacher_button_bg));
             teacherText.setGravity(Gravity.CENTER);
             teacherText.setLayoutParams(layoutParams);
@@ -135,8 +146,50 @@ public class AddCommentActivity extends AppCompatActivity {
 //            });
 //        }
 
+        usefulnessRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setUsefulness(rating);
+            }
+        });
+
+        vivdnessRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setVivdness(rating);
+            }
+        });
+
+        scorehighRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setScorehigh(rating);
+            }
+        });
+
+        rollcallRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setRollcall(rating);
+            }
+        });
+
+        scorehighRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setScorehigh(rating);
+            }
+        });
+
+        timeoccuRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                comment.setSparetimeoccupation(rating);
+            }
+        });
 
         //评论提交，弹出刚填写好的评论popupwindow
+
         //TODO:获得更新后该课程推荐星级、弹出窗口的用户信息时间戳等
         commentSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +213,8 @@ public class AddCommentActivity extends AppCompatActivity {
                     comment.setNickname("井下山");
                     comment.setTimestamp("1997-2-26");
                     Log.i("info", "" + comment.getSparetimeoccupation());
+
+
                     comment.setRecstar(comment.getSparetimeoccupation());
 
                     Bundle bundle = new Bundle();
@@ -184,95 +239,95 @@ public class AddCommentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initView() {
-        attribute attribute1 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_usefulness),
-                getResources().getString(R.string.activity_addcomment_attrdescrip_usefulness));
-        attribute attribute2 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_vividness),
-                getResources().getString(R.string.activity_addcomment_attrdescrip_vividness));
-        attribute attribute3 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_timeoccupation),
-                getResources().getString(R.string.activity_addcomment_attrdescrip_vividness));
-        attribute attribute4 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_scorehigh),
-                getResources().getString(R.string.activity_addcomment_attrdescrip_scorehigh));
-        attribute attribute5 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_rollcall),
-                getResources().getString(R.string.activity_addcomment_attrdescrip_rollcall));
-
-        attributeList = new ArrayList<>();
-        attributeList.add(attribute1);
-        attributeList.add(attribute2);
-        attributeList.add(attribute3);
-        attributeList.add(attribute4);
-        attributeList.add(attribute5);
-
-        AttributeAdapter attributeAdapter = new AttributeAdapter();
-        attributePile.setAdapter(attributeAdapter);
-
-
-    }
-
-    private class attribute {
-        private String attrname;
-        private String attrdescrip;
-
-        attribute(String tname, String tdescrip) {
-            attrname = tname;
-            attrdescrip = tdescrip;
-        }
-    }
-
-    private class AttributeAdapter extends PileLayout.Adapter {
-
-        public int getLayoutId() {
-            return R.layout.item_activity_addcomment_attribute;
-        }
-
-        @Override
-        public int getItemCount() {
-            return attributeList.size();
-        }
-
-        @Override
-        public void bindView(View view, final int index) {
-            super.bindView(view, index);
-            final attribute tattribute = attributeList.get(index);
-
-            TextView attributeName = (TextView) view.findViewById(R.id.item_addcomment_text_attributename);
-            TextView attributeDescrip = (TextView) view.findViewById(R.id.item_addcomment_text_attributedescrip);
-            final RatingBar attributeRating = (RatingBar) view.findViewById(R.id.item_addcomment_rating_attributerating);
-
-            attributeName.setText(tattribute.attrname);
-            attributeDescrip.setText(tattribute.attrdescrip);
-            //属性默认评分
-            attributeRating.setNumStars(0);
-            attributeRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                    if (index == 0) {
-                        comment.setUsefulness((int) rating);
-                    }
-                    if (index == 1) {
-                        comment.setVivdness((int) rating);
-                    }
-                    if (index == 2) {
-                        comment.setSparetimeoccupation((int) rating);
-                    }
-                    if (index == 3) {
-                        comment.setScorehigh((int) rating);
-                    }
-                    if (index == 4) {
-                        comment.setRollcall((int) rating);
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void displaying(int position) {
-            super.displaying(position);
-        }
-
-        @Override
-        public void onItemClick(View view, int position) {
-            super.onItemClick(view, position);
-        }
-    }
+//    private void initView() {
+//        attribute attribute1 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_usefulness),
+//                getResources().getString(R.string.activity_addcomment_attrdescrip_usefulness));
+//        attribute attribute2 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_vividness),
+//                getResources().getString(R.string.activity_addcomment_attrdescrip_vividness));
+//        attribute attribute3 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_timeoccupation),
+//                getResources().getString(R.string.activity_addcomment_attrdescrip_vividness));
+//        attribute attribute4 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_scorehigh),
+//                getResources().getString(R.string.activity_addcomment_attrdescrip_scorehigh));
+//        attribute attribute5 = new attribute(getResources().getString(R.string.activity_addcomment_attrname_rollcall),
+//                getResources().getString(R.string.activity_addcomment_attrdescrip_rollcall));
+//
+//        attributeList = new ArrayList<>();
+//        attributeList.add(attribute1);
+//        attributeList.add(attribute2);
+//        attributeList.add(attribute3);
+//        attributeList.add(attribute4);
+//        attributeList.add(attribute5);
+//
+//        AttributeAdapter attributeAdapter = new AttributeAdapter();
+//        attributePile.setAdapter(attributeAdapter);
+//
+//
+//    }
+//
+//    private class attribute {
+//        private String attrname;
+//        private String attrdescrip;
+//
+//        attribute(String tname, String tdescrip) {
+//            attrname = tname;
+//            attrdescrip = tdescrip;
+//        }
+//    }
+//
+//    private class AttributeAdapter extends PileLayout.Adapter {
+//
+//        public int getLayoutId() {
+//            return R.layout.item_activity_addcomment_attribute;
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return attributeList.size();
+//        }
+//
+//        @Override
+//        public void bindView(View view, final int index) {
+//            super.bindView(view, index);
+//            final attribute tattribute = attributeList.get(index);
+//
+//            TextView attributeName = (TextView) view.findViewById(R.id.item_addcomment_text_attributename);
+//            TextView attributeDescrip = (TextView) view.findViewById(R.id.item_addcomment_text_attributedescrip);
+//            final RatingBar attributeRating = (RatingBar) view.findViewById(R.id.item_addcomment_rating_attributerating);
+//
+//            attributeName.setText(tattribute.attrname);
+//            attributeDescrip.setText(tattribute.attrdescrip);
+//            //属性默认评分
+//            attributeRating.setNumStars(0);
+//            attributeRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//                @Override
+//                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                    if (index == 0) {
+//                        comment.setUsefulness((int) rating);
+//                    }
+//                    if (index == 1) {
+//                        comment.setVivdness((int) rating);
+//                    }
+//                    if (index == 2) {
+//                        comment.setSparetimeoccupation((int) rating);
+//                    }
+//                    if (index == 3) {
+//                        comment.setScorehigh((int) rating);
+//                    }
+//                    if (index == 4) {
+//                        comment.setRollcall((int) rating);
+//                    }
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void displaying(int position) {
+//            super.displaying(position);
+//        }
+//
+//        @Override
+//        public void onItemClick(View view, int position) {
+//            super.onItemClick(view, position);
+//        }
+//    }
 }
