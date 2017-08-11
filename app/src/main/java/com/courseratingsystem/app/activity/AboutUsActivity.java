@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.courseratingsystem.app.R;
+import com.courseratingsystem.app.datebase.SearchHistory;
 import com.courseratingsystem.app.tools.DepthPageTransformer;
 
 import org.xutils.view.annotation.ContentView;

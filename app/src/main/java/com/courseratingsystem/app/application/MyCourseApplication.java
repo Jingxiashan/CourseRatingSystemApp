@@ -3,6 +3,7 @@ package com.courseratingsystem.app.application;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import org.litepal.LitePalApplication;
 import org.xutils.x;
 
 import okhttp3.OkHttpClient;
@@ -11,7 +12,7 @@ import okhttp3.OkHttpClient;
  * Created by kongx on 2017/8/2 0002.
  */
 
-public class MyCourseApplication extends Application {
+public class MyCourseApplication extends LitePalApplication {
 
     public static final String PREF_FILE_NAME = "prefs";
     public static final String PREF_INT_USERID = "userid";
